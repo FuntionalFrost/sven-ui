@@ -144,7 +144,7 @@ switchAccent('#0ea5e9'); // Sky Cyan
 
 Contributions are always welcome!
 
-1. Fork the repository: `git clone https://github.com/FuntionalFrost/sven-ui/sven.git`
+1. Fork the repository: `git clone https://github.com/FuntionalFrost/sven-ui.git`
 2. Install dependencies: `pnpm install`
 3. Start development server: `pnpm dev`
 4. Run type checking & linting: `pnpm check && pnpm lint`
