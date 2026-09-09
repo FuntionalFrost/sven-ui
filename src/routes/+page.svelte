@@ -757,7 +757,7 @@
 							</p>
 							<p class="text-sm text-neutral-500 dark:text-neutral-400">
 								Need assistance? Check out the <a
-									href="https://github.com/sven-ui/sven"
+									href="https://github.com/FuntionalFrost/sven-ui"
 									target="_blank"
 									rel="noopener noreferrer"
 									class="font-medium text-[#ff3e00] underline">GitHub repository</a

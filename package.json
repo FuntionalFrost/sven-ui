@@ -6,10 +6,10 @@
 	"homepage": "https://sven-ui.dev",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/sven-ui/sven.git"
+		"url": "https://github.com/FuntionalFrost/sven-ui.git"
 	},
 	"bugs": {
-		"url": "https://github.com/sven-ui/sven/issues"
+		"url": "https://github.com/FuntionalFrost/sven-ui/issues"
 	},
 	"keywords": [
 		"svelte",

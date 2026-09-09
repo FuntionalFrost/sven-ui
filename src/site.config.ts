@@ -11,7 +11,7 @@ export const siteConfig = defineSiteConfig({
 	author: {
 		name: 'Sven UI Team',
 		twitter: '@sven_ui',
-		github: 'https://github.com/sven-ui/sven'
+		github: 'https://github.com/FuntionalFrost/sven-ui'
 	},
 	theme: {
 		primaryColor: '#ff3e00',
@@ -51,7 +51,7 @@ export const siteConfig = defineSiteConfig({
 		{ label: 'Releases', href: '#releases', badge: 'v4.11.1' }
 	],
 	socials: {
-		github: 'https://github.com/sven-ui/sven',
+		github: 'https://github.com/FuntionalFrost/sven-ui',
 		twitter: 'https://twitter.com/sven_ui'
 	}
 });
