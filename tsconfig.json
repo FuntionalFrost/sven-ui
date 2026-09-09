@@ -16,17 +16,9 @@
 		"src/**/*.js",
 		"src/**/*.ts",
 		"src/**/*.svelte",
-		"worker-configuration.d.ts",
 		".svelte-kit/ambient.d.ts",
 		".svelte-kit/non-ambient.d.ts",
 		".svelte-kit/types/**/$types.d.ts"
 	],
-	"exclude": [
-		"node_modules/**",
-		".svelte-kit/output/**",
-		".svelte-kit/cloudflare/**",
-		"dist/**",
-		".wrangler/**",
-		"build/**"
-	]
+	"exclude": ["node_modules/**", ".svelte-kit/output/**", ".vercel/**", "dist/**", "build/**"]
 }
