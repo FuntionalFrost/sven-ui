@@ -1,9 +1,11 @@
 <script lang="ts">
 	import './layout.css';
-	import favicon from '$lib/assets/favicon.svg';
+	import SvenApp from '$lib/components/layout/SvenApp.svelte';
+	import { siteConfig } from '../site.config';
 
 	let { children } = $props();
 </script>
 
-<svelte:head><link rel="icon" href={favicon} /></svelte:head>
-{@render children()}
+<SvenApp config={siteConfig}>
+	{@render children()}
+</SvenApp>

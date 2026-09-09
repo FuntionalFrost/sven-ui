@@ -1,11 +1,53 @@
 {
 	"name": "sven-ui",
-	"private": true,
-	"version": "0.0.1",
+	"version": "1.0.0",
+	"description": "The Intuitive Svelte UI Library — Nuxt UI v4 equivalent for SvelteKit 2.7+ & Svelte 5 with automated SEO, dynamic OpenGraph cards, sitemaps, robots.txt, and Tailwind CSS v4.",
+	"license": "MIT",
+	"homepage": "https://sven-ui.dev",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sven-ui/sven.git"
+	},
+	"bugs": {
+		"url": "https://github.com/sven-ui/sven/issues"
+	},
+	"keywords": [
+		"svelte",
+		"sveltekit",
+		"svelte5",
+		"nuxt-ui",
+		"tailwind",
+		"tailwindcss-v4",
+		"ui-components",
+		"seo",
+		"opengraph",
+		"sitemap",
+		"robots"
+	],
 	"type": "module",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"svelte": "./dist/index.js",
+	"files": [
+		"dist"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js",
+			"default": "./dist/index.js"
+		},
+		"./vite": {
+			"types": "./dist/vite/index.d.ts",
+			"default": "./dist/vite/index.js"
+		},
+		"./sven.css": "./dist/styles/sven.css"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
+		"package": "svelte-package",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -18,6 +60,7 @@
 		"@iconify/json": "^2.2.525",
 		"@sveltejs/adapter-auto": "^7.0.1",
 		"@sveltejs/kit": "^2.63.0",
+		"@sveltejs/package": "^2.5.8",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
 		"@tailwindcss/typography": "^0.5.19",
 		"@tailwindcss/vite": "^4.3.0",
@@ -48,5 +91,9 @@
 		"sveltekit-superforms": "^2.30.2",
 		"tailwind-variants": "^3.3.1",
 		"zod": "^4.5.4"
+	},
+	"peerDependencies": {
+		"@sveltejs/kit": "^2.0.0",
+		"svelte": "^5.0.0"
 	}
 }
