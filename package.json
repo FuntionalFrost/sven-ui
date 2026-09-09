@@ -46,19 +46,20 @@
 	},
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build",
+		"build": "wrangler types --check && vite build",
 		"package": "svelte-package",
-		"preview": "vite preview",
+		"preview": "wrangler dev .svelte-kit/cloudflare/_worker.js --port 4173",
 		"prepare": "svelte-kit sync || echo ''",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check": "wrangler types --check && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"gen": "wrangler types"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
 		"@iconify/json": "^2.2.525",
-		"@sveltejs/adapter-auto": "^7.0.1",
+		"@sveltejs/adapter-cloudflare": "^7.2.8",
 		"@sveltejs/kit": "^2.63.0",
 		"@sveltejs/package": "^2.5.8",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
@@ -80,7 +81,8 @@
 		"typescript": "^6.0.3",
 		"typescript-eslint": "^8.60.1",
 		"unplugin-icons": "^23.0.1",
-		"vite": "^8.0.16"
+		"vite": "^8.0.16",
+		"wrangler": "^4.97.0"
 	},
 	"dependencies": {
 		"bits-ui": "^2.19.0",
