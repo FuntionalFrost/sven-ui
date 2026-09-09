@@ -1,13 +1,19 @@
-node_modules
+node_modules/
 
-# Output
-.output
-.vercel
-.netlify
-.wrangler
-/.svelte-kit
-/build
-/dist
+# Cloudflare & Wrangler
+.wrangler/
+.cloudflare/
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+
+# Output & Build
+.output/
+.vercel/
+.netlify/
+.svelte-kit/
+build/
+dist/
 
 # OS
 .DS_Store
@@ -25,4 +31,4 @@ vite.config.ts.timestamp-*
 
 # AI
 GEMINI.md
-/.gemini
+.gemini/
