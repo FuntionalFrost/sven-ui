@@ -63,7 +63,7 @@
 						<Link
 							href={item.href}
 							class="rounded-md px-3 py-1.5 text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white"
-							activeClass="text-[#ff3e00] dark:text-[#ff3e00] font-semibold"
+							activeClass="text-primary-600 dark:text-primary-400 font-semibold"
 						>
 							{#if item.icon}
 								<Icon name={item.icon} size="xs" />

@@ -55,7 +55,7 @@
 				return 'bg-neutral-600';
 			case 'primary':
 			default:
-				return 'bg-[#ff3e00]';
+				return 'bg-primary-600';
 		}
 	});
 </script>

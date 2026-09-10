@@ -59,7 +59,7 @@
 				return 'bg-neutral-500 text-white ring-white dark:ring-neutral-950';
 			case 'primary':
 			default:
-				return 'bg-[#ff3e00] text-white ring-white dark:ring-neutral-950';
+				return 'bg-primary-600 text-white ring-white dark:ring-neutral-950';
 		}
 	});
 

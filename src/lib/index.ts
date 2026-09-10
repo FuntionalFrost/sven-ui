@@ -71,8 +71,24 @@ export { useDebounce } from './composables/useDebounce.svelte';
 export { toast } from 'svelte-sonner';
 
 // Theming
-export { theme, themeInitScript } from './theme/theme.svelte';
-export type { ThemeMode } from './theme/theme.svelte';
+export {
+	theme,
+	themeInitScript,
+	ACCENT_PALETTES,
+	NEUTRAL_PALETTES,
+	FONT_PRESETS,
+	RADIUS_PRESETS,
+	FONT_SIZE_PRESETS
+} from './theme/theme.svelte';
+export type {
+	ThemeMode,
+	AccentName,
+	NeutralName,
+	FontFamily,
+	RadiusPreset,
+	BaseFontSize,
+	AccentOption
+} from './theme/theme.svelte';
 
 // Site Essentials & SEO Suite
 export { default as Seo } from './components/seo/Seo.svelte';

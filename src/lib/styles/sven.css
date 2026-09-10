@@ -33,6 +33,11 @@
 	--color-neutral-800: var(--sven-neutral-800, #27272a);
 	--color-neutral-900: var(--sven-neutral-900, #18181b);
 	--color-neutral-950: var(--sven-neutral-950, #121212);
+
+	--radius-sm: calc(var(--sven-radius, 0.5rem) * 0.5);
+	--radius-md: var(--sven-radius, 0.5rem);
+	--radius-lg: calc(var(--sven-radius, 0.5rem) * 1.5);
+	--radius-xl: calc(var(--sven-radius, 0.5rem) * 2);
 }
 
 :root {
