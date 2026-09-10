@@ -55,15 +55,6 @@
 						<Logo size="sm" />
 						<span class="text-base font-extrabold tracking-tight">{config.name}</span>
 					</a>
-
-					<!-- Version Badge Dropdown Pill -->
-					<div
-						class="flex items-center gap-1 rounded-full border border-neutral-200/80 bg-neutral-100/80 px-2 py-0.5 text-xs font-semibold text-neutral-600 transition-colors hover:border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900/80 dark:text-neutral-400 dark:hover:border-neutral-700"
-					>
-						<span class="h-1.5 w-1.5 rounded-full bg-[#ff3e00]"></span>
-						<span>{config.version || 'v1.0.0'}</span>
-						<Icon name="chevron-down" size="xs" class="text-neutral-400" />
-					</div>
 				</div>
 
 				<!-- Desktop Navigation Links -->

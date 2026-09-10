@@ -16,7 +16,7 @@
      ```ts
      import { sven } from 'sven-ui/vite';
      export default defineConfig({
-      plugins: [tailwindcss(), sveltekit(), sven()]
+     	plugins: [tailwindcss(), sveltekit(), sven()]
      });
      ```
 

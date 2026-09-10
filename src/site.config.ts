@@ -48,7 +48,7 @@ export const siteConfig = defineSiteConfig({
 		{ label: 'Docs', href: '#docs' },
 		{ label: 'Components', href: '#components' },
 		{ label: 'SEO Suite', href: '#seo-studio' },
-		{ label: 'Releases', href: '#releases', badge: 'v1' }
+		{ label: 'Releases', href: 'https://github.com/FuntionalFrost/sven-ui/releases' }
 	],
 	socials: {
 		github: 'https://github.com/FuntionalFrost/sven-ui',
