@@ -32,7 +32,7 @@
 
 	<ContextMenu.Portal>
 		<ContextMenu.Content
-			class="z-50 min-w-[180px] rounded-xl border border-neutral-200/80 bg-white/95 p-1.5 shadow-xl backdrop-blur-md transition-all focus:outline-none dark:border-neutral-800/80 dark:bg-[#18181b]/95 {className}"
+			class="z-50 min-w-45 rounded-xl border border-neutral-200/80 bg-white/95 p-1.5 shadow-xl backdrop-blur-md transition-all focus:outline-none dark:border-neutral-800/80 dark:bg-[#18181b]/95 {className}"
 			sideOffset={5}
 		>
 			{#if content}
@@ -45,8 +45,8 @@
 						<ContextMenu.Item
 							disabled={item.disabled}
 							onSelect={item.onSelect}
-							class="group flex cursor-pointer items-center justify-between rounded-lg px-2.5 py-1.5 text-sm font-medium text-neutral-700 transition-colors outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-40 data-[highlighted]:bg-neutral-100 data-[highlighted]:text-neutral-900 dark:text-neutral-300 dark:data-[highlighted]:bg-neutral-800 dark:data-[highlighted]:text-white {item.destructive
-								? 'text-red-600 data-[highlighted]:bg-red-50 dark:text-red-400 dark:data-[highlighted]:bg-red-950/40'
+							class="group flex cursor-pointer items-center justify-between rounded-lg px-2.5 py-1.5 text-sm font-medium text-neutral-700 transition-colors outline-none select-none data-disabled:pointer-events-none data-disabled:opacity-40 data-highlighted:bg-neutral-100 data-highlighted:text-neutral-900 dark:text-neutral-300 dark:data-highlighted:bg-neutral-800 dark:data-highlighted:text-white {item.destructive
+								? 'text-red-600 data-highlighted:bg-red-50 dark:text-red-400 dark:data-highlighted:bg-red-950/40'
 								: ''}"
 						>
 							<div class="flex items-center gap-2">

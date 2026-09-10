@@ -43,7 +43,7 @@
 
 	<DropdownMenu.Portal>
 		<DropdownMenu.Content
-			class="animate-in fade-in-0 zoom-in-95 z-50 min-w-[12rem] overflow-hidden rounded-xl border border-neutral-200 bg-white p-1.5 text-neutral-900 shadow-xl dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-100 {className}"
+			class="animate-in fade-in-0 zoom-in-95 z-50 min-w-48 overflow-hidden rounded-xl border border-neutral-200 bg-white p-1.5 text-neutral-900 shadow-xl dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-100 {className}"
 			sideOffset={6}
 		>
 			{#each items as item}
@@ -53,8 +53,8 @@
 					<DropdownMenu.Item
 						disabled={item.disabled}
 						onSelect={item.onSelect}
-						class="flex cursor-pointer items-center justify-between rounded-lg px-2.5 py-1.5 text-sm transition-colors outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[highlighted]:bg-neutral-100 data-[highlighted]:text-neutral-900 dark:data-[highlighted]:bg-neutral-800 dark:data-[highlighted]:text-neutral-100 {item.destructive
-							? 'text-rose-600 data-[highlighted]:bg-rose-50 dark:text-rose-400 dark:data-[highlighted]:bg-rose-950/50'
+						class="flex cursor-pointer items-center justify-between rounded-lg px-2.5 py-1.5 text-sm transition-colors outline-none select-none data-disabled:pointer-events-none data-disabled:opacity-50 data-highlighted:bg-neutral-100 data-highlighted:text-neutral-900 dark:data-highlighted:bg-neutral-800 dark:data-highlighted:text-neutral-100 {item.destructive
+							? 'text-rose-600 data-highlighted:bg-rose-50 dark:text-rose-400 dark:data-highlighted:bg-rose-950/50'
 							: ''}"
 					>
 						<div class="flex items-center gap-2">

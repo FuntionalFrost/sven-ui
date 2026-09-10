@@ -12,16 +12,19 @@
 
 2. **Vite Plugin (`sven()`)**:
    - Configurable in `vite.config.ts`:
+
      ```ts
      import { sven } from 'sven-ui/vite';
      export default defineConfig({
-     	plugins: [tailwindcss(), sveltekit(), sven()]
+      plugins: [tailwindcss(), sveltekit(), sven()]
      });
      ```
+
    - Automatically handles dependency pre-bundling for rapid HMR.
 
 3. **1-Line Server Hook (`createSvenHook`)**:
    - Manage all 5 SEO endpoints (`/robots.txt`, `/sitemap.xml`, `/sitemap.xsl`, `/site.webmanifest`, `/api/og`) with **1 line** in `src/hooks.server.ts`:
+
      ```ts
      import { createSvenHook } from 'sven-ui';
      import { siteConfig } from './site.config';

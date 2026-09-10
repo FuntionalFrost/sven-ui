@@ -297,10 +297,10 @@
 	>
 		<!-- Svelte Flame ambient glowing orbs -->
 		<div
-			class="pointer-events-none absolute -top-40 left-1/4 -z-10 h-[500px] w-[500px] rounded-full bg-[#ff3e00]/15 blur-[120px]"
+			class="pointer-events-none absolute -top-40 left-1/4 -z-10 h-125 w-125 rounded-full bg-[#ff3e00]/15 blur-[120px]"
 		></div>
 		<div
-			class="pointer-events-none absolute top-1/2 right-10 -z-10 h-[400px] w-[400px] rounded-full bg-[#ea580c]/10 blur-[100px]"
+			class="pointer-events-none absolute top-1/2 right-10 -z-10 h-100 w-100 rounded-full bg-[#ea580c]/10 blur-[100px]"
 		></div>
 
 		<Container size="2xl">
@@ -313,7 +313,7 @@
 						>
 							The Intuitive <br />
 							<span
-								class="bg-gradient-to-r from-[#ff3e00] via-[#ff6a00] to-[#ff9900] bg-clip-text text-transparent"
+								class="bg-linear-to-r from-[#ff3e00] via-[#ff6a00] to-[#ff9900] bg-clip-text text-transparent"
 							>
 								Svelte UI Library
 							</span>
