@@ -844,7 +844,7 @@
 					<!-- Feature Parity Matrix -->
 					<div class="space-y-4">
 						<h3 class="font-serif text-2xl font-bold text-neutral-900 dark:text-white">
-							Nuxt UI v4.11.1 vs Sven UI Parity Matrix
+							Nuxt UI v1 vs Sven UI Parity Matrix
 						</h3>
 						<div
 							class="overflow-x-auto rounded-xl border border-neutral-200 shadow-xs dark:border-neutral-800"

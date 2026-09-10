@@ -19,7 +19,7 @@ _Nuxt UI v4 Equivalent for SvelteKit 2.7+ & Svelte 5 with Built-in SEO Parity._
 
 ## 🌟 Overview
 
-**Sven UI** brings the full developer experience, visual elegance, and full-stack toolkit of **Nuxt UI v4.11.1** and the **Nuxt SEO ecosystem** to **SvelteKit 2.7+** and **Svelte 5**.
+**Sven UI** brings the full developer experience, visual elegance, and full-stack toolkit of **Nuxt UI v1** and the **Nuxt SEO ecosystem** to **SvelteKit 2.7+** and **Svelte 5**.
 
 - 🎨 **Tailwind CSS v4 Native Tokens**: Styled with `@theme` variables; customize any color or token directly.
 - ⚡ **Pure Svelte 5 Runes**: Built using `$state`, `$derived`, `$props`, and `$bindable` — zero Virtual DOM overhead.

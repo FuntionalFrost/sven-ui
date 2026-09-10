@@ -6,7 +6,7 @@ export const siteConfig = defineSiteConfig({
 	description:
 		'A comprehensive Svelte 5 UI component library (SvelteKit optional) with 25+ accessible, Tailwind CSS components for building modern web applications.',
 	url: 'https://sven-ui.dev',
-	version: 'v4.11.1',
+	version: 'v1',
 	logo: '/favicon.svg',
 	author: {
 		name: 'Sven UI Team',
@@ -48,7 +48,7 @@ export const siteConfig = defineSiteConfig({
 		{ label: 'Docs', href: '#docs' },
 		{ label: 'Components', href: '#components' },
 		{ label: 'SEO Suite', href: '#seo-studio' },
-		{ label: 'Releases', href: '#releases', badge: 'v4.11.1' }
+		{ label: 'Releases', href: '#releases', badge: 'v1' }
 	],
 	socials: {
 		github: 'https://github.com/FuntionalFrost/sven-ui',

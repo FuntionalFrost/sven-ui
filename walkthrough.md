@@ -1,6 +1,6 @@
 # Sven UI — Nuxt UI Parity for SvelteKit 2.7+ & Svelte 5
 
-**Sven UI** delivers the full developer experience and component toolkit of **Nuxt UI v4.11.1** and the **Nuxt SEO ecosystem** to **SvelteKit 2.7+** and **Svelte 5**, with authentic Svelte flame branding (`#ff3e00` / `#121212`).
+**Sven UI** delivers the full developer experience and component toolkit of **Nuxt UI v1** and the **Nuxt SEO ecosystem** to **SvelteKit 2.7+** and **Svelte 5**, with authentic Svelte flame branding (`#ff3e00` / `#121212`).
 
 ---
 
