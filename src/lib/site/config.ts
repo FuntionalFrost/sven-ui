@@ -88,3 +88,26 @@ export function defineSiteConfig(config: SiteConfig): SiteConfig {
 		...config
 	};
 }
+
+export const DEFAULT_SITE_CONFIG: SiteConfig = defineSiteConfig({
+	name: 'Sven UI',
+	title: 'Sven UI — Intuitive Svelte UI Library',
+	description: 'A comprehensive Svelte 5 UI component and SEO library with Tailwind CSS v4.',
+	url: 'https://sven-ui.dev',
+	logo: '/favicon.svg',
+	theme: {
+		primaryColor: '#ff3e00',
+		neutralColor: '#71717a',
+		defaultMode: 'dark'
+	},
+	seo: {
+		titleTemplate: '%s · Sven UI',
+		defaultOgImage: '/api/og',
+		twitterCard: 'summary_large_image'
+	},
+	nav: [
+		{ label: 'Docs', href: '/docs' },
+		{ label: 'Components', href: '/docs/comp-buttons' },
+		{ label: 'SEO Suite', href: '/docs/seo-og' }
+	]
+});

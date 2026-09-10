@@ -8,7 +8,7 @@
 	import Kbd from '../elements/Kbd.svelte';
 	import Link from '../elements/Link.svelte';
 	import Logo from '../elements/Logo.svelte';
-	import { siteConfig as defaultSiteConfig } from '../../../site.config';
+	import { getSiteConfig } from '$lib/site/context';
 
 	interface Props {
 		config?: SiteConfig;
@@ -18,13 +18,10 @@
 		class?: string;
 	}
 
-	let {
-		config = defaultSiteConfig,
-		links = config.nav || [],
-		onOpenCommand,
-		actions,
-		class: className = ''
-	}: Props = $props();
+	let { config, links, onOpenCommand, actions, class: className = '' }: Props = $props();
+
+	let currentConfig = $derived(config || getSiteConfig());
+	let resolvedLinks = $derived(links || currentConfig.nav || []);
 
 	let mobileMenuOpen = $state(false);
 	let isScrolled = $state(false);
@@ -53,13 +50,13 @@
 						class="flex items-center gap-2.5 font-bold tracking-tight text-neutral-900 transition-opacity hover:opacity-90 dark:text-white"
 					>
 						<Logo size="sm" />
-						<span class="text-base font-extrabold tracking-tight">{config.name}</span>
+						<span class="text-base font-extrabold tracking-tight">{currentConfig.name}</span>
 					</a>
 				</div>
 
 				<!-- Desktop Navigation Links -->
 				<nav class="hidden items-center gap-1 md:flex">
-					{#each links as item}
+					{#each resolvedLinks as item}
 						<Link
 							href={item.href}
 							class="rounded-md px-3 py-1.5 text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white"
@@ -113,9 +110,9 @@
 				</Button>
 
 				<!-- GitHub Link -->
-				{#if config.socials?.github}
+				{#if currentConfig.socials?.github}
 					<Button
-						href={config.socials.github}
+						href={currentConfig.socials.github}
 						variant="ghost"
 						color="neutral"
 						square
@@ -162,7 +159,7 @@
 		{#if mobileMenuOpen}
 			<div class="border-t border-neutral-200 py-4 md:hidden dark:border-neutral-800">
 				<div class="flex flex-col space-y-2">
-					{#each links as item}
+					{#each resolvedLinks as item}
 						<a
 							href={item.href}
 							onclick={() => (mobileMenuOpen = false)}

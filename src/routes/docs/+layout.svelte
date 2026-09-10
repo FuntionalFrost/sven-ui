@@ -1,0 +1,97 @@
+<script lang="ts">
+	import { page } from '$app/state';
+	import { DOC_NAV_GROUPS, ALL_DOC_ITEMS } from './_data/docs-nav';
+	import Container from '$lib/components/layout/Container.svelte';
+	import Badge from '$lib/components/elements/Badge.svelte';
+	import Icon from '$lib/components/elements/Icon.svelte';
+
+	let { children } = $props();
+
+	let currentPath = $derived(page.url.pathname);
+	let currentItem = $derived(ALL_DOC_ITEMS.find((i) => i.href === currentPath) || ALL_DOC_ITEMS[0]);
+</script>
+
+<div class="border-b border-zinc-200 bg-zinc-50/50 py-3 dark:border-zinc-800 dark:bg-zinc-900/30">
+	<Container size="2xl">
+		<div class="flex items-center justify-between gap-4 text-xs">
+			<!-- Breadcrumb trail -->
+			<div class="flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
+				<a href="/" class="font-medium hover:text-primary-600 dark:hover:text-primary-400">Home</a>
+				<span>/</span>
+				<a href="/docs/intro" class="font-medium hover:text-primary-600 dark:hover:text-primary-400"
+					>Docs</a
+				>
+				<span>/</span>
+				<span class="font-semibold text-zinc-900 dark:text-white">{currentItem.label}</span>
+			</div>
+
+			<!-- Quick Jump Link to Github -->
+			<a
+				href="https://github.com/FuntionalFrost/sven-ui"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="hidden items-center gap-1.5 font-mono text-zinc-500 hover:text-zinc-900 sm:inline-flex dark:hover:text-white"
+			>
+				<Icon name="github" class="h-3.5 w-3.5" />
+				<span>GitHub</span>
+			</a>
+		</div>
+
+		<!-- Mobile Horizontal Section Scrollbar -->
+		<div class="mt-3 flex gap-2 overflow-x-auto pb-1 lg:hidden">
+			{#each ALL_DOC_ITEMS as item}
+				{@const active = currentPath === item.href}
+				<a
+					href={item.href}
+					class="shrink-0 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all {active
+						? 'bg-primary-600 text-white shadow-xs dark:bg-primary-500'
+						: 'bg-zinc-200/70 text-zinc-700 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700'}"
+				>
+					{item.label}
+				</a>
+			{/each}
+		</div>
+	</Container>
+</div>
+
+<Container size="2xl" class="py-8 sm:py-12">
+	<div class="grid grid-cols-1 items-start gap-10 lg:grid-cols-12">
+		<!-- Left Sidebar (Sticky Desktop) -->
+		<aside
+			class="sticky top-24 hidden max-h-[calc(100vh-8rem)] space-y-6 overflow-y-auto pr-4 lg:col-span-3 lg:block"
+		>
+			{#each DOC_NAV_GROUPS as group}
+				<div class="space-y-1.5">
+					<h3
+						class="px-3 text-[11px] font-bold tracking-wider text-zinc-400 uppercase dark:text-zinc-500"
+					>
+						{group.title}
+					</h3>
+					<nav class="space-y-0.5">
+						{#each group.items as item}
+							{@const active = currentPath === item.href}
+							<a
+								href={item.href}
+								class="group flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition-all {active
+									? 'bg-primary-50 font-bold text-primary-600 ring-1 ring-primary-500/20 dark:bg-primary-950/40 dark:text-primary-400 dark:ring-primary-400/30'
+									: 'text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-900/60 dark:hover:text-white'}"
+							>
+								<span class="truncate">{item.label}</span>
+								{#if item.badge}
+									<Badge size="xs" variant={active ? 'solid' : 'subtle'} color="primary">
+										{item.badge}
+									</Badge>
+								{/if}
+							</a>
+						{/each}
+					</nav>
+				</div>
+			{/each}
+		</aside>
+
+		<!-- Main Content Section -->
+		<main class="max-w-4xl min-w-0 lg:col-span-9">
+			{@render children()}
+		</main>
+	</div>
+</Container>

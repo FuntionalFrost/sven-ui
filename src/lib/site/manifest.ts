@@ -1,6 +1,5 @@
 import type { RequestHandler } from '@sveltejs/kit';
-import type { SiteConfig } from './config';
-import { siteConfig as defaultSiteConfig } from '../../site.config';
+import { type SiteConfig, DEFAULT_SITE_CONFIG } from './config';
 
 export interface ManifestOptions {
 	config?: SiteConfig;
@@ -10,10 +9,10 @@ export function createManifestHandler(
 	optionsOrConfig?: SiteConfig | ManifestOptions
 ): RequestHandler {
 	const config: SiteConfig = !optionsOrConfig
-		? defaultSiteConfig
+		? DEFAULT_SITE_CONFIG
 		: 'name' in optionsOrConfig
 			? optionsOrConfig
-			: optionsOrConfig.config || defaultSiteConfig;
+			: optionsOrConfig.config || DEFAULT_SITE_CONFIG;
 
 	return async () => {
 		const manifest = {

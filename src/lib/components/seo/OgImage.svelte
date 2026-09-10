@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { SiteConfig } from '$lib/site/config';
-	import { siteConfig as defaultSiteConfig } from '../../../site.config';
+	import { getSiteConfig } from '$lib/site/context';
 
 	interface Props {
 		title?: string;
@@ -16,9 +16,11 @@
 		description,
 		badge,
 		theme = 'dark',
-		config = defaultSiteConfig,
+		config,
 		class: className = ''
 	}: Props = $props();
+
+	let currentConfig = $derived(config || getSiteConfig());
 
 	let ogUrl = $derived.by(() => {
 		const pairs: string[] = [];
@@ -26,7 +28,7 @@
 		if (description) pairs.push(`description=${encodeURIComponent(description)}`);
 		if (badge) pairs.push(`badge=${encodeURIComponent(badge)}`);
 		if (theme) pairs.push(`theme=${encodeURIComponent(theme)}`);
-		if (config.name) pairs.push(`site=${encodeURIComponent(config.name)}`);
+		if (currentConfig.name) pairs.push(`site=${encodeURIComponent(currentConfig.name)}`);
 		return `/api/og?${pairs.join('&')}`;
 	});
 </script>
@@ -52,7 +54,7 @@
 	</div>
 	<img
 		src={ogUrl}
-		alt="Open Graph preview for {title || config.title}"
+		alt="Open Graph preview for {title || currentConfig.title}"
 		class="aspect-[1200/630] h-auto w-full bg-neutral-950 object-cover"
 		loading="lazy"
 	/>

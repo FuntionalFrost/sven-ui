@@ -1,6 +1,5 @@
 import { getContext, setContext } from 'svelte';
-import type { SiteConfig } from './config';
-import { siteConfig as defaultSiteConfig } from '../../site.config';
+import { type SiteConfig, DEFAULT_SITE_CONFIG } from './config';
 
 const SVEN_CONFIG_KEY = Symbol('SVEN_SITE_CONFIG');
 
@@ -14,13 +13,13 @@ export function setSiteConfig(config: () => SiteConfig): void {
 
 /**
  * Retrieves the site configuration from Svelte 5 context.
- * Falls back to the root site.config.ts if called outside <SvenApp>.
+ * Falls back to DEFAULT_SITE_CONFIG if called outside <SvenApp>.
  */
 export function getSiteConfig(): SiteConfig {
 	try {
 		const getter = getContext<() => SiteConfig>(SVEN_CONFIG_KEY);
-		return getter ? getter() : defaultSiteConfig;
+		return getter ? getter() : DEFAULT_SITE_CONFIG;
 	} catch {
-		return defaultSiteConfig;
+		return DEFAULT_SITE_CONFIG;
 	}
 }

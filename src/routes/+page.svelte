@@ -1,107 +1,80 @@
 <script lang="ts">
+	import Container from '$lib/components/layout/Container.svelte';
+	import Button from '$lib/components/elements/Button.svelte';
+	import Badge from '$lib/components/elements/Badge.svelte';
+	import Chip from '$lib/components/elements/Chip.svelte';
+	import Icon from '$lib/components/elements/Icon.svelte';
+	import Input from '$lib/components/forms/Input.svelte';
+	import Switch from '$lib/components/forms/Switch.svelte';
+	import Tabs from '$lib/components/navigation/Tabs.svelte';
+	import { useToast } from '$lib/composables/useToast';
 	import {
-		Button,
-		ButtonGroup,
-		Badge,
-		Avatar,
-		AvatarGroup,
-		Kbd,
-		Icon,
-		Spinner,
-		Progress,
-		Skeleton,
-		Link,
-		Input,
-		Textarea,
-		Checkbox,
-		Switch,
-		Select,
-		RadioGroup,
-		Slider,
-		FormField,
-		Container,
-		Header,
-		Footer,
-		Card,
-		Divider,
-		Tabs,
-		Pagination,
-		CommandPalette,
-		DropdownMenu,
-		Modal,
-		Slideover,
-		Popover,
-		Tooltip,
-		Alert,
-		Accordion,
-		DataTable,
-		Chip,
-		Meter,
-		ColorPicker,
-		ContextMenu,
-		useShortcuts,
-		OgImage,
-		toast,
 		theme,
 		ACCENT_PALETTES,
 		NEUTRAL_PALETTES,
 		FONT_PRESETS,
-		RADIUS_PRESETS,
 		FONT_SIZE_PRESETS,
+		RADIUS_PRESETS,
 		type NeutralName,
 		type FontFamily,
 		type RadiusPreset,
 		type BaseFontSize
-	} from '$lib';
-	import { siteConfig } from '../site.config';
+	} from '$lib/theme/theme.svelte';
 
-	// Typed customizer preset lists
-	const neutralList = Object.entries(NEUTRAL_PALETTES) as [
-		NeutralName,
-		(typeof NEUTRAL_PALETTES)[NeutralName]
-	][];
-	const fontList = Object.entries(FONT_PRESETS) as [
-		FontFamily,
-		(typeof FONT_PRESETS)[FontFamily]
-	][];
-	const radiusList = Object.entries(RADIUS_PRESETS) as [
-		RadiusPreset,
-		(typeof RADIUS_PRESETS)[RadiusPreset]
-	][];
-	const fontSizeList = Object.entries(FONT_SIZE_PRESETS) as [
-		BaseFontSize,
-		(typeof FONT_SIZE_PRESETS)[BaseFontSize]
-	][];
+	const toast = useToast();
+	const accentList = Object.values(ACCENT_PALETTES);
+	const neutralList = (
+		Object.entries(NEUTRAL_PALETTES) as [
+			NeutralName,
+			{ name: string; shades: Record<number, string> }
+		][]
+	).map(([id, item]) => ({
+		id,
+		name: item.name,
+		color: item.shades[500]
+	}));
 
-	// Interactive Dialog & Command State
-	let commandOpen = $state(false);
-	let modalOpen = $state(false);
-	let slideoverOpen = $state(false);
+	const fontOptions = (
+		Object.entries(FONT_PRESETS) as [FontFamily, { name: string; value: string }][]
+	).map(([id, item]) => ({
+		id,
+		name: item.name
+	}));
 
-	// Form State
-	let demoEmail = $state('');
-	let demoName = $state('Alex Mercer');
-	let demoPlan = $state('pro');
-	let demoBio = $state('Solo developer building indie SaaS with SvelteKit & Sven UI.');
-	let demoNotifications = $state(true);
-	let demoMarketing = $state(false);
-	let demoVolume = $state(75);
-	let demoPaginationPage = $state(2);
-	let demoActiveTab = $state('preview');
+	const radiusOptions = (
+		Object.entries(RADIUS_PRESETS) as [RadiusPreset, { name: string; value: string }][]
+	).map(([id, item]) => ({
+		id,
+		name: item.name,
+		value: item.value
+	}));
 
-	// Active Docs Nav
-	let activeDocSection = $state('intro');
+	const sizeOptions = (
+		Object.entries(FONT_SIZE_PRESETS) as [
+			BaseFontSize,
+			{ name: string; value: string; label: string }
+		][]
+	).map(([id, item]) => ({
+		id,
+		name: item.name,
+		label: item.label
+	}));
 
-	// CLI Copy state
-	let copiedCli = $state(false);
-	async function copyCli() {
-		try {
-			await navigator.clipboard.writeText('pnpm add sven-ui');
-			copiedCli = true;
-			toast.success('Copied to clipboard: pnpm add sven-ui');
-			setTimeout(() => (copiedCli = false), 2000);
-		} catch {
-			toast.info('Command: pnpm add sven-ui');
+	let activeDemoTab = $state('buttons');
+	let demoSwitchState = $state(true);
+	let demoInputValue = $state('user@sven-ui.dev');
+
+	let copiedInstall = $state(false);
+	const installCommand = 'pnpm add sven-ui @tailwindcss/vite tailwindcss';
+
+	function copyInstall() {
+		if (typeof navigator !== 'undefined' && navigator.clipboard) {
+			navigator.clipboard.writeText(installCommand);
+			copiedInstall = true;
+			toast.success('Copied to clipboard', installCommand);
+			setTimeout(() => {
+				copiedInstall = false;
+			}, 2500);
 		}
 	}
 
@@ -110,1754 +83,665 @@
 import { defineSiteConfig } from 'sven-ui';
 
 export const siteConfig = defineSiteConfig({
-  name: 'My Indie App',
-  title: 'My Indie App — Built with SvelteKit & Sven UI',
-  description: 'Fast, beautiful, accessible web applications.',
-  url: 'https://my-app.com',
   theme: {
-    primaryColor: '${ACCENT_PALETTES[theme.accent].color}',
-    neutralColor: '${NEUTRAL_PALETTES[theme.neutral].shades[500]}',
+    primaryColor: '${ACCENT_PALETTES[theme.accent]?.color || '#ff3e00'}',
+    neutralColor: '${NEUTRAL_PALETTES[theme.neutral]?.shades[500] || '#71717a'}',
     defaultMode: '${theme.mode}'
   }
 });`;
+
 		if (typeof navigator !== 'undefined' && navigator.clipboard) {
 			navigator.clipboard.writeText(snippet);
-			toast.success('Configuration snippet copied to clipboard!');
+			toast.success('Theme Configuration Copied!', 'Paste into your src/site.config.ts file');
 		}
 	}
 
-	// Interactive Svelte 5 Runes State Inspector
-	let runeCounter = $state(6);
-	let runeMultiplier = $state(2);
-	let runeTotal = $derived(runeCounter * runeMultiplier);
-	let runeStatus = $derived(
-		runeTotal >= 20 ? 'Max Capacity' : runeTotal >= 10 ? 'High Performance' : 'Optimal'
-	);
-
-	// Dynamic OG Demo State
-	let ogTitle = $state('Building Indie SaaS with SvelteKit');
-	let ogDesc = $state(
-		'How Sven UI delivers 100% DRY components, Tailwind v4 tokens, and automated SEO.'
-	);
-	let ogBadge = $state('Case Study');
-	let ogTheme = $state<'dark' | 'light'>('dark');
-
-	// DataTable Demo Data
-	const demoTableData = [
-		{
-			id: 1,
-			name: 'Rich Harris',
-			role: 'Creator of Svelte',
-			team: 'Core',
-			stars: 78500,
-			status: 'Active'
-		},
-		{
-			id: 2,
-			name: 'Sébastien Chopin',
-			role: 'Creator of Nuxt',
-			team: 'Nuxt Labs',
-			stars: 54200,
-			status: 'Active'
-		},
-		{
-			id: 3,
-			name: 'Alex Mercer',
-			role: 'Solo Developer',
-			team: 'Indie SaaS',
-			stars: 1200,
-			status: 'Building'
-		},
-		{
-			id: 4,
-			name: 'Elena Rostova',
-			role: 'Lead Architect',
-			team: 'Design Systems',
-			stars: 3400,
-			status: 'Active'
-		}
-	];
-	let selectedRows = $state<typeof demoTableData>([]);
-	let tableSearch = $state('');
-
-	// ColorPicker Demo State
-	let customThemeColor = $state('#ff3e00');
-
-	// Meter Demo State
-	let cpuMeter = $state(68);
-
-	// Context Menu items
-	const contextMenuItems = [
-		{ id: '1', label: 'Inspect Component', icon: 'sparkles' },
-		{ id: '2', label: 'Copy Source Code', icon: 'copy', shortcut: '⌘C' },
-		{ id: 'sep-1', label: '', separator: true },
-		{
-			id: '3',
-			label: 'Open in Docs',
-			icon: 'external-link',
-			onSelect: () => toast.info('Opened documentation')
-		}
-	];
-
-	// Global Keyboard Shortcuts (Nuxt UI useShortcuts parity)
-	useShortcuts({
-		meta_k: () => (commandOpen = true)
-	});
-
-	// Command Palette items
-	const commandItems = [
-		{
-			id: 'comp-btn',
-			label: 'Button Component',
-			description: 'Explore Button variants & states',
-			icon: 'sparkles',
-			group: 'Components',
-			shortcut: 'B',
-			href: '#components'
-		},
-		{
-			id: 'comp-form',
-			label: 'Form Controls & Inputs',
-			description: 'Inputs, Selects, Switches, Sliders',
-			icon: 'check',
-			group: 'Components',
-			shortcut: 'F',
-			href: '#forms'
-		},
-		{
-			id: 'seo-og',
-			label: 'Dynamic OG Image Studio',
-			description: 'Test live Open Graph SVG generator',
-			icon: 'sparkles',
-			group: 'SEO Suite',
-			shortcut: 'O',
-			href: '#seo-studio'
-		},
-		{
-			id: 'seo-robots',
-			label: 'View /robots.txt',
-			description: 'Inspect live robots.txt endpoint',
-			icon: 'external-link',
-			group: 'SEO Suite',
-			href: '/robots.txt'
-		},
-		{
-			id: 'seo-sitemap',
-			label: 'View /sitemap.xml',
-			description: 'Inspect live sitemap.xml endpoint',
-			icon: 'external-link',
-			group: 'SEO Suite',
-			href: '/sitemap.xml'
-		},
-		{
-			id: 'theme-toggle',
-			label: 'Toggle Dark / Light Mode',
-			description: 'Switch application color mode',
-			icon: 'sun',
-			group: 'Actions',
-			shortcut: 'T',
-			onSelect: () => theme.toggle()
-		}
-	];
-
-	// Menu items for Dropdown demo
-	const menuItems = [
-		{ id: '1', label: 'Edit Profile', icon: 'sparkles' },
-		{ id: '2', label: 'Account Settings', icon: 'info', shortcut: '⌘S' },
-		{ id: 'sep-1', label: '', separator: true },
-		{ id: '3', label: 'Documentation', icon: 'external-link' },
-		{
-			id: '4',
-			label: 'Log out',
-			icon: 'cross',
-			destructive: true,
-			onSelect: () => toast.error('Logged out')
-		}
-	];
-
-	// Accordion items
-	const faqItems = [
-		{
-			value: 'item-1',
-			title: 'Why build Sven UI for SvelteKit?',
-			content:
-				'Nuxt UI v4 is widely considered the gold standard for full-stack developer ergonomics in Vue. Sven UI brings that exact level of polish, Tailwind CSS v4 design tokens, accessible primitives, and built-in Nuxt SEO parity to SvelteKit 2.7+ and Svelte 5 with authentic Svelte aesthetics.'
-		},
-		{
-			value: 'item-2',
-			title: 'How does it follow the DRY principle?',
-			content:
-				'You define your brand, metadata, social links, author, and theme colors in a single src/site.config.ts file. The framework automatically derives your meta tags, OpenGraph cards, Twitter cards, Schema.org JSON-LD, robots.txt, sitemap.xml, PWA manifest, favicons, header, and footer from that single source of truth.'
-		},
-		{
-			value: 'item-3',
-			title: 'How do I add it to existing SvelteKit projects?',
-			content:
-				'Simply import sven.css in your layout, wrap your root +layout.svelte with <SvenApp config={siteConfig}>, and create two 1-line server routes for /robots.txt and /sitemap.xml. That is all!'
-		}
+	const demoTabs = [
+		{ value: 'buttons', label: 'Actions' },
+		{ value: 'forms', label: 'Inputs' },
+		{ value: 'badges', label: 'Status' }
 	];
 </script>
 
-<!-- Navigation Header -->
-<Header config={siteConfig} onOpenCommand={() => (commandOpen = true)}>
-	{#snippet actions()}
-		<Button
-			variant="solid"
-			color="primary"
-			size="sm"
-			icon="sparkles"
-			onclick={() => toast.success('Sven UI is ready for production!')}
+<svelte:head>
+	<title>Sven UI — The Intuitive Svelte 5 UI & SEO Library</title>
+	<meta
+		name="description"
+		content="A comprehensive Svelte 5 UI component library and automated Nuxt SEO parity suite with real-time Tailwind CSS v4 customization."
+	/>
+</svelte:head>
+
+<!-- Hero Section -->
+<section class="relative overflow-hidden pt-12 pb-20 md:pt-20 md:pb-28">
+	<!-- Subtle ambient glow matching dynamic primary color -->
+	<div
+		class="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[500px] w-[800px] -translate-x-1/2 rounded-full opacity-20 blur-3xl transition-all duration-700 dark:opacity-30"
+		style="background: radial-gradient(circle, var(--sven-primary-500, #ff3e00) 0%, transparent 70%);"
+	></div>
+
+	<Container size="2xl" class="relative text-center">
+		<!-- Release Pill Badge -->
+		<div
+			class="mb-8 inline-flex items-center gap-2 rounded-full border border-primary-500/30 bg-primary-50/50 px-4 py-1.5 text-xs font-semibold text-primary-700 shadow-xs backdrop-blur-md dark:border-primary-400/20 dark:bg-primary-950/40 dark:text-primary-300"
 		>
-			Get Started
-		</Button>
-	{/snippet}
-</Header>
+			<span class="flex h-2 w-2 animate-pulse rounded-full bg-primary-500"></span>
+			<span>Svelte 5 Runes · Tailwind CSS v4 · Nuxt UI & Nuxt SEO Parity</span>
+		</div>
 
-<!-- Command Palette Modal -->
-<CommandPalette bind:open={commandOpen} items={commandItems} />
+		<!-- Main Headline -->
+		<h1
+			class="mx-auto max-w-4xl text-4xl leading-[1.1] font-extrabold tracking-tight text-neutral-900 sm:text-6xl md:text-7xl dark:text-white"
+		>
+			The Intuitive Svelte UI Library for <span
+				class="bg-gradient-to-r from-primary-600 via-primary-500 to-amber-500 bg-clip-text text-transparent dark:from-primary-400 dark:via-primary-300 dark:to-amber-300"
+				>Fast Teams</span
+			>
+		</h1>
 
-<main
-	class="flex-1 bg-white text-neutral-900 transition-colors dark:bg-[#121212] dark:text-neutral-100"
+		<p
+			class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed font-normal text-neutral-600 sm:text-xl dark:text-neutral-400"
+		>
+			25+ accessible components, automated runtime OpenGraph card generation, robots.txt, XML
+			sitemaps, and real-time Tailwind theme customization from a single source of truth.
+		</p>
+
+		<!-- Action CTA Buttons -->
+		<div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+			<Button
+				href="/docs/intro"
+				size="lg"
+				color="primary"
+				variant="solid"
+				class="font-semibold shadow-lg shadow-primary-500/20"
+			>
+				<Icon name="bolt" class="mr-2 h-4 w-4" />
+				Explore Documentation
+			</Button>
+
+			<Button
+				href="/docs/comp-buttons"
+				size="lg"
+				variant="outline"
+				color="neutral"
+				class="font-semibold"
+			>
+				<Icon name="squares-2x2" class="mr-2 h-4 w-4" />
+				Browse Components
+			</Button>
+
+			<Button
+				href="https://github.com/FuntionalFrost/sven-ui"
+				size="lg"
+				variant="ghost"
+				color="neutral"
+				target="_blank"
+				class="font-semibold"
+			>
+				<Icon name="github" class="mr-2 h-4 w-4" />
+				GitHub
+			</Button>
+		</div>
+
+		<!-- One-Click Install Command Pill -->
+		<div class="mx-auto mt-8 max-w-md">
+			<button
+				type="button"
+				onclick={copyInstall}
+				class="group flex w-full items-center justify-between gap-3 rounded-xl border border-neutral-200/80 bg-white/80 p-2.5 pl-4 font-mono text-xs shadow-xs backdrop-blur-md transition-all hover:border-primary-500/50 hover:bg-neutral-50/90 dark:border-neutral-800 dark:bg-neutral-900/80 dark:hover:border-primary-500/40 dark:hover:bg-neutral-800/80"
+			>
+				<span class="flex items-center gap-2 text-neutral-600 dark:text-neutral-300">
+					<span class="font-bold text-primary-500">$</span>
+					<span>{installCommand}</span>
+				</span>
+				<span
+					class="flex items-center gap-1 rounded-lg bg-neutral-100 px-2.5 py-1 text-xs font-semibold text-neutral-600 transition-colors group-hover:bg-primary-100 group-hover:text-primary-700 dark:bg-neutral-800 dark:text-neutral-300 dark:group-hover:bg-primary-950 dark:group-hover:text-primary-300"
+				>
+					<Icon name={copiedInstall ? 'check' : 'clipboard-document'} class="h-3.5 w-3.5" />
+					<span>{copiedInstall ? 'Copied!' : 'Copy'}</span>
+				</span>
+			</button>
+		</div>
+	</Container>
+</section>
+
+<!-- Live Theme Customizer Studio -->
+<section
+	id="theme-studio"
+	class="border-y border-neutral-200/80 bg-neutral-50/60 py-16 dark:border-neutral-800/80 dark:bg-neutral-900/30"
 >
-	<!-- HERO SECTION (Nuxt UI Structure with Dynamic Accent Tokens) -->
-	<section
-		class="relative overflow-hidden border-b border-neutral-200/60 pt-16 pb-20 md:pt-24 md:pb-28 dark:border-neutral-800/60"
-	>
-		<!-- Ambient glowing orbs reacting to primary accent -->
-		<div
-			class="pointer-events-none absolute -top-40 left-1/4 -z-10 h-125 w-125 rounded-full bg-primary-500/15 blur-[120px]"
-		></div>
-		<div
-			class="pointer-events-none absolute top-1/2 right-10 -z-10 h-100 w-100 rounded-full bg-primary-600/10 blur-[100px]"
-		></div>
+	<Container size="2xl">
+		<div class="mb-10 text-center">
+			<div
+				class="mb-3 inline-flex items-center gap-1.5 rounded-full bg-primary-100 px-3 py-1 text-xs font-bold text-primary-700 dark:bg-primary-950/60 dark:text-primary-300"
+			>
+				<Icon name="swatch" class="h-3.5 w-3.5" /> Live Tailwind CSS v4 Theme Studio
+			</div>
+			<h2
+				class="text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-4xl dark:text-white"
+			>
+				Customize Every Dimension in Real Time
+			</h2>
+			<p class="mx-auto mt-2 max-w-xl text-sm text-neutral-600 dark:text-neutral-400">
+				Watch components and typography adapt instantly across the entire page with pure CSS
+				variables.
+			</p>
+		</div>
 
-		<Container size="2xl">
-			<div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
-				<!-- Left Column: Hero Headline, CTAs, Features -->
-				<div class="space-y-8 lg:col-span-6">
-					<div class="space-y-4">
-						<h1
-							class="text-4xl leading-[1.1] font-extrabold tracking-tight text-neutral-900 sm:text-6xl dark:text-white"
+		<div class="grid grid-cols-1 items-start gap-8 lg:grid-cols-12">
+			<!-- Theme Controls Panel -->
+			<div
+				class="space-y-6 rounded-2xl border border-neutral-200/90 bg-white p-6 shadow-sm lg:col-span-6 dark:border-neutral-800 dark:bg-neutral-900/90"
+			>
+				<!-- 1. Primary Accent Palette -->
+				<div>
+					<div class="mb-2 flex items-center justify-between">
+						<span
+							class="text-xs font-bold tracking-wider text-neutral-700 uppercase dark:text-neutral-300"
 						>
-							The Intuitive <br />
-							<span
-								class="bg-linear-to-r from-primary-500 via-primary-400 to-amber-500 bg-clip-text text-transparent"
+							1. Primary Accent
+						</span>
+						<span
+							class="font-mono text-xs font-semibold text-primary-600 capitalize dark:text-primary-400"
+						>
+							{theme.accent}
+						</span>
+					</div>
+					<div class="flex flex-wrap gap-2.5">
+						{#each accentList as item}
+							{@const active = theme.accent === item.id}
+							<button
+								type="button"
+								onclick={() => theme.setAccent(item.id)}
+								class="relative flex h-10 w-10 items-center justify-center rounded-xl transition-all hover:scale-105 {active
+									? 'shadow-md ring-2 ring-neutral-900 ring-offset-2 dark:ring-white dark:ring-offset-neutral-950'
+									: 'opacity-80 hover:opacity-100'}"
+								style="background-color: {item.color};"
+								title={item.name}
 							>
-								Svelte UI Library
-							</span>
-						</h1>
-
-						<p
-							class="max-w-xl text-base leading-relaxed text-neutral-600 sm:text-lg dark:text-neutral-300"
-						>
-							A comprehensive Svelte 5 UI component library (SvelteKit optional) with 25+
-							accessible, Tailwind CSS v4 components and built-in Nuxt SEO parity for building
-							modern web applications.
-						</p>
-					</div>
-
-					<!-- CTAs -->
-					<div class="flex flex-wrap items-center gap-4">
-						<Button
-							href="#customizer"
-							variant="solid"
-							color="primary"
-							size="md"
-							class="font-semibold shadow-lg shadow-primary-500/25"
-						>
-							Customize Theme
-						</Button>
-						<Button
-							href="#components"
-							variant="outline"
-							color="neutral"
-							size="md"
-							trailingIcon="chevron-right"
-						>
-							Explore components
-						</Button>
-
-						<!-- 1-Click CLI Quick Copy Bar -->
-						<button
-							type="button"
-							onclick={copyCli}
-							class="group flex items-center gap-2 rounded-lg border border-neutral-200 bg-neutral-100/80 px-3.5 py-2 font-mono text-sm font-medium text-neutral-700 transition hover:border-primary-500/50 hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900/80 dark:text-neutral-300 dark:hover:border-primary-500/50"
-						>
-							<span class="text-neutral-400 dark:text-neutral-500">$</span>
-							<span>pnpm add sven-ui</span>
-							<span class="ml-1 text-neutral-400 group-hover:text-primary-500">
-								{#if copiedCli}
-									<Icon name="check" size="xs" class="text-emerald-500" />
-								{:else}
-									<Icon name="copy" size="xs" />
+								{#if active}
+									<span class="h-2 w-2 rounded-full bg-white shadow-xs"></span>
 								{/if}
-							</span>
-						</button>
+							</button>
+						{/each}
 					</div>
+				</div>
 
-					<!-- Interactive Accent Palette Swatches -->
-					<div class="flex flex-wrap items-center gap-3 pt-2">
-						<span class="text-sm font-semibold text-neutral-600 dark:text-neutral-300">Accent:</span
+				<!-- 2. Neutral Base Tone -->
+				<div>
+					<div class="mb-2 flex items-center justify-between">
+						<span
+							class="text-xs font-bold tracking-wider text-neutral-700 uppercase dark:text-neutral-300"
 						>
-						<div class="flex items-center gap-2">
-							{#each Object.values(ACCENT_PALETTES) as themeItem}
+							2. Neutral Undertone
+						</span>
+						<span
+							class="font-mono text-xs font-semibold text-neutral-600 capitalize dark:text-neutral-400"
+						>
+							{theme.neutral}
+						</span>
+					</div>
+					<div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+						{#each neutralList as item}
+							{@const active = theme.neutral === item.id}
+							<button
+								type="button"
+								onclick={() => theme.setNeutral(item.id)}
+								class="flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-semibold transition-all {active
+									? 'border-primary-500 bg-primary-50/50 text-primary-700 ring-1 ring-primary-500 dark:bg-primary-950/40 dark:text-primary-300'
+									: 'border-neutral-200 bg-neutral-50/50 text-neutral-700 hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-800/40 dark:text-neutral-300 dark:hover:bg-neutral-800'}"
+							>
+								<span class="h-3 w-3 shrink-0 rounded-full" style="background-color: {item.color};"
+								></span>
+								<span>{item.name}</span>
+							</button>
+						{/each}
+					</div>
+				</div>
+
+				<!-- 3. Typography Family -->
+				<div>
+					<div class="mb-2 flex items-center justify-between">
+						<span
+							class="text-xs font-bold tracking-wider text-neutral-700 uppercase dark:text-neutral-300"
+						>
+							3. Typography Family
+						</span>
+						<span
+							class="font-mono text-xs font-semibold text-neutral-600 capitalize dark:text-neutral-400"
+						>
+							{theme.fontFamily}
+						</span>
+					</div>
+					<div class="grid grid-cols-3 gap-2">
+						{#each fontOptions as item}
+							{@const active = theme.fontFamily === item.id}
+							<button
+								type="button"
+								onclick={() => theme.setFontFamily(item.id)}
+								class="rounded-lg border px-3 py-2 text-center text-xs font-semibold transition-all {active
+									? 'border-primary-500 bg-primary-50/50 text-primary-700 ring-1 ring-primary-500 dark:bg-primary-950/40 dark:text-primary-300'
+									: 'border-neutral-200 bg-neutral-50/50 text-neutral-700 hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-800/40 dark:text-neutral-300'}"
+							>
+								<div class="capitalize">{item.id}</div>
+								<div class="text-[10px] font-normal text-neutral-500">{item.name}</div>
+							</button>
+						{/each}
+					</div>
+				</div>
+
+				<!-- 4. Corner Radius & 5. Size Density -->
+				<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+					<div>
+						<span
+							class="mb-2 block text-xs font-bold tracking-wider text-neutral-700 uppercase dark:text-neutral-300"
+						>
+							4. Corner Radius
+						</span>
+						<div class="flex flex-wrap gap-1.5">
+							{#each radiusOptions as item}
+								{@const active = theme.radius === item.id}
 								<button
 									type="button"
-									onclick={() => theme.setAccent(themeItem.id)}
-									class="group relative flex h-6 w-6 items-center justify-center rounded-full transition-transform hover:scale-110 {theme.accent ===
-									themeItem.id
-										? 'ring-2 ring-neutral-900 ring-offset-2 dark:ring-white dark:ring-offset-[#121212]'
-										: ''}"
-									style="background-color: {themeItem.color};"
-									title="{themeItem.name} ({themeItem.color})"
-									aria-label={themeItem.name}
+									onclick={() => theme.setRadius(item.id)}
+									class="rounded-md border px-2.5 py-1 text-xs font-medium transition-all {active
+										? 'border-primary-500 bg-primary-500 font-bold text-white'
+										: 'border-neutral-200 text-neutral-600 hover:bg-neutral-100 dark:border-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-800'}"
 								>
-									{#if theme.accent === themeItem.id}
-										<span class="h-2 w-2 rounded-full bg-white shadow-xs"></span>
-									{/if}
+									{item.name}
 								</button>
 							{/each}
 						</div>
 					</div>
 
-					<!-- 3 Value Props with Svelte Flame Accents -->
-					<div class="space-y-4 border-t border-neutral-200/60 pt-4 dark:border-neutral-800/60">
-						<!-- Feature 1 -->
-						<div class="flex items-start gap-3.5">
-							<div
-								class="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-primary-500/10 text-primary-500"
-							>
-								<svg
-									class="h-4 w-4"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="2"
-								>
-									<path
-										d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v2h-2zm0-10h2v8h-2z"
-									/>
-								</svg>
-							</div>
-							<div>
-								<h3 class="text-base font-semibold text-neutral-900 dark:text-white">
-									Styled with Tailwind CSS v4
-								</h3>
-								<p class="text-sm text-neutral-600 dark:text-neutral-400">
-									Beautifully styled by default with native <code class="text-primary-500"
-										>@theme</code
-									> tokens, overwrite any style you want.
-								</p>
-							</div>
-						</div>
-
-						<!-- Feature 2 -->
-						<div class="flex items-start gap-3.5">
-							<div
-								class="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-primary-500/10 text-primary-500"
-							>
-								<svg
-									class="h-4 w-4"
-									viewBox="0 0 24 24"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="2"
-								>
-									<path d="M4 6h16M4 12h16M4 18h7" />
-								</svg>
-							</div>
-							<div>
-								<h3 class="text-base font-semibold text-neutral-900 dark:text-white">
-									Accessible with Bits UI & Runes
-								</h3>
-								<p class="text-sm text-neutral-600 dark:text-neutral-400">
-									Robust accessibility out of the box powered by pure Svelte 5 runes and snippets.
-								</p>
-							</div>
-						</div>
-
-						<!-- Feature 3 -->
-						<div class="flex items-start gap-3.5">
-							<div
-								class="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-amber-500/10 text-amber-500"
-							>
-								<span class="font-mono text-sm font-bold">TS</span>
-							</div>
-							<div>
-								<h3 class="text-base font-semibold text-neutral-900 dark:text-white">
-									Type-safe & Zero-Config SEO
-								</h3>
-								<p class="text-sm text-neutral-600 dark:text-neutral-400">
-									Auto-complete and type safety for all components plus automated dynamic OG images,
-									robots.txt, and sitemaps.
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- Right Column: The Component Mosaic Grid with Dynamic Primary Theme -->
-				<div class="lg:col-span-6">
-					<div class="grid grid-cols-2 gap-4">
-						<!-- Mosaic 1: Login Card -->
-						<div
-							class="space-y-3 rounded-2xl border border-neutral-200/80 bg-neutral-100/60 p-4 backdrop-blur-md dark:border-neutral-800/80 dark:bg-[#18181b]/80"
-						>
-							<div class="flex items-center justify-between">
-								<div class="flex items-center gap-1.5">
-									<div class="h-2 w-2 rounded-full bg-primary-500"></div>
-									<div class="h-2 w-2 rounded-full bg-amber-400"></div>
-								</div>
-								<span class="text-xs font-medium text-neutral-400">Login</span>
-							</div>
-							<div class="space-y-2">
-								<div
-									class="flex h-7 items-center rounded-md border border-neutral-200/60 bg-white/70 px-2 text-xs text-neutral-400 dark:border-neutral-800 dark:bg-neutral-900/70"
-								>
-									user@sven-ui.dev
-								</div>
-								<div
-									class="flex h-7 items-center rounded-md border border-neutral-200/60 bg-white/70 px-2 text-xs text-neutral-400 dark:border-neutral-800 dark:bg-neutral-900/70"
-								>
-									••••••••••••
-								</div>
-								<button
-									type="button"
-									class="w-full rounded-md bg-primary-600 py-1.5 text-center text-xs font-bold text-white transition-colors hover:bg-primary-500"
-								>
-									Continue
-								</button>
-							</div>
-						</div>
-
-						<!-- Mosaic 2: Chat Message Feed -->
-						<div
-							class="space-y-3 rounded-2xl border border-neutral-200/80 bg-neutral-100/60 p-4 backdrop-blur-md dark:border-neutral-800/80 dark:bg-[#18181b]/80"
-						>
-							<div class="flex items-center gap-2">
-								<Avatar alt="Sarah" size="xs" presence="online" />
-								<div class="flex-1 space-y-1">
-									<div class="h-2 w-3/4 rounded bg-neutral-300 dark:bg-neutral-700"></div>
-									<div class="h-1.5 w-1/2 rounded bg-neutral-200 dark:bg-neutral-800"></div>
-								</div>
-							</div>
-							<div
-								class="rounded-lg bg-neutral-200/40 p-2 text-xs text-neutral-600 dark:bg-neutral-900/60 dark:text-neutral-400"
-							>
-								Sven UI handles 100% of my meta tags automatically.
-							</div>
-						</div>
-
-						<!-- Mosaic 3: Avatar Stack & Presence -->
-						<div
-							class="flex flex-col justify-between rounded-2xl border border-neutral-200/80 bg-neutral-100/60 p-4 backdrop-blur-md dark:border-neutral-800/80 dark:bg-[#18181b]/80"
-						>
-							<span class="text-xs font-semibold text-neutral-400">Team Presence</span>
-							<div class="flex items-center justify-center gap-2 py-3">
-								<Avatar alt="Dev 1" size="sm" presence="online" />
-								<Avatar alt="Dev 2" size="sm" presence="busy" />
-								<Avatar alt="Dev 3" size="sm" presence="away" />
-								<div
-									class="flex h-8 w-8 items-center justify-center rounded-full bg-primary-500/10 text-xs font-bold text-primary-500"
-								>
-									+4
-								</div>
-							</div>
-							<div class="text-center text-xs text-neutral-500">7 devs active now</div>
-						</div>
-
-						<!-- Mosaic 4: Chat Thread with Reaction -->
-						<div
-							class="space-y-2 rounded-2xl border border-neutral-200/80 bg-neutral-100/60 p-4 backdrop-blur-md dark:border-neutral-800/80 dark:bg-[#18181b]/80"
-						>
-							<div class="flex items-center gap-2">
-								<Avatar alt="Hunter" size="xs" />
-								<span class="text-xs font-bold text-neutral-900 dark:text-white">Hunter</span>
-								<Badge variant="soft" color="primary" size="xs">Admin</Badge>
-							</div>
-							<div class="h-2 w-full rounded bg-neutral-200 dark:bg-neutral-800"></div>
-							<div class="h-2 w-4/5 rounded bg-neutral-200 dark:bg-neutral-800"></div>
-							<div class="flex items-center gap-1.5 pt-1">
-								<span
-									class="rounded bg-neutral-200/60 px-1.5 py-0.5 text-xs text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300"
-								>
-									🔥 12
-								</span>
-								<span
-									class="rounded bg-neutral-200/60 px-1.5 py-0.5 text-xs text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300"
-								>
-									🚀 8
-								</span>
-							</div>
-						</div>
-
-						<!-- Mosaic 5: Avatar Group Preview -->
-						<div
-							class="flex items-center justify-center rounded-2xl border border-neutral-200/80 bg-neutral-100/60 p-4 backdrop-blur-md dark:border-neutral-800/80 dark:bg-[#18181b]/80"
-						>
-							<AvatarGroup>
-								<Avatar alt="User 1" size="sm" />
-								<Avatar alt="User 2" size="sm" />
-								<Avatar alt="User 3" size="sm" />
-							</AvatarGroup>
-						</div>
-
-						<!-- Mosaic 6: Command Search Preview -->
-						<div
-							class="space-y-2 rounded-2xl border border-neutral-200/80 bg-neutral-100/60 p-4 backdrop-blur-md dark:border-neutral-800/80 dark:bg-[#18181b]/80"
-						>
-							<div class="flex items-center justify-between text-xs text-neutral-400">
-								<span>Quick Search</span>
-								<Kbd value="⌘K" size="xs" />
-							</div>
-							<div
-								class="flex h-7 items-center justify-between rounded-md border border-neutral-200/60 bg-white/70 px-2 text-xs text-neutral-400 dark:border-neutral-800 dark:bg-neutral-900/70"
-							>
-								<span>Search components...</span>
-								<Icon name="search" size="xs" />
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</Container>
-	</section>
-
-	<!-- THEME & UI CUSTOMIZATION STUDIO SECTION -->
-	<section
-		id="customizer"
-		class="relative border-b border-neutral-200/60 bg-neutral-50/70 py-16 md:py-20 dark:border-neutral-800/60 dark:bg-neutral-950/40"
-	>
-		<Container size="2xl">
-			<div class="space-y-8">
-				<!-- Header -->
-				<div class="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-					<div class="space-y-2">
-						<div
-							class="flex items-center gap-2 text-xs font-bold tracking-wider text-primary-600 uppercase dark:text-primary-400"
-						>
-							<Icon name="sparkles" size="xs" />
-							<span>LIVE THEME ENGINE</span>
-						</div>
-						<h2
-							class="font-serif text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-4xl dark:text-white"
-						>
-							Tailwind CSS v4 Customizer
-						</h2>
-						<p class="max-w-2xl text-base text-neutral-600 dark:text-neutral-400">
-							Customize primary accents, neutral palettes, typography, corner radii, and base font
-							sizes in real time. Every component on this site reacts instantaneously via native CSS
-							custom properties.
-						</p>
-					</div>
-
-					<div class="flex items-center gap-2">
-						<Button
-							variant="outline"
-							color="neutral"
-							size="sm"
-							icon="copy"
-							onclick={copyConfigSnippet}
-						>
-							Copy Config
-						</Button>
-						<Button
-							variant="ghost"
-							color="neutral"
-							size="sm"
-							onclick={() => {
-								theme.reset();
-								toast.info('Theme reset to defaults');
-							}}
-						>
-							Reset
-						</Button>
-					</div>
-				</div>
-
-				<!-- Customization Grid & Live Sandbox Card -->
-				<div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
-					<!-- Left: Control Panels -->
-					<div class="space-y-6 lg:col-span-7">
-						<!-- 1. Primary Accent Palette -->
-						<Card class="space-y-3">
-							<div class="flex items-center justify-between">
-								<span class="text-sm font-semibold text-neutral-900 dark:text-white"
-									>1. Primary Accent</span
-								>
-								<span class="font-mono text-xs text-neutral-500"
-									>{ACCENT_PALETTES[theme.accent].name} ({ACCENT_PALETTES[theme.accent]
-										.color})</span
-								>
-							</div>
-							<div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
-								{#each Object.values(ACCENT_PALETTES) as item}
-									<button
-										type="button"
-										onclick={() => theme.setAccent(item.id)}
-										class="flex items-center gap-2.5 rounded-lg border p-2 text-left transition-all {theme.accent ===
-										item.id
-											? 'border-primary-500 bg-primary-500/10 font-bold text-neutral-900 ring-1 ring-primary-500 dark:text-white'
-											: 'border-neutral-200/80 bg-white/80 text-neutral-700 hover:border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-300'}"
-									>
-										<span
-											class="h-4 w-4 shrink-0 rounded-full shadow-xs"
-											style="background-color: {item.color};"
-										></span>
-										<span class="truncate text-xs">{item.name}</span>
-									</button>
-								{/each}
-							</div>
-						</Card>
-
-						<!-- 2. Neutral Palette Tone -->
-						<Card class="space-y-3">
-							<div class="flex items-center justify-between">
-								<span class="text-sm font-semibold text-neutral-900 dark:text-white"
-									>2. Neutral Base Tone</span
-								>
-								<span class="font-mono text-xs text-neutral-500"
-									>{NEUTRAL_PALETTES[theme.neutral].name}</span
-								>
-							</div>
-							<div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
-								{#each neutralList as [id, item]}
-									<button
-										type="button"
-										onclick={() => theme.setNeutral(id)}
-										class="flex items-center justify-center rounded-lg border px-3 py-2 text-center text-xs font-medium transition-all {theme.neutral ===
-										id
-											? 'border-primary-500 bg-primary-500/10 font-bold text-neutral-900 ring-1 ring-primary-500 dark:text-white'
-											: 'border-neutral-200/80 bg-white/80 text-neutral-700 hover:border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-300'}"
-									>
-										{item.name}
-									</button>
-								{/each}
-							</div>
-						</Card>
-
-						<!-- 3. Typography & Font Family -->
-						<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-							<Card class="space-y-3">
-								<span class="text-sm font-semibold text-neutral-900 dark:text-white"
-									>3. Typography Family</span
-								>
-								<div class="grid grid-cols-3 gap-1.5">
-									{#each fontList as [id, item]}
-										<button
-											type="button"
-											onclick={() => theme.setFontFamily(id)}
-											class="rounded-lg border px-2 py-2 text-center text-xs font-medium transition-all {theme.fontFamily ===
-											id
-												? 'border-primary-500 bg-primary-500/10 font-bold text-neutral-900 ring-1 ring-primary-500 dark:text-white'
-												: 'border-neutral-200/80 bg-white/80 text-neutral-700 hover:border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-300'}"
-										>
-											{item.name.split(' ')[0]}
-										</button>
-									{/each}
-								</div>
-							</Card>
-
-							<!-- 4. Corner Radius Roundness -->
-							<Card class="space-y-3">
-								<span class="text-sm font-semibold text-neutral-900 dark:text-white"
-									>4. Corner Radius</span
-								>
-								<div class="grid grid-cols-5 gap-1">
-									{#each radiusList as [id, item]}
-										<button
-											type="button"
-											onclick={() => theme.setRadius(id)}
-											class="rounded-lg border px-1 py-2 text-center text-xs font-medium transition-all {theme.radius ===
-											id
-												? 'border-primary-500 bg-primary-500/10 font-bold text-neutral-900 ring-1 ring-primary-500 dark:text-white'
-												: 'border-neutral-200/80 bg-white/80 text-neutral-700 hover:border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-300'}"
-										>
-											{item.name}
-										</button>
-									{/each}
-								</div>
-							</Card>
-						</div>
-
-						<!-- 5. Base Font Scale & Density -->
-						<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-							<Card class="space-y-3">
-								<span class="text-sm font-semibold text-neutral-900 dark:text-white"
-									>5. Base Size & Scale</span
-								>
-								<div class="grid grid-cols-3 gap-1.5">
-									{#each fontSizeList as [id, item]}
-										<button
-											type="button"
-											onclick={() => theme.setFontSize(id)}
-											class="rounded-lg border px-2 py-2 text-center text-xs font-medium transition-all {theme.fontSize ===
-											id
-												? 'border-primary-500 bg-primary-500/10 font-bold text-neutral-900 ring-1 ring-primary-500 dark:text-white'
-												: 'border-neutral-200/80 bg-white/80 text-neutral-700 hover:border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-300'}"
-										>
-											{item.label} ({item.name})
-										</button>
-									{/each}
-								</div>
-							</Card>
-
-							<Card class="space-y-3">
-								<span class="text-sm font-semibold text-neutral-900 dark:text-white"
-									>6. Color Mode</span
-								>
-								<div class="grid grid-cols-3 gap-1.5">
-									{#each ['light', 'dark', 'system'] as const as modeOption}
-										<button
-											type="button"
-											onclick={() => theme.setMode(modeOption)}
-											class="rounded-lg border px-2 py-2 text-center text-xs capitalize transition-all {theme.mode ===
-											modeOption
-												? 'border-primary-500 bg-primary-500/10 font-bold text-neutral-900 ring-1 ring-primary-500 dark:text-white'
-												: 'border-neutral-200/80 bg-white/80 text-neutral-700 hover:border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900/60 dark:text-neutral-300'}"
-										>
-											{modeOption}
-										</button>
-									{/each}
-								</div>
-							</Card>
-						</div>
-					</div>
-
-					<!-- Right: Live Reactive Sandbox Preview Card -->
-					<div class="lg:col-span-5">
-						<Card class="sticky top-20 space-y-5 border-2 border-primary-500/30 p-6 shadow-md">
-							<div
-								class="flex items-center justify-between border-b border-neutral-200 pb-3 dark:border-neutral-800"
-							>
-								<div class="flex items-center gap-2">
-									<span class="h-3 w-3 animate-pulse rounded-full bg-primary-500"></span>
-									<h3 class="font-serif text-lg font-bold text-neutral-900 dark:text-white">
-										Real-Time Preview
-									</h3>
-								</div>
-								<Badge variant="soft" color="primary">Live Reactive</Badge>
-							</div>
-
-							<!-- Buttons Sandbox -->
-							<div class="space-y-2">
-								<span class="text-xs font-semibold tracking-wider text-neutral-400 uppercase"
-									>Buttons & Badges</span
-								>
-								<div class="flex flex-wrap items-center gap-2">
-									<Button variant="solid" color="primary" size="sm">Solid Primary</Button>
-									<Button variant="outline" color="primary" size="sm">Outline</Button>
-									<Button variant="soft" color="primary" size="sm">Soft</Button>
-									<Badge variant="solid" color="primary">Badge</Badge>
-									<Chip color="primary" pulse>
-										<Avatar alt="User" size="xs" />
-									</Chip>
-								</div>
-							</div>
-
-							<!-- Interactive Form Control Sandbox -->
-							<div class="space-y-3">
-								<span class="text-xs font-semibold tracking-wider text-neutral-400 uppercase"
-									>Form Inputs & Sliders</span
-								>
-								<Input placeholder="Interactive theme input..." icon="sparkles" class="text-sm" />
-								<Slider bind:value={demoVolume} min={0} max={100} />
-								<div class="flex items-center justify-between pt-1">
-									<Switch bind:checked={demoNotifications} label="Interactive Theme Switch" />
-									<span class="font-mono text-xs text-neutral-500">{demoVolume}%</span>
-								</div>
-							</div>
-
-							<!-- Metrics Progress -->
-							<div class="space-y-2 border-t border-neutral-200 pt-3 dark:border-neutral-800">
-								<Progress value={demoVolume} max={100} color="primary" />
-							</div>
-
-							<!-- Output Config Code Preview -->
-							<div
-								class="rounded-lg border border-neutral-200/80 bg-neutral-100/80 p-3 font-mono text-xs text-neutral-700 dark:border-neutral-800 dark:bg-neutral-900/80 dark:text-neutral-300"
-							>
-								<div class="text-primary-600 dark:text-primary-400">// site.config.ts output:</div>
-								<div>primaryColor: '{ACCENT_PALETTES[theme.accent].color}',</div>
-								<div>defaultMode: '{theme.mode}'</div>
-							</div>
-						</Card>
-					</div>
-				</div>
-			</div>
-		</Container>
-	</section>
-
-	<!-- DOCUMENTATION & SHOWCASE SECTION (Svelte.dev Inspired 3-Column Layout) -->
-	<section id="docs" class="py-12 md:py-16">
-		<Container size="2xl">
-			<div class="grid grid-cols-1 gap-8 lg:grid-cols-12">
-				<!-- Left Sidebar: Doc Navigation Tree -->
-				<aside class="space-y-8 lg:col-span-3">
-					<!-- Group: Getting Started -->
-					<div class="space-y-3">
-						<h3
-							class="text-sm font-semibold tracking-wider text-neutral-400 uppercase dark:text-neutral-500"
-						>
-							Getting started
-						</h3>
-						<ul class="space-y-1.5 text-sm">
-							<li>
-								<button
-									type="button"
-									onclick={() => (activeDocSection = 'intro')}
-									class="w-full rounded-md px-2.5 py-1.5 text-left transition-colors {activeDocSection ===
-									'intro'
-										? 'bg-primary-500/10 font-bold text-primary-600 dark:text-primary-400'
-										: 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'}"
-								>
-									Introduction
-								</button>
-							</li>
-							<li>
-								<button
-									type="button"
-									onclick={() => (activeDocSection = 'install')}
-									class="w-full rounded-md px-2.5 py-1.5 text-left transition-colors {activeDocSection ===
-									'install'
-										? 'bg-primary-500/10 font-bold text-primary-600 dark:text-primary-400'
-										: 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'}"
-								>
-									Creating a project
-								</button>
-							</li>
-							<li>
-								<button
-									type="button"
-									onclick={() => (activeDocSection = 'config')}
-									class="w-full rounded-md px-2.5 py-1.5 text-left transition-colors {activeDocSection ===
-									'config'
-										? 'bg-primary-500/10 font-bold text-primary-600 dark:text-primary-400'
-										: 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'}"
-								>
-									Site configuration
-								</button>
-							</li>
-						</ul>
-					</div>
-
-					<!-- Group: SEO & Site Kit -->
-					<div class="space-y-3">
-						<h3
-							class="text-sm font-semibold tracking-wider text-neutral-400 uppercase dark:text-neutral-500"
-						>
-							Site & SEO Kit
-						</h3>
-						<ul class="space-y-1.5 text-sm">
-							<li>
-								<button
-									type="button"
-									onclick={() => (activeDocSection = 'seo-og')}
-									class="w-full rounded-md px-2.5 py-1.5 text-left transition-colors {activeDocSection ===
-									'seo-og'
-										? 'bg-primary-500/10 font-bold text-primary-600 dark:text-primary-400'
-										: 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'}"
-								>
-									Dynamic OG Generator (/api/og)
-								</button>
-							</li>
-							<li>
-								<button
-									type="button"
-									onclick={() => (activeDocSection = 'seo-robots')}
-									class="w-full rounded-md px-2.5 py-1.5 text-left transition-colors {activeDocSection ===
-									'seo-robots'
-										? 'bg-primary-500/10 font-bold text-primary-600 dark:text-primary-400'
-										: 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'}"
-								>
-									Robots & Sitemaps
-								</button>
-							</li>
-						</ul>
-					</div>
-
-					<!-- Group: Components -->
-					<div class="space-y-3" id="components">
-						<h3
-							class="text-sm font-semibold tracking-wider text-neutral-400 uppercase dark:text-neutral-500"
-						>
-							Components
-						</h3>
-						<ul class="space-y-1.5 text-sm">
-							<li>
-								<button
-									type="button"
-									onclick={() => (activeDocSection = 'comp-buttons')}
-									class="w-full rounded-md px-2.5 py-1.5 text-left transition-colors {activeDocSection ===
-									'comp-buttons'
-										? 'bg-primary-500/10 font-bold text-primary-600 dark:text-primary-400'
-										: 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'}"
-								>
-									Buttons & Badges
-								</button>
-							</li>
-							<li>
-								<button
-									type="button"
-									onclick={() => (activeDocSection = 'comp-forms')}
-									class="w-full rounded-md px-2.5 py-1.5 text-left transition-colors {activeDocSection ===
-									'comp-forms'
-										? 'bg-primary-500/10 font-bold text-primary-600 dark:text-primary-400'
-										: 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'}"
-								>
-									Forms & Inputs
-								</button>
-							</li>
-							<li>
-								<button
-									type="button"
-									onclick={() => (activeDocSection = 'comp-overlays')}
-									class="w-full rounded-md px-2.5 py-1.5 text-left transition-colors {activeDocSection ===
-									'comp-overlays'
-										? 'bg-primary-500/10 font-bold text-primary-600 dark:text-primary-400'
-										: 'text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'}"
-								>
-									Modals & Overlays
-								</button>
-							</li>
-						</ul>
-					</div>
-				</aside>
-
-				<!-- Center: Main Editorial & Interactive Playground -->
-				<div class="space-y-12 lg:col-span-7">
-					<!-- Breadcrumb Header -->
 					<div>
-						<div
-							class="text-sm font-semibold tracking-wider text-neutral-400 uppercase dark:text-neutral-500"
+						<span
+							class="mb-2 block text-xs font-bold tracking-wider text-neutral-700 uppercase dark:text-neutral-300"
 						>
-							SVELTEKIT • GETTING STARTED
+							5. Density Scale
+						</span>
+						<div class="flex flex-wrap gap-1.5">
+							{#each sizeOptions as item}
+								{@const active = theme.fontSize === item.id}
+								<button
+									type="button"
+									onclick={() => theme.setFontSize(item.id)}
+									class="rounded-md border px-2.5 py-1 text-xs font-medium transition-all {active
+										? 'border-primary-500 bg-primary-500 font-bold text-white'
+										: 'border-neutral-200 text-neutral-600 hover:bg-neutral-100 dark:border-neutral-800 dark:text-neutral-400 dark:hover:bg-neutral-800'}"
+								>
+									{item.name}
+								</button>
+							{/each}
 						</div>
-						<h2
-							class="mt-2 font-serif text-3xl font-extrabold text-neutral-900 sm:text-4xl dark:text-white"
-						>
-							Introduction
-						</h2>
 					</div>
+				</div>
 
-					<!-- Callout Box (Svelte.dev Lightbulb Style) -->
+				<!-- Controls Footer Actions -->
+				<div
+					class="flex items-center justify-between border-t border-neutral-200 pt-4 dark:border-neutral-800"
+				>
+					<Button variant="ghost" size="xs" color="neutral" onclick={() => theme.reset()}>
+						<Icon name="arrow-path" class="mr-1 h-3.5 w-3.5" /> Reset Defaults
+					</Button>
+
+					<Button size="xs" color="primary" variant="solid" onclick={copyConfigSnippet}>
+						<Icon name="code-bracket" class="mr-1 h-3.5 w-3.5" /> Copy site.config.ts
+					</Button>
+				</div>
+			</div>
+
+			<!-- Live Interactive Component Sandbox reacting to Studio -->
+			<div class="space-y-6 lg:col-span-6">
+				<div
+					class="space-y-6 rounded-2xl border border-neutral-200/90 bg-white p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-900/90"
+				>
 					<div
-						class="flex items-start gap-3 rounded-xl border border-primary-500/30 bg-primary-500/5 p-4"
+						class="flex items-center justify-between border-b border-neutral-200 pb-3 dark:border-neutral-800"
 					>
-						<div class="mt-0.5 text-primary-500">
-							<Icon name="sparkles" size="sm" />
+						<div>
+							<h3 class="text-sm font-bold text-neutral-900 dark:text-white">
+								Live Sandbox Preview
+							</h3>
+							<p class="text-xs text-neutral-500">Reacting to active palette & radius tokens</p>
 						</div>
-						<div class="space-y-1.5 text-base text-neutral-700 dark:text-neutral-300">
-							<p>
-								If you're new to Sven UI or SvelteKit, explore the live interactive component and
-								SEO playground below.
-							</p>
-							<p class="text-sm text-neutral-500 dark:text-neutral-400">
-								Need assistance? Check out the <a
-									href="https://github.com/FuntionalFrost/sven-ui"
-									target="_blank"
-									rel="noopener noreferrer"
-									class="font-medium text-primary-600 underline dark:text-primary-400"
-									>GitHub repository</a
-								> or documentation guides.
-							</p>
-						</div>
+						<Badge color="primary" variant="subtle" size="xs">Live State</Badge>
 					</div>
 
-					<!-- Editorial Section: What is Sven UI? -->
-					<div class="space-y-4">
-						<h3 class="font-serif text-2xl font-bold text-neutral-900 dark:text-white">
-							What is Sven UI?
-						</h3>
-						<p class="text-base leading-relaxed text-neutral-600 dark:text-neutral-300">
-							Sven UI brings the developer experience and full-stack polish of <strong
-								>Nuxt UI v4</strong
-							>
-							to <strong>SvelteKit 2.7+</strong> and <strong>Svelte 5</strong> with authentic Svelte design
-							language. If you're coming from Vue or Nuxt, Sven UI is identical to Nuxt UI. If you're
-							coming from React, Sven UI is similar to Shadcn UI combined with Next SEO.
-						</p>
-					</div>
+					<!-- Sandbox Tab Strip -->
+					<Tabs items={demoTabs} bind:value={activeDemoTab} />
 
-					<!-- Svelte 5 Runes Live Inspector -->
-					<div class="space-y-4">
-						<h3 class="font-serif text-2xl font-bold text-neutral-900 dark:text-white">
-							Pure Svelte 5 Runes Architecture
-						</h3>
-						<Card variant="outline" padding="lg">
-							{#snippet header()}
-								<div class="flex items-center justify-between">
-									<div class="flex items-center gap-2">
-										<span class="h-2 w-2 animate-pulse rounded-full bg-emerald-500"></span>
-										<span class="text-base font-bold text-neutral-900 dark:text-white"
-											>Live Runes Inspector ($state & $derived)</span
-										>
-									</div>
-									<Badge variant="solid" color="primary">Zero Virtual DOM</Badge>
-								</div>
-							{/snippet}
-
-							<div class="grid grid-cols-1 gap-4 text-center sm:grid-cols-3">
-								<div
-									class="rounded-lg border border-neutral-200 bg-neutral-100 p-4 dark:border-neutral-800 dark:bg-neutral-900"
-								>
-									<div class="font-mono text-sm text-neutral-500">$state(runeCounter)</div>
-									<div class="my-1 text-2xl font-black text-neutral-900 dark:text-white">
-										{runeCounter}
-									</div>
-									<div class="mt-2 flex items-center justify-center gap-2">
-										<Button
-											size="xs"
-											variant="outline"
-											color="neutral"
-											onclick={() => (runeCounter = Math.max(1, runeCounter - 1))}>-</Button
-										>
-										<Button size="xs" variant="solid" color="primary" onclick={() => runeCounter++}
-											>+</Button
-										>
-									</div>
-								</div>
-
-								<div
-									class="rounded-lg border border-neutral-200 bg-neutral-100 p-4 dark:border-neutral-800 dark:bg-neutral-900"
-								>
-									<div class="font-mono text-sm text-neutral-500">$derived(runeTotal)</div>
-									<div class="my-1 text-2xl font-black text-primary-600 dark:text-primary-400">
-										{runeTotal}
-									</div>
-									<div class="mt-2 font-mono text-sm text-neutral-400">
-										counter × {runeMultiplier}
-									</div>
-								</div>
-
-								<div
-									class="rounded-lg border border-neutral-200 bg-neutral-100 p-4 dark:border-neutral-800 dark:bg-neutral-900"
-								>
-									<div class="font-mono text-sm text-neutral-500">$derived(runeStatus)</div>
-									<div class="my-2 text-base font-bold text-emerald-500">{runeStatus}</div>
-									<Badge variant="soft" color="success" size="xs">Reactive</Badge>
-								</div>
+					{#if activeDemoTab === 'buttons'}
+						<div class="space-y-4">
+							<div class="flex flex-wrap gap-2.5">
+								<Button variant="solid" color="primary">Solid Accent</Button>
+								<Button variant="outline" color="primary">Outline</Button>
+								<Button variant="soft" color="primary">Soft</Button>
+								<Button variant="subtle" color="primary">Subtle</Button>
+								<Button variant="ghost">Ghost</Button>
 							</div>
-						</Card>
-					</div>
 
-					<!-- Feature Parity Matrix -->
-					<div class="space-y-4">
-						<h3 class="font-serif text-2xl font-bold text-neutral-900 dark:text-white">
-							Nuxt UI vs Sven UI Parity Matrix
-						</h3>
-						<div
-							class="overflow-x-auto rounded-xl border border-neutral-200 shadow-xs dark:border-neutral-800"
-						>
-							<table class="w-full text-left text-sm">
-								<thead
-									class="border-b border-neutral-200 bg-neutral-100 font-semibold text-neutral-600 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400"
-								>
-									<tr>
-										<th class="p-3">Feature Capability</th>
-										<th class="p-3">Nuxt UI v4 (Vue)</th>
-										<th class="p-3 text-primary-600 dark:text-primary-400">Sven UI (SvelteKit)</th>
-										<th class="p-3">Ergonomics</th>
-									</tr>
-								</thead>
-								<tbody
-									class="divide-y divide-neutral-200 text-neutral-700 dark:divide-neutral-800 dark:text-neutral-300"
-								>
-									<tr>
-										<td class="p-3 font-medium">Design Tokens</td>
-										<td class="p-3">Tailwind CSS v4 @theme</td>
-										<td class="p-3 font-semibold text-primary-600 dark:text-primary-400"
-											>Tailwind CSS v4 @theme</td
-										>
-										<td class="p-3"
-											><Badge variant="soft" color="success" size="xs">100% Identical</Badge></td
-										>
-									</tr>
-									<tr>
-										<td class="p-3 font-medium">UI Primitives</td>
-										<td class="p-3">Radix Vue</td>
-										<td class="p-3 font-semibold text-primary-600 dark:text-primary-400"
-											>Bits UI & Runes</td
-										>
-										<td class="p-3"
-											><Badge variant="soft" color="success" size="xs">Accessible & Fast</Badge></td
-										>
-									</tr>
-									<tr>
-										<td class="p-3 font-medium">Dynamic OG Generator</td>
-										<td class="p-3">nuxt-og-image (Satori)</td>
-										<td class="p-3 font-semibold text-primary-600 dark:text-primary-400"
-											>Zero-Dep Native SVG (/api/og)</td
-										>
-										<td class="p-3"
-											><Badge variant="soft" color="success" size="xs">Zero Binaries</Badge></td
-										>
-									</tr>
-									<tr>
-										<td class="p-3 font-medium">Sitemap & XSL Viewer</td>
-										<td class="p-3">@nuxtjs/sitemap</td>
-										<td class="p-3 font-semibold text-primary-600 dark:text-primary-400"
-											>/sitemap.xml + /sitemap.xsl</td
-										>
-										<td class="p-3"
-											><Badge variant="soft" color="success" size="xs">Styled Dashboard</Badge></td
-										>
-									</tr>
-									<tr>
-										<td class="p-3 font-medium">Robots Automation</td>
-										<td class="p-3">@nuxtjs/robots</td>
-										<td class="p-3 font-semibold text-primary-600 dark:text-primary-400"
-											>/robots.txt (Env Gated)</td
-										>
-										<td class="p-3"
-											><Badge variant="soft" color="success" size="xs">Zero-Config</Badge></td
-										>
-									</tr>
-									<tr>
-										<td class="p-3 font-medium">Configuration</td>
-										<td class="p-3">nuxt.config.ts</td>
-										<td class="p-3 font-semibold text-primary-600 dark:text-primary-400"
-											>src/site.config.ts</td
-										>
-										<td class="p-3"
-											><Badge variant="solid" color="primary" size="xs">100% DRY</Badge></td
-										>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-
-					<!-- Interactive Tabs Component Demo -->
-					<div class="space-y-6">
-						<h3
-							class="font-serif text-2xl font-bold text-neutral-900 dark:text-white"
-							id="playground"
-						>
-							Interactive Component Showcase
-						</h3>
-
-						<Card variant="outline" padding="lg">
-							{#snippet header()}
-								<div class="flex items-center justify-between">
-									<h4 class="text-base font-bold text-neutral-900 dark:text-white">
-										Live Playground
-									</h4>
-									<Badge variant="soft" color="primary">Svelte 5 Runes</Badge>
-								</div>
-							{/snippet}
-
-							<div class="space-y-6">
-								<!-- Buttons & Badges & ButtonGroup -->
-								<div>
-									<h5 class="mb-3 text-sm font-semibold tracking-wider text-neutral-400 uppercase">
-										Buttons, Badges & Groups
-									</h5>
-									<div class="flex flex-wrap items-center gap-3">
-										<Button variant="solid" color="primary" icon="sparkles">Solid Primary</Button>
-										<Button variant="outline" color="primary">Outline</Button>
-										<Button variant="soft" color="primary">Soft</Button>
-										<Button variant="subtle" color="primary">Subtle</Button>
-										<Button variant="ghost" color="primary">Ghost</Button>
-										<Button variant="solid" color="success" icon="check">Success</Button>
-										<Button variant="solid" color="error" icon="cross">Error</Button>
-										<Button variant="solid" color="primary" loading>Loading</Button>
-									</div>
-
-									<div class="mt-4 flex flex-wrap items-center gap-4">
-										<ButtonGroup>
-											<Button variant="outline" color="neutral" size="sm">Monthly</Button>
-											<Button variant="solid" color="primary" size="sm">Yearly</Button>
-											<Button variant="outline" color="neutral" size="sm">Lifetime</Button>
-										</ButtonGroup>
-
-										<div class="flex items-center gap-2">
-											<Badge variant="soft" color="primary" dot>Active</Badge>
-											<Badge variant="solid" color="success" icon="check">Verified</Badge>
-											<Badge variant="subtle" color="error">Rejected</Badge>
-										</div>
-									</div>
-								</div>
-
-								<Divider />
-
-								<!-- Form Controls & Inputs -->
-								<div class="grid grid-cols-1 gap-4 md:grid-cols-2" id="forms">
-									<FormField label="Developer Name" required>
-										<Input
-											bind:value={demoName}
-											placeholder="Enter your name"
-											icon="sparkles"
-											clearable
-										/>
-									</FormField>
-
-									<FormField label="Work Email" required>
-										<Input
-											type="email"
-											bind:value={demoEmail}
-											placeholder="alex@company.com"
-											icon="search"
-										/>
-									</FormField>
-
-									<FormField label="Subscription Plan">
-										<Select
-											bind:value={demoPlan}
-											options={[
-												{ value: 'free', label: 'Starter Plan' },
-												{ value: 'pro', label: 'Pro Solo Dev ($19/mo)' },
-												{ value: 'team', label: 'Enterprise ($99/mo)' }
-											]}
-										/>
-									</FormField>
-
-									<FormField label="Developer Bio">
-										<Textarea
-											bind:value={demoBio}
-											rows={2}
-											maxlength={140}
-											showCount
-											placeholder="Short bio..."
-										/>
-									</FormField>
-
-									<div class="space-y-3 md:col-span-2">
-										<Switch
-											bind:checked={demoNotifications}
-											label="Enable Realtime Sync"
-											description="Automatically receive live updates and SEO indexing metrics"
-										/>
-										<Checkbox
-											bind:checked={demoMarketing}
-											label="Subscribe to Sven UI newsletter"
-											description="Get notified about new component releases"
-										/>
-									</div>
-
-									<div class="md:col-span-2">
-										<RadioGroup
-											bind:value={demoPlan}
-											card
-											options={[
-												{
-													value: 'pro',
-													label: 'Pro License ($19)',
-													description: 'Full component suite and SEO tools'
-												},
-												{
-													value: 'team',
-													label: 'Team License ($99)',
-													description: 'Unlimited seats and priority support'
-												}
-											]}
-										/>
-									</div>
-
-									<div class="md:col-span-2">
-										<div
-											class="mb-1.5 flex justify-between text-sm text-neutral-600 dark:text-neutral-400"
-										>
-											<span>Volume</span>
-											<span>{demoVolume}%</span>
-										</div>
-										<Slider bind:value={demoVolume} min={0} max={100} />
-									</div>
-								</div>
-
-								<Divider />
-
-								<!-- Loaders & Skeletons -->
-								<div class="grid grid-cols-1 items-center gap-6 md:grid-cols-3">
-									<div>
-										<h5
-											class="mb-2 text-sm font-semibold tracking-wider text-neutral-400 uppercase"
-										>
-											Spinners
-										</h5>
-										<div class="flex items-center gap-3">
-											<Spinner size="sm" class="text-primary-500" />
-											<Spinner size="md" class="text-amber-500" />
-											<Spinner size="lg" class="text-orange-500" />
-										</div>
-									</div>
-
-									<div>
-										<h5
-											class="mb-2 text-sm font-semibold tracking-wider text-neutral-400 uppercase"
-										>
-											Progress
-										</h5>
-										<Progress value={demoVolume} max={100} color="primary" />
-									</div>
-
-									<div>
-										<h5
-											class="mb-2 text-sm font-semibold tracking-wider text-neutral-400 uppercase"
-										>
-											Skeleton & Link
-										</h5>
-										<div class="space-y-1.5">
-											<Skeleton class="h-3.5 w-3/4" />
-											<Link href="https://svelte.dev" showExternalIcon class="text-sm">
-												Svelte Official
-											</Link>
-										</div>
-									</div>
-								</div>
-
-								<Divider />
-
-								<!-- Overlays, Modals, Popovers, Tooltips & Toast -->
-								<div class="space-y-4">
-									<h5 class="text-sm font-semibold tracking-wider text-neutral-400 uppercase">
-										Overlays & Notifications
-									</h5>
-									<div class="flex flex-wrap items-center gap-3">
-										<Button
-											variant="outline"
-											color="primary"
-											icon="sparkles"
-											onclick={() => (modalOpen = true)}
-										>
-											Open Modal Dialog
-										</Button>
-										<Button
-											variant="outline"
-											color="neutral"
-											icon="chevron-right"
-											onclick={() => (slideoverOpen = true)}
-										>
-											Open Slideover Drawer
-										</Button>
-										<Tooltip text="Sven UI Tooltip with Floating UI">
-											<Button variant="subtle" color="neutral" size="sm">Hover Tooltip</Button>
-										</Tooltip>
-										<Popover>
-											{#snippet trigger()}
-												<Button variant="subtle" color="primary" size="sm">Popover</Button>
-											{/snippet}
-											<div class="max-w-xs space-y-1 text-sm">
-												<h6 class="font-bold text-neutral-900 dark:text-white">Floating Popover</h6>
-												<p class="text-neutral-500 dark:text-neutral-400">
-													Accessible popover with backdrop anchoring.
-												</p>
-											</div>
-										</Popover>
-										<DropdownMenu items={menuItems}>
-											{#snippet trigger()}
-												<Button
-													variant="outline"
-													color="neutral"
-													size="sm"
-													trailingIcon="chevron-down">Menu</Button
-												>
-											{/snippet}
-										</DropdownMenu>
-										<Button
-											variant="soft"
-											color="success"
-											icon="check"
-											onclick={() => toast.success('Action completed with Sven UI toast!')}
-										>
-											Trigger Toast
-										</Button>
-									</div>
-
-									<Alert
-										color="info"
-										title="Zero-Config Notifications"
-										description="SvenApp mounts the global toast provider so you can call toast.success() anywhere."
-										closable
-									/>
-								</div>
-
-								<Divider />
-
-								<!-- DataTable Component (Nuxt UTable parity) -->
-								<div class="space-y-3">
-									<div class="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
-										<h5 class="text-sm font-semibold tracking-wider text-neutral-400 uppercase">
-											Data Table (<code class="font-mono text-primary-500">&lt;DataTable /&gt;</code
-											>)
-										</h5>
-										<Input
-											bind:value={tableSearch}
-											placeholder="Search table records..."
-											icon="search"
-											class="h-9 max-w-xs text-sm"
-										/>
-									</div>
-
-									<DataTable
-										data={demoTableData}
-										columns={[
-											{ key: 'name', label: 'Developer', sortable: true },
-											{ key: 'role', label: 'Role', sortable: true },
-											{ key: 'team', label: 'Organization' },
-											{ key: 'stars', label: 'Stars ★', sortable: true },
-											{ key: 'status', label: 'Status' }
-										]}
-										selectable
-										bind:selected={selectedRows}
-										searchQuery={tableSearch}
-									>
-										{#snippet cell(item, col)}
-											{#if col.key === 'status'}
-												<Badge
-													variant="soft"
-													color={item.status === 'Active' ? 'success' : 'primary'}
-													dot
-												>
-													{item.status}
-												</Badge>
-											{:else if col.key === 'stars'}
-												<span class="font-mono font-medium text-amber-500"
-													>{item.stars.toLocaleString()}</span
-												>
-											{:else}
-												{item[col.key as keyof typeof item] ?? '—'}
-											{/if}
-										{/snippet}
-									</DataTable>
-								</div>
-
-								<Divider />
-
-								<!-- Chips, Meter & ColorPicker -->
-								<div class="grid grid-cols-1 items-start gap-6 md:grid-cols-3">
-									<!-- Chip Component -->
-									<div class="space-y-2">
-										<h5 class="text-sm font-semibold tracking-wider text-neutral-400 uppercase">
-											Chips & Badges (<code class="font-mono text-primary-500">&lt;Chip /&gt;</code
-											>)
-										</h5>
-										<div class="flex items-center gap-4 pt-1">
-											<Chip color="success" pulse>
-												<Avatar alt="Alex" fallback="AM" size="md" />
-											</Chip>
-
-											<Chip text="3" color="primary">
-												<Button variant="outline" color="neutral" size="sm">Inbox</Button>
-											</Chip>
-
-											<Chip text="9+" color="error">
-												<Avatar alt="Team" fallback="TM" size="md" />
-											</Chip>
-										</div>
-									</div>
-
-									<!-- Meter Component -->
-									<div class="space-y-2">
-										<h5 class="text-sm font-semibold tracking-wider text-neutral-400 uppercase">
-											Metric Meter (<code class="font-mono text-primary-500">&lt;Meter /&gt;</code>)
-										</h5>
-										<Meter
-											value={cpuMeter}
-											label="System CPU Load"
-											color={cpuMeter > 80 ? 'error' : cpuMeter > 60 ? 'warning' : 'success'}
-										/>
-										<div class="flex gap-2 pt-1">
-											<Button
-												size="xs"
-												variant="outline"
-												color="neutral"
-												onclick={() => (cpuMeter = Math.max(10, cpuMeter - 15))}>Decrease</Button
-											>
-											<Button
-												size="xs"
-												variant="solid"
-												color="primary"
-												onclick={() => (cpuMeter = Math.min(95, cpuMeter + 15))}>Increase</Button
-											>
-										</div>
-									</div>
-
-									<!-- ColorPicker Component -->
-									<div class="space-y-2">
-										<h5 class="text-sm font-semibold tracking-wider text-neutral-400 uppercase">
-											Color Picker (<code class="font-mono text-primary-500"
-												>&lt;ColorPicker /&gt;</code
-											>)
-										</h5>
-										<ColorPicker bind:value={customThemeColor} />
-									</div>
-								</div>
-
-								<Divider />
-
-								<!-- Context Menu Demo -->
-								<div>
-									<h5 class="mb-2 text-sm font-semibold tracking-wider text-neutral-400 uppercase">
-										Context Menu (<code class="font-mono text-primary-500"
-											>&lt;ContextMenu /&gt;</code
-										>)
-									</h5>
-									<ContextMenu items={contextMenuItems}>
-										<div
-											class="flex h-24 w-full items-center justify-center rounded-xl border border-dashed border-neutral-300 bg-neutral-50/50 text-sm text-neutral-500 transition hover:border-primary-500 dark:border-neutral-700 dark:bg-neutral-900/40 dark:text-neutral-400"
-										>
-											Right-click anywhere inside this box to trigger the Context Menu
-										</div>
-									</ContextMenu>
-								</div>
-
-								<Divider />
-
-								<!-- Tabs & Pagination & FAQ Accordion -->
-								<div class="space-y-4">
-									<div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
-										<h5 class="text-sm font-semibold tracking-wider text-neutral-400 uppercase">
-											Tabs & Pagination
-										</h5>
-										<Pagination bind:page={demoPaginationPage} total={60} pageSize={10} />
-									</div>
-
-									<Tabs
-										items={[
-											{ value: 'preview', label: 'Preview', icon: 'sparkles' },
-											{ value: 'code', label: 'Svelte 5 Runes', icon: 'check' },
-											{ value: 'seo', label: 'Site Config', icon: 'info' }
-										]}
-										bind:value={demoActiveTab}
-									>
-										{#if demoActiveTab === 'preview'}
-											<div
-												class="rounded-xl border border-neutral-200/80 bg-neutral-50 p-4 text-sm dark:border-neutral-800 dark:bg-neutral-900/50"
-											>
-												Ready to use Svelte 5 components with zero boilerplate.
-											</div>
-										{:else if demoActiveTab === 'code'}
-											<div class="rounded-xl bg-neutral-900 p-4 font-mono text-sm text-neutral-200">
-												<pre>&lt;script lang="ts"&gt;
-  import &#123; Button, Modal, toast &#125; from '$lib';
-  let open = $state(false);
-&lt;/script&gt;</pre>
-											</div>
-										{:else}
-											<div class="rounded-xl bg-neutral-900 p-4 font-mono text-sm text-neutral-200">
-												<pre>// src/site.config.ts
-export const siteConfig = defineSiteConfig(&#123;
-  name: 'Sven UI',
-  url: 'https://sven-ui.dev'
-&#125;);</pre>
-											</div>
-										{/if}
-									</Tabs>
-
-									<Accordion items={faqItems} />
-								</div>
+							<div class="flex items-center gap-3">
+								<Chip color="primary" pulse>Live Deploy</Chip>
+								<Chip color="success" pulse>Connected</Chip>
+								<Chip color="warning">Pending</Chip>
 							</div>
-						</Card>
-					</div>
-
-					<!-- Dynamic OG Studio Section -->
-					<div class="space-y-6" id="seo-studio">
-						<h3 class="font-serif text-2xl font-bold text-neutral-900 dark:text-white">
-							Dynamic Open Graph Studio (/api/og)
-						</h3>
-
-						<Card variant="outline" padding="lg">
-							{#snippet header()}
-								<div class="flex items-center justify-between">
-									<span class="text-base font-bold text-neutral-900 dark:text-white"
-										>Live OG Card Generator</span
-									>
-									<Badge variant="solid" color="primary">Zero Binary Dependencies</Badge>
-								</div>
-							{/snippet}
-
-							<div class="space-y-4">
-								<FormField label="Card Title">
-									<Input bind:value={ogTitle} placeholder="Card title" />
-								</FormField>
-
-								<FormField label="Card Description">
-									<Textarea bind:value={ogDesc} rows={2} placeholder="Card description" />
-								</FormField>
-
-								<div class="grid grid-cols-2 gap-4">
-									<FormField label="Badge Text">
-										<Input bind:value={ogBadge} placeholder="e.g. Case Study" />
-									</FormField>
-									<FormField label="Card Theme">
-										<Select
-											bind:value={ogTheme}
-											options={[
-												{ value: 'dark', label: 'Dark Mode Card' },
-												{ value: 'light', label: 'Light Mode Card' }
-											]}
-										/>
-									</FormField>
-								</div>
-
-								<Divider />
-
-								<OgImage
-									title={ogTitle}
-									description={ogDesc}
-									badge={ogBadge}
-									theme={ogTheme}
-									config={siteConfig}
+						</div>
+					{:else if activeDemoTab === 'forms'}
+						<div class="space-y-4">
+							<div>
+								<label
+									for="demo-work-email-input"
+									class="mb-1 block text-xs font-semibold text-neutral-700 dark:text-neutral-300"
+								>
+									Work Email
+								</label>
+								<Input
+									id="demo-work-email-input"
+									bind:value={demoInputValue}
+									placeholder="you@company.com"
+									icon="envelope"
 								/>
 							</div>
-						</Card>
-					</div>
-
-					<!-- Quickstart Code Guide -->
-					<div class="space-y-4" id="quickstart">
-						<h3 class="font-serif text-2xl font-bold text-neutral-900 dark:text-white">
-							Quickstart in 3 Steps
-						</h3>
-
-						<div class="space-y-4">
-							<div
-								class="space-y-2 rounded-xl border border-neutral-200 bg-neutral-900 p-4 font-mono text-sm text-neutral-200 dark:border-neutral-800"
-							>
-								<div class="font-bold text-primary-400">// 1. Wrap your root +layout.svelte</div>
-								<pre>&lt;script lang="ts"&gt;
-  import &#123; SvenApp &#125; from 'sven-ui';
-  import &#123; siteConfig &#125; from '../site.config';
-  let &#123; children &#125; = $props();
-&lt;/script&gt;
-
-&lt;SvenApp config=&#123;siteConfig&#125;&gt;
-  &#123;@render children()&#125;
-&lt;/SvenApp&gt;</pre>
-							</div>
-
-							<div
-								class="space-y-2 rounded-xl border border-neutral-200 bg-neutral-900 p-4 font-mono text-sm text-neutral-200 dark:border-neutral-800"
-							>
-								<div class="font-bold text-emerald-400">
-									// 2. Zero-file SEO automation (hooks.server.ts)
-								</div>
-								<pre>// src/hooks.server.ts
-import &#123; createSvenHook &#125; from 'sven-ui';
-import &#123; siteConfig &#125; from './site.config';
-
-// Handles /robots.txt, /sitemap.xml, /sitemap.xsl, /site.webmanifest, and /api/og automatically
-export const handle = createSvenHook(siteConfig);</pre>
-							</div>
-
-							<div
-								class="space-y-2 rounded-xl border border-neutral-200 bg-neutral-900 p-4 font-mono text-sm text-neutral-200 dark:border-neutral-800"
-							>
-								<div class="font-bold text-amber-400">
-									// 3. Automatic page SEO in SvelteKit load()
-								</div>
-								<pre>// src/routes/blog/[slug]/+page.ts
-export const load = async (&#123; params &#125;) => &#123;
-  return &#123;
-    seo: &#123;
-      title: 'How to Build Fast Indie SaaS',
-      description: 'Step-by-step guide with SvelteKit 2.7 & Sven UI',
-      badge: 'Tutorial'
-    &#125;
-  &#125;;
-&#125;;</pre>
+							<div class="flex items-center justify-between">
+								<span class="text-xs font-medium text-neutral-700 dark:text-neutral-300"
+									>Auto Deploy on Push</span
+								>
+								<Switch bind:checked={demoSwitchState} />
 							</div>
 						</div>
+					{:else if activeDemoTab === 'badges'}
+						<div class="flex flex-wrap gap-2">
+							<Badge color="primary" variant="solid">Primary</Badge>
+							<Badge color="primary" variant="subtle">Accent Subtle</Badge>
+							<Badge color="success" variant="subtle">Operational</Badge>
+							<Badge color="warning" variant="subtle">Maintenance</Badge>
+							<Badge color="info" variant="subtle">Beta 2.0</Badge>
+						</div>
+					{/if}
+
+					<div
+						class="rounded-xl bg-neutral-100 p-3 font-mono text-xs text-neutral-600 dark:bg-neutral-950 dark:text-neutral-400"
+					>
+						<div>// Active CSS Variables:</div>
+						<div class="text-primary-600 dark:text-primary-400">
+							--sven-primary: {ACCENT_PALETTES[theme.accent]?.color}
+						</div>
+						<div>--radius: {RADIUS_PRESETS[theme.radius]?.value}</div>
 					</div>
 				</div>
-
-				<!-- Right Sidebar: "On this page" (Svelte.dev Style) -->
-				<aside class="hidden space-y-4 lg:col-span-2 lg:block">
-					<h3
-						class="text-sm font-semibold tracking-wider text-neutral-400 uppercase dark:text-neutral-500"
-					>
-						On this page
-					</h3>
-					<ul class="space-y-2.5 text-sm text-neutral-500 dark:text-neutral-400">
-						<li>
-							<a href="#overview" class="transition-colors hover:text-primary-500">
-								Introduction
-							</a>
-						</li>
-						<li>
-							<a href="#customizer" class="transition-colors hover:text-primary-500">
-								Theme Customizer
-							</a>
-						</li>
-						<li>
-							<a href="#docs" class="transition-colors hover:text-primary-500"> Before we begin </a>
-						</li>
-						<li>
-							<a href="#playground" class="transition-colors hover:text-primary-500">
-								Component Playground
-							</a>
-						</li>
-						<li>
-							<a href="#seo-studio" class="transition-colors hover:text-primary-500">
-								Dynamic OG Studio
-							</a>
-						</li>
-						<li>
-							<a href="#quickstart" class="transition-colors hover:text-primary-500">
-								Quickstart Guide
-							</a>
-						</li>
-					</ul>
-				</aside>
 			</div>
-		</Container>
-	</section>
-</main>
+		</div>
+	</Container>
+</section>
 
-<!-- Interactive Modal Demo -->
-<Modal
-	bind:open={modalOpen}
-	title="Sven UI Modal Dialog"
-	description="Accessible dialog powered by Bits UI primitives and Svelte 5 runes."
+<!-- 6 Pillar Features Grid -->
+<section class="py-20">
+	<Container size="2xl">
+		<div class="mb-14 text-center">
+			<Badge color="primary" variant="subtle" size="sm" class="mb-3">Architectural Pillars</Badge>
+			<h2
+				class="text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-4xl dark:text-white"
+			>
+				Why Sven UI for SvelteKit?
+			</h2>
+			<p class="mx-auto mt-2 max-w-xl text-sm text-neutral-600 dark:text-neutral-400">
+				Modern web development primitives built specifically for solo developers who value velocity
+				and DX.
+			</p>
+		</div>
+
+		<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+			<!-- Card 1 -->
+			<div
+				class="rounded-2xl border border-neutral-200/80 bg-white p-6 shadow-xs transition-all hover:border-primary-500/40 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/40"
+			>
+				<div
+					class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-primary-100 text-primary-600 dark:bg-primary-950/60 dark:text-primary-400"
+				>
+					<Icon name="bolt" class="h-5 w-5" />
+				</div>
+				<h3 class="mb-2 text-base font-bold text-neutral-900 dark:text-white">
+					Svelte 5 Runes Native
+				</h3>
+				<p class="text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">
+					Zero legacy Svelte 4 store baggage. Pure Svelte 5 runes (`$state`, `$derived`, `$props`,
+					and `&#123;#snippet&#125;`) for lightning-fast reactivity and ultra-clean code.
+				</p>
+			</div>
+
+			<!-- Card 2 -->
+			<div
+				class="rounded-2xl border border-neutral-200/80 bg-white p-6 shadow-xs transition-all hover:border-primary-500/40 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/40"
+			>
+				<div
+					class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400"
+				>
+					<Icon name="photo" class="h-5 w-5" />
+				</div>
+				<h3 class="mb-2 text-base font-bold text-neutral-900 dark:text-white">
+					Dynamic OG Card Engine
+				</h3>
+				<p class="text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">
+					Zero-dependency runtime SVG OpenGraph image generator (`/api/og`). Generates pixel-perfect
+					social preview cards at the edge without heavy canvas binaries.
+				</p>
+			</div>
+
+			<!-- Card 3 -->
+			<div
+				class="rounded-2xl border border-neutral-200/80 bg-white p-6 shadow-xs transition-all hover:border-primary-500/40 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/40"
+			>
+				<div
+					class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-sky-100 text-sky-600 dark:bg-sky-950/60 dark:text-sky-400"
+				>
+					<Icon name="document-text" class="h-5 w-5" />
+				</div>
+				<h3 class="mb-2 text-base font-bold text-neutral-900 dark:text-white">
+					Automated Robots & Sitemaps
+				</h3>
+				<p class="text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">
+					Mount `createSvenHook(siteConfig)` in `src/hooks.server.ts` to get environment-aware
+					robots.txt, XML sitemaps with human-readable XSL dashboards, and webmanifests.
+				</p>
+			</div>
+
+			<!-- Card 4 -->
+			<div
+				class="rounded-2xl border border-neutral-200/80 bg-white p-6 shadow-xs transition-all hover:border-primary-500/40 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/40"
+			>
+				<div
+					class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-violet-100 text-violet-600 dark:bg-violet-950/60 dark:text-violet-400"
+				>
+					<Icon name="swatch" class="h-5 w-5" />
+				</div>
+				<h3 class="mb-2 text-base font-bold text-neutral-900 dark:text-white">
+					Tailwind CSS v4 Ready
+				</h3>
+				<p class="text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">
+					Built for `@tailwindcss/vite` with pure CSS `@theme` variables. Dynamic 11-shade color
+					paletting without configuring giant JavaScript theme objects.
+				</p>
+			</div>
+
+			<!-- Card 5 -->
+			<div
+				class="rounded-2xl border border-neutral-200/80 bg-white p-6 shadow-xs transition-all hover:border-primary-500/40 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/40"
+			>
+				<div
+					class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-600 dark:bg-amber-950/60 dark:text-amber-400"
+				>
+					<Icon name="squares-plus" class="h-5 w-5" />
+				</div>
+				<h3 class="mb-2 text-base font-bold text-neutral-900 dark:text-white">
+					25+ Accessible Primitives
+				</h3>
+				<p class="text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">
+					Buttons, Modals, Slideovers, Popovers, Tooltips, DataTables, FormFields, Selects, Sliders,
+					and Toasts ready for immediate production deployment.
+				</p>
+			</div>
+
+			<!-- Card 6 -->
+			<div
+				class="rounded-2xl border border-neutral-200/80 bg-white p-6 shadow-xs transition-all hover:border-primary-500/40 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/40"
+			>
+				<div
+					class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-rose-100 text-rose-600 dark:bg-rose-950/60 dark:text-rose-400"
+				>
+					<Icon name="sparkles" class="h-5 w-5" />
+				</div>
+				<h3 class="mb-2 text-base font-bold text-neutral-900 dark:text-white">
+					100% DRY Architecture
+				</h3>
+				<p class="text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">
+					Never repeat metadata or styling across files. Configure `src/site.config.ts` once and let
+					Sven UI derive your header, footer, SEO tags, and endpoints automatically.
+				</p>
+			</div>
+		</div>
+	</Container>
+</section>
+
+<!-- Documentation Quick Directory -->
+<section
+	class="border-t border-neutral-200/80 bg-neutral-50/60 py-16 dark:border-neutral-800/80 dark:bg-neutral-900/30"
 >
-	<p class="text-base text-neutral-600 dark:text-neutral-400">
-		This modal includes automatic keyboard focus trapping, backdrop blur, escape key handling, and
-		smooth transition animations.
-	</p>
+	<Container size="2xl">
+		<div class="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+			<div>
+				<Badge color="primary" variant="subtle" size="sm" class="mb-2">Documentation Hub</Badge>
+				<h2
+					class="text-2xl font-extrabold tracking-tight text-neutral-900 sm:text-3xl dark:text-white"
+				>
+					Explore Sven UI by Category
+				</h2>
+			</div>
+			<Button href="/docs/intro" color="primary" variant="outline" size="sm">
+				View All Documentation ↗
+			</Button>
+		</div>
 
-	{#snippet footer()}
-		<Button variant="outline" color="neutral" onclick={() => (modalOpen = false)}>Cancel</Button>
-		<Button
-			variant="solid"
-			color="primary"
-			onclick={() => {
-				modalOpen = false;
-				toast.success('Action confirmed!');
-			}}
+		<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+			<a
+				href="/docs/intro"
+				class="group rounded-xl border border-neutral-200 bg-white p-5 transition-all hover:border-primary-500 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/60"
+			>
+				<div
+					class="mb-1 text-xs font-bold tracking-wider text-primary-600 uppercase dark:text-primary-400"
+				>
+					Getting Started
+				</div>
+				<h3
+					class="text-sm font-bold text-neutral-900 transition-colors group-hover:text-primary-600 dark:text-white dark:group-hover:text-primary-400"
+				>
+					Introduction & Setup
+				</h3>
+				<p class="mt-2 text-xs leading-relaxed text-neutral-500">
+					Svelte 5 Runes Live Inspector and 4-step quickstart install guide.
+				</p>
+			</a>
+
+			<a
+				href="/docs/seo-og"
+				class="group rounded-xl border border-neutral-200 bg-white p-5 transition-all hover:border-primary-500 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/60"
+			>
+				<div
+					class="mb-1 text-xs font-bold tracking-wider text-emerald-600 uppercase dark:text-emerald-400"
+				>
+					SEO Suite
+				</div>
+				<h3
+					class="text-sm font-bold text-neutral-900 transition-colors group-hover:text-emerald-600 dark:text-white dark:group-hover:text-emerald-400"
+				>
+					Dynamic OG & Sitemaps
+				</h3>
+				<p class="mt-2 text-xs leading-relaxed text-neutral-500">
+					Interactive OG Studio, XML sitemaps with XSL dashboard, and robots.txt.
+				</p>
+			</a>
+
+			<a
+				href="/docs/comp-buttons"
+				class="group rounded-xl border border-neutral-200 bg-white p-5 transition-all hover:border-primary-500 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/60"
+			>
+				<div class="mb-1 text-xs font-bold tracking-wider text-sky-600 uppercase dark:text-sky-400">
+					Components
+				</div>
+				<h3
+					class="text-sm font-bold text-neutral-900 transition-colors group-hover:text-sky-600 dark:text-white dark:group-hover:text-sky-400"
+				>
+					Buttons & Form Inputs
+				</h3>
+				<p class="mt-2 text-xs leading-relaxed text-neutral-500">
+					Action buttons, pulsing radar chips, FormFields, and inputs.
+				</p>
+			</a>
+
+			<a
+				href="/docs/comp-overlays"
+				class="group rounded-xl border border-neutral-200 bg-white p-5 transition-all hover:border-primary-500 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/60"
+			>
+				<div
+					class="mb-1 text-xs font-bold tracking-wider text-violet-600 uppercase dark:text-violet-400"
+				>
+					Components
+				</div>
+				<h3
+					class="text-sm font-bold text-neutral-900 transition-colors group-hover:text-violet-600 dark:text-white dark:group-hover:text-violet-400"
+				>
+					Modals & DataTables
+				</h3>
+				<p class="mt-2 text-xs leading-relaxed text-neutral-500">
+					Dialog overlays, slideover drawers, dropdowns, and data tables.
+				</p>
+			</a>
+		</div>
+	</Container>
+</section>
+
+<!-- Call to Action Banner -->
+<section class="py-20">
+	<Container size="lg">
+		<div
+			class="relative overflow-hidden rounded-3xl border border-primary-500/30 bg-gradient-to-br from-primary-900/40 via-neutral-900/90 to-neutral-950 p-8 text-center shadow-2xl backdrop-blur-md sm:p-12"
 		>
-			Confirm Action
-		</Button>
-	{/snippet}
-</Modal>
+			<div
+				class="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-primary-500/20 blur-3xl"
+			></div>
+			<div
+				class="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-amber-500/20 blur-3xl"
+			></div>
 
-<!-- Interactive Slideover Demo -->
-<Slideover
-	bind:open={slideoverOpen}
-	title="Filters & Settings Drawer"
-	description="Responsive slide-in panel for navigation, filters, or details."
->
-	<div class="space-y-4 py-2">
-		<FormField label="Search Filter">
-			<Input placeholder="Filter records..." icon="search" />
-		</FormField>
-		<FormField label="Category">
-			<Select
-				options={[
-					{ value: 'all', label: 'All Categories' },
-					{ value: 'components', label: 'Components' },
-					{ value: 'seo', label: 'SEO Tools' }
-				]}
-			/>
-		</FormField>
-		<Switch label="Enable Realtime Sync" />
-	</div>
+			<Badge color="primary" variant="subtle" size="sm" class="mb-4">Production Ready</Badge>
+			<h2 class="mb-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+				Start Building Faster with Sven UI
+			</h2>
+			<p class="mx-auto mb-8 max-w-xl text-sm leading-relaxed text-neutral-300">
+				Supercharge your SvelteKit development with accessible Tailwind CSS components and automated
+				SEO parity.
+			</p>
 
-	{#snippet footer()}
-		<Button variant="solid" color="primary" block onclick={() => (slideoverOpen = false)}>
-			Apply Filters
-		</Button>
-	{/snippet}
-</Slideover>
-
-<!-- Footer -->
-<Footer config={siteConfig} />
+			<div class="flex flex-wrap items-center justify-center gap-4">
+				<Button
+					href="/docs/intro"
+					size="lg"
+					color="primary"
+					variant="solid"
+					class="font-semibold shadow-lg shadow-primary-500/30"
+				>
+					Read the Documentation ↗
+				</Button>
+				<Button
+					href="https://github.com/FuntionalFrost/sven-ui"
+					target="_blank"
+					size="lg"
+					variant="outline"
+					color="neutral"
+					class="border-neutral-700 font-semibold text-white hover:bg-neutral-800"
+				>
+					Star on GitHub ★
+				</Button>
+			</div>
+		</div>
+	</Container>
+</section>

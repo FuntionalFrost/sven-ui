@@ -45,9 +45,9 @@ export const siteConfig = defineSiteConfig({
 		exclude: ['/api/*']
 	},
 	nav: [
-		{ label: 'Docs', href: '#docs' },
-		{ label: 'Components', href: '#components' },
-		{ label: 'SEO Suite', href: '#seo-studio' },
+		{ label: 'Docs', href: '/docs/intro' },
+		{ label: 'Components', href: '/docs/comp-buttons' },
+		{ label: 'SEO Suite', href: '/docs/seo-og' },
 		{ label: 'Releases', href: 'https://github.com/FuntionalFrost/sven-ui/releases' }
 	],
 	socials: {
