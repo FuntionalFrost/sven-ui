@@ -11,6 +11,10 @@
 	"bugs": {
 		"url": "https://github.com/FuntionalFrost/sven-ui/issues"
 	},
+	"packageManager": "pnpm@11.24.0",
+	"engines": {
+		"node": ">=24"
+	},
 	"keywords": [
 		"svelte",
 		"sveltekit",
