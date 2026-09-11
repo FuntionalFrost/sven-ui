@@ -15,53 +15,56 @@ export function createRobotsHandler(optionsOrConfig: SiteConfig | RobotsOptions)
 	const { config } = options;
 
 	return async ({ url }) => {
-		const isProdEnv = typeof process !== 'undefined' && process.env?.NODE_ENV === 'production';
-		const isImportMetaProd =
-			typeof import.meta !== 'undefined' &&
-			Boolean((import.meta as unknown as { env?: { PROD?: boolean } })?.env?.PROD);
+		try {
+			const isProdEnv = typeof process !== 'undefined' && process.env?.NODE_ENV === 'production';
+			const isProd =
+				options.isProduction ??
+				(isProdEnv &&
+					!url.hostname.includes('localhost') &&
+					!url.hostname.includes('vercel.app') &&
+					!url.hostname.includes('preview') &&
+					!url.hostname.includes('staging'));
 
-		const isProd =
-			options.isProduction ??
-			((isProdEnv || isImportMetaProd) &&
-				!url.hostname.includes('localhost') &&
-				!url.hostname.includes('vercel.app') &&
-				!url.hostname.includes('preview') &&
-				!url.hostname.includes('staging'));
+			const baseUrl = config?.url || url?.origin || 'https://yaxa.vercel.app';
 
-		const baseUrl = config.url || url.origin;
+			let body: string;
 
-		let body: string;
-
-		if (!isProd && !options.isProduction) {
-			// Non-production or preview deployment: protect against indexing
-			body = `# Non-production environment: indexing disabled\nUser-agent: *\nDisallow: /\n`;
-		} else if (config.robots?.rules && config.robots.rules.length > 0) {
-			// Custom defined rules
-			body = config.robots.rules
-				.map((rule) => {
-					let ruleText = `User-agent: ${rule.userAgent}\n`;
-					if (rule.allow) {
-						ruleText += rule.allow.map((path) => `Allow: ${path}\n`).join('');
-					}
-					if (rule.disallow) {
-						ruleText += rule.disallow.map((path) => `Disallow: ${path}\n`).join('');
-					}
-					return ruleText;
-				})
-				.join('\n');
-		} else {
-			// Default production allow
-			body = `User-agent: *\nAllow: /\n`;
-		}
-
-		// Always append sitemap reference
-		body += `\nSitemap: ${baseUrl}/sitemap.xml\n`;
-
-		return new Response(body, {
-			headers: {
-				'Content-Type': 'text/plain; charset=utf-8',
-				'Cache-Control': 'public, max-age=86400'
+			if (!isProd && !options.isProduction) {
+				// Non-production or preview deployment: protect against indexing
+				body = `# Non-production environment: indexing disabled\nUser-agent: *\nDisallow: /\n`;
+			} else if (config?.robots?.rules && config.robots.rules.length > 0) {
+				// Custom defined rules
+				body = config.robots.rules
+					.map((rule) => {
+						let ruleText = `User-agent: ${rule.userAgent}\n`;
+						if (rule.allow) {
+							ruleText += rule.allow.map((path) => `Allow: ${path}\n`).join('');
+						}
+						if (rule.disallow) {
+							ruleText += rule.disallow.map((path) => `Disallow: ${path}\n`).join('');
+						}
+						return ruleText;
+					})
+					.join('\n');
+			} else {
+				// Default production allow
+				body = `User-agent: *\nAllow: /\n`;
 			}
-		});
+
+			// Always append sitemap reference
+			body += `\nSitemap: ${baseUrl}/sitemap.xml\n`;
+
+			return new Response(body, {
+				headers: {
+					'Content-Type': 'text/plain; charset=utf-8',
+					'Cache-Control': 'public, max-age=86400'
+				}
+			});
+		} catch (err) {
+			console.error('robots.txt handler error:', err);
+			return new Response(`User-agent: *\nDisallow: /\n`, {
+				headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+			});
+		}
 	};
 }
