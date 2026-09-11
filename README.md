@@ -31,17 +31,43 @@ _Nuxt UI v4 & Nuxt UI Pro Equivalent for SvelteKit 2.7+ & Svelte 5 with Built-in
 
 ---
 
-## 📦 Quickstart in 3 Steps
+## 📦 Quickstart
 
-### 1. Install Yaxa
+### 1. Install Dependencies
+
+Install `yaxa-svelte` along with Tailwind CSS v4 and icon tooling:
 
 ```bash
-pnpm add yaxa-svelte bits-ui tailwind-variants svelte-sonner better-auth drizzle-orm @polar-sh/sdk resend
-# or
-npm install yaxa-svelte bits-ui tailwind-variants svelte-sonner better-auth drizzle-orm @polar-sh/sdk resend
+# Core package
+pnpm add yaxa-svelte
+
+# Tailwind CSS v4 & Icon tooling (Dev Dependencies)
+pnpm add -D tailwindcss @tailwindcss/vite @tailwindcss/typography unplugin-icons @iconify/json
 ```
 
-### 2. Define Your Site Configuration
+_(Optional full-stack SaaS features: `pnpm add better-auth drizzle-orm @polar-sh/sdk resend`)_
+
+---
+
+### 2. Configure `vite.config.ts`
+
+Add Tailwind CSS and Unplugin Icons to your Vite plugins:
+
+```ts
+// vite.config.ts
+import { sveltekit } from '@sveltejs/kit/vite';
+import tailwindcss from '@tailwindcss/vite';
+import Icons from 'unplugin-icons/vite';
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+	plugins: [tailwindcss(), Icons({ compiler: 'svelte', autoInstall: false }), sveltekit()]
+});
+```
+
+---
+
+### 3. Define Your Site Configuration
 
 Create `src/site.config.ts` — your single source of truth for branding, metadata, and SEO:
 
@@ -55,7 +81,8 @@ export const siteConfig = defineSiteConfig({
 	description: 'Fast, beautiful, accessible web applications.',
 	url: 'https://my-app.com',
 	theme: {
-		primaryColor: '#ff3e00',
+		accent: 'svelte', // 'svelte' | 'emerald' | 'amber' | 'sky' | 'violet' | 'rose' | 'indigo'
+		neutral: 'zinc', // 'zinc' | 'slate' | 'stone' | 'neutral'
 		defaultMode: 'dark'
 	},
 	socials: {
@@ -65,11 +92,16 @@ export const siteConfig = defineSiteConfig({
 });
 ```
 
-### 3. Wrap Root Layout
+---
+
+### 4. Import CSS & Wrap Root Layout
+
+Import `yaxa-svelte/yaxa.css` and wrap your app in `<YaxaApp>`:
 
 ```svelte
 <!-- src/routes/+layout.svelte -->
 <script lang="ts">
+	import 'yaxa-svelte/yaxa.css';
 	import { YaxaApp } from 'yaxa-svelte';
 	import { siteConfig } from '../site.config';
 

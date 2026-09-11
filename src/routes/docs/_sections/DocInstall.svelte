@@ -5,10 +5,29 @@
 
 	const viteSnippet = `import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
+import Icons from 'unplugin-icons/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  plugins: [tailwindcss(), sveltekit()]
+  plugins: [
+    tailwindcss(),
+    Icons({ compiler: 'svelte', autoInstall: false }),
+    sveltekit()
+  ]
+});`;
+
+	const configSnippet = `import { defineSiteConfig } from 'yaxa-svelte';
+
+export const siteConfig = defineSiteConfig({
+  name: 'My App',
+  title: 'My App — Built with SvelteKit & Yaxa',
+  description: 'Fast, accessible, modern UI.',
+  url: 'https://my-app.com',
+  theme: {
+    accent: 'svelte',
+    neutral: 'zinc',
+    defaultMode: 'dark'
+  }
 });`;
 
 	const layoutSnippet =
@@ -68,11 +87,15 @@ export const handle = createYaxaHook(siteConfig);`;
 				2
 			</span>
 			<h3 class="text-base font-bold text-zinc-900 dark:text-white">
-				Install Yaxa and Tailwind CSS v4
+				Install Yaxa and Dev Dependencies
 			</h3>
 		</div>
+		<p class="text-xs text-zinc-600 dark:text-zinc-400">
+			Install the core package and the required Tailwind CSS v4 and icon tooling:
+		</p>
 		<DocCodeBlock
-			code="pnpm add yaxa-svelte @tailwindcss/vite tailwindcss"
+			code="pnpm add yaxa-svelte
+pnpm add -D tailwindcss @tailwindcss/vite @tailwindcss/typography unplugin-icons @iconify/json"
 			filename="Terminal"
 			language="bash"
 		/>
@@ -89,7 +112,7 @@ export const handle = createYaxaHook(siteConfig);`;
 			<h3 class="text-base font-bold text-zinc-900 dark:text-white">Configure Vite Plugins</h3>
 		</div>
 		<p class="text-xs text-zinc-600 dark:text-zinc-400">
-			Add the Tailwind CSS Vite plugin in your <code
+			Add Tailwind CSS and Unplugin Icons in your <code
 				class="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-xs dark:bg-zinc-800"
 				>vite.config.ts</code
 			>:
@@ -105,13 +128,35 @@ export const handle = createYaxaHook(siteConfig);`;
 			>
 				4
 			</span>
+			<h3 class="text-base font-bold text-zinc-900 dark:text-white">Create Site Configuration</h3>
+		</div>
+		<p class="text-xs text-zinc-600 dark:text-zinc-400">
+			Define branding, theme, and default SEO in <code
+				class="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-xs dark:bg-zinc-800"
+				>src/site.config.ts</code
+			>:
+		</p>
+		<DocCodeBlock code={configSnippet} filename="src/site.config.ts" language="typescript" />
+	</div>
+
+	<!-- Step 5 -->
+	<div class="space-y-3">
+		<div class="flex items-center gap-2.5">
+			<span
+				class="flex h-7 w-7 items-center justify-center rounded-full bg-primary-600 text-xs font-bold text-white dark:bg-primary-500"
+			>
+				5
+			</span>
 			<h3 class="text-base font-bold text-zinc-900 dark:text-white">
-				Mount YaxaApp in Root Layout
+				Import CSS & Mount YaxaApp in Root Layout
 			</h3>
 		</div>
 		<p class="text-xs text-zinc-600 dark:text-zinc-400">
-			Wrap your application in <code
-				class="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-xs dark:bg-zinc-800"
+			Import <code class="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-xs dark:bg-zinc-800"
+				>yaxa-svelte/yaxa.css</code
+			>
+			and wrap your application in
+			<code class="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-xs dark:bg-zinc-800"
 				>&lt;YaxaApp /&gt;</code
 			>
 			in
@@ -122,7 +167,7 @@ export const handle = createYaxaHook(siteConfig);`;
 		<DocCodeBlock code={layoutSnippet} filename="src/routes/+layout.svelte" language="svelte" />
 	</div>
 
-	<!-- Optional Step 5 -->
+	<!-- Optional Step 6 -->
 	<div class="space-y-3">
 		<div class="flex items-center gap-2.5">
 			<Badge color="primary" variant="subtle" size="sm">Optional</Badge>
