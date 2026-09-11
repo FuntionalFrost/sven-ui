@@ -70,10 +70,11 @@ export function generateOgSvg(params: {
 
   <!-- Top Bar: Logo & Badge -->
   <g transform="translate(120, 130)">
-    <!-- Yaxa Geometric Y+X Monogram Icon -->
+    <!-- Yaxa Svelte-Style Interlocking X Icon -->
     <rect width="40" height="40" rx="10" fill="url(#brandGrad)"/>
-    <g transform="scale(0.4)" fill="#ffffff">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M22 20 L38 20 L50 40 L62 20 L78 20 L58 50 L78 80 L62 80 L50 60 L38 80 L22 80 L42 50 Z"/>
+    <g transform="scale(0.4)" stroke="#ffffff" stroke-width="14" stroke-linecap="round">
+      <path d="M26 26 L74 74"/>
+      <path d="M74 26 L58 42 M42 58 L26 74"/>
     </g>
     
     <!-- Site Name -->

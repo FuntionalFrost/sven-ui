@@ -43,11 +43,12 @@
 			xmlns="http://www.w3.org/2000/svg"
 			aria-hidden="true"
 		>
+			<path d="M26 26 L74 74" stroke="currentColor" stroke-width="14" stroke-linecap="round" />
 			<path
-				fill="currentColor"
-				fill-rule="evenodd"
-				clip-rule="evenodd"
-				d="M22 20 L38 20 L50 40 L62 20 L78 20 L58 50 L78 80 L62 80 L50 60 L38 80 L22 80 L42 50 Z"
+				d="M74 26 L58 42 M42 58 L26 74"
+				stroke="currentColor"
+				stroke-width="14"
+				stroke-linecap="round"
 			/>
 		</svg>
 	</div>
