@@ -49,9 +49,9 @@
 							<div
 								class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600 text-sm font-black text-white shadow-sm"
 							>
-								S
+								Y
 							</div>
-							<span>Sven <span class="text-primary-600 dark:text-primary-400">SaaS</span></span>
+							<span>Yaxa <span class="text-primary-600 dark:text-primary-400">SaaS</span></span>
 						</a>
 
 						<nav
@@ -242,10 +242,10 @@
 	<!-- Footer -->
 	<Footer
 		config={{
-			name: 'Sven UI Solo SaaS',
-			title: 'Sven UI',
+			name: 'Yaxa Solo SaaS',
+			title: 'Yaxa',
 			description: 'The batteries-included SvelteKit SaaS stack.',
-			url: 'https://sven-ui.vercel.app'
+			url: 'https://yaxa.vercel.app'
 		}}
 	/>
 </div>

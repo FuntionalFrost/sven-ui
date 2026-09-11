@@ -1,6 +1,6 @@
 <div align="center">
 
-# Sven UI
+# Yaxa
 
 **The Intuitive Svelte UI & Solo SaaS Library**  
 _Nuxt UI v4 & Nuxt UI Pro Equivalent for SvelteKit 2.7+ & Svelte 5 with Built-in SEO & SaaS Parity._
@@ -11,7 +11,7 @@ _Nuxt UI v4 & Nuxt UI Pro Equivalent for SvelteKit 2.7+ & Svelte 5 with Built-in
 [![Bits UI](https://img.shields.io/badge/Bits_UI-v2.0-18181b?style=flat)](https://bits-ui.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](LICENSE)
 
-[**Live Documentation & Playground →**](https://sven-ui.dev)
+[**Live Documentation & Playground →**](https://yaxa.vercel.app)
 
 </div>
 
@@ -19,7 +19,7 @@ _Nuxt UI v4 & Nuxt UI Pro Equivalent for SvelteKit 2.7+ & Svelte 5 with Built-in
 
 ## 🌟 Overview
 
-**Sven UI** brings the full developer experience, visual elegance, and full-stack toolkit of **Nuxt UI** and the **Nuxt SEO + SaaS ecosystem** to **SvelteKit 2.7+** and **Svelte 5**.
+**Yaxa** brings the full developer experience, visual elegance, and full-stack toolkit of **Nuxt UI** and the **Nuxt SEO + SaaS ecosystem** to **SvelteKit 2.7+** and **Svelte 5**.
 
 - 🎨 **Tailwind CSS v4 Native Tokens**: Styled with `@theme` variables; customize any color or token directly.
 - ⚡ **Pure Svelte 5 Runes**: Built using `$state`, `$derived`, `$props`, and `$bindable` — zero Virtual DOM overhead.
@@ -33,12 +33,12 @@ _Nuxt UI v4 & Nuxt UI Pro Equivalent for SvelteKit 2.7+ & Svelte 5 with Built-in
 
 ## 📦 Quickstart in 3 Steps
 
-### 1. Install Sven UI
+### 1. Install Yaxa
 
 ```bash
-pnpm add sven-ui bits-ui tailwind-variants svelte-sonner better-auth drizzle-orm @polar-sh/sdk resend
+pnpm add yaxa bits-ui tailwind-variants svelte-sonner better-auth drizzle-orm @polar-sh/sdk resend
 # or
-npm install sven-ui bits-ui tailwind-variants svelte-sonner better-auth drizzle-orm @polar-sh/sdk resend
+npm install yaxa bits-ui tailwind-variants svelte-sonner better-auth drizzle-orm @polar-sh/sdk resend
 ```
 
 ### 2. Define Your Site Configuration
@@ -47,7 +47,7 @@ Create `src/site.config.ts` — your single source of truth for branding, metada
 
 ```ts
 // src/site.config.ts
-import { defineSiteConfig } from 'sven-ui';
+import { defineSiteConfig } from 'yaxa';
 
 export const siteConfig = defineSiteConfig({
 	name: 'My Indie SaaS',
@@ -70,15 +70,15 @@ export const siteConfig = defineSiteConfig({
 ```svelte
 <!-- src/routes/+layout.svelte -->
 <script lang="ts">
-	import { SvenApp } from 'sven-ui';
+	import { YaxaApp } from 'yaxa';
 	import { siteConfig } from '../site.config';
 
 	let { children } = $props();
 </script>
 
-<SvenApp config={siteConfig}>
+<YaxaApp config={siteConfig}>
 	{@render children()}
-</SvenApp>
+</YaxaApp>
 ```
 
 ---
@@ -90,18 +90,18 @@ Handle **all 5 SEO endpoints** and **Better-Auth session parsing** in `src/hooks
 ```ts
 // src/hooks.server.ts
 import { sequence } from '@sveltejs/kit/hooks';
-import { createSvenHook, createSvenAuth, createSvenAuthHook } from 'sven-ui';
+import { createYaxaHook, createYaxaAuth, createYaxaAuthHook } from 'yaxa';
 import { siteConfig } from './site.config';
 
-const svenHook = createSvenHook(siteConfig);
-const auth = createSvenAuth();
-const authHook = createSvenAuthHook({
+const yaxaHook = createYaxaHook(siteConfig);
+const auth = createYaxaAuth();
+const authHook = createYaxaAuthHook({
 	auth,
 	protectedPaths: ['/dashboard', '/settings', '/billing'],
 	loginPath: '/login'
 });
 
-export const handle = sequence(svenHook, authHook);
+export const handle = sequence(yaxaHook, authHook);
 ```
 
 ---
@@ -112,7 +112,7 @@ Create a webhook endpoint in `src/routes/api/webhooks/polar/+server.ts`:
 
 ```ts
 // src/routes/api/webhooks/polar/+server.ts
-import { createPolarWebhookHandler } from 'sven-ui';
+import { createPolarWebhookHandler } from 'yaxa';
 
 export const POST = createPolarWebhookHandler();
 ```
@@ -126,23 +126,23 @@ export const POST = createPolarWebhookHandler();
 | **SaaS Suite**     | `AuthCard`, `UserMenu`, `PricingCard`, `PricingTable`, `SubscriptionCard`, `useAuth`                                                                         |
 | **Elements**       | `Button`, `ButtonGroup`, `Badge`, `Avatar`, `AvatarGroup`, `DataTable`, `Chip`, `Meter`, `Kbd`, `Icon`, `Spinner`, `Progress`, `Skeleton`, `Link`, `Logo`    |
 | **Forms**          | `Form`, `FormField`, `Input`, `Textarea`, `Checkbox`, `Switch`, `Select`, `RadioGroup`, `Slider`, `ColorPicker`                                              |
-| **Layout**         | `Container`, `Header`, `Footer`, `Section`, `Card`, `Divider`, `SvenApp`                                                                                     |
+| **Layout**         | `Container`, `Header`, `Footer`, `Section`, `Card`, `Divider`, `YaxaApp`                                                                                     |
 | **Overlays & Nav** | `Tabs`, `Breadcrumb`, `Pagination`, `CommandPalette` (`⌘K`), `DropdownMenu`, `ContextMenu`, `Modal`, `Slideover`, `Popover`, `Tooltip`, `Alert`, `Accordion` |
 | **Composables**    | `useAuth`, `useClipboard`, `useShortcuts`, `useColorMode`, `useToast`, `useMediaQuery`, `useDebounce`                                                        |
 
 ---
 
-## 🎨 Interactive Live Accent Themes
+## 🎨 Interactive Live Themes
 
-Sven UI includes first-class support for instant dynamic CSS accent variables:
+Yaxa includes first-class support for instant dynamic CSS accent and neutral variables via `theme`:
 
 ```ts
-import { switchAccent } from 'sven-ui';
+import { theme } from 'yaxa';
 
 // Change theme accent dynamically at runtime:
-switchAccent('#ff3e00'); // Svelte Flame
-switchAccent('#10b981'); // Emerald Mint
-switchAccent('#0ea5e9'); // Sky Cyan
+theme.setAccent('svelte'); // Svelte Flame (#ff3e00)
+theme.setAccent('emerald'); // Emerald Mint (#10b981)
+theme.setAccent('sky'); // Sky Cyan (#0ea5e9)
 ```
 
 ---
@@ -151,7 +151,7 @@ switchAccent('#0ea5e9'); // Sky Cyan
 
 Contributions are always welcome!
 
-1. Fork the repository: `git clone https://github.com/FuntionalFrost/sven-ui.git`
+1. Fork the repository: `git clone https://github.com/FuntionalFrost/yaxa.git`
 2. Install dependencies: `pnpm install`
 3. Start development server: `pnpm dev`
 4. Run type checking & linting: `pnpm check && pnpm lint`
@@ -160,4 +160,4 @@ Contributions are always welcome!
 
 ## 📄 License
 
-[MIT License](LICENSE) © 2026 Sven UI Contributors.
+[MIT License](LICENSE) © 2026 Yaxa Contributors.

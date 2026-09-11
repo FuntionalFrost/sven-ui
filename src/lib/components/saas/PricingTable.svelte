@@ -15,7 +15,7 @@
 		{
 			id: 'free',
 			name: 'Hobby',
-			description: 'Perfect for side projects and evaluating Sven UI.',
+			description: 'Perfect for side projects and evaluating Yaxa.',
 			priceMonthly: 0,
 			priceYearly: 0,
 			popular: false,

@@ -100,7 +100,7 @@
 		<div class="space-y-4 text-xs text-zinc-600 dark:text-zinc-400">
 			<p>Configure custom domains, automatic SSL certificates, and CI/CD webhooks.</p>
 			<div class="rounded-lg bg-zinc-100 p-3 font-mono text-[11px] dark:bg-zinc-800/60">
-				VERCEL_ANALYTICS_ID=sven_ui_prod_99
+				VERCEL_ANALYTICS_ID=yaxa_prod_99
 			</div>
 		</div>
 		{#snippet footer()}
@@ -142,12 +142,12 @@
 			<Alert
 				color="info"
 				title="Svelte 5 Runes Support"
-				description="Sven UI requires Svelte 5.0.0 or later and SvelteKit 2.7+."
+				description="Yaxa requires Svelte 5.0.0 or later and SvelteKit 2.7+."
 			/>
 			<Alert
 				color="warning"
 				title="Tailwind CSS v4 Requirement"
-				description="Make sure to install @tailwindcss/vite and import 'sven-ui/sven.css' in your root layout."
+				description="Make sure to install @tailwindcss/vite and import 'yaxa/yaxa.css' in your root layout."
 			/>
 		</div>
 	</div>

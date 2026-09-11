@@ -27,7 +27,7 @@
 
 			<!-- Quick Jump Link to Github -->
 			<a
-				href="https://github.com/FuntionalFrost/sven-ui"
+				href="https://github.com/FuntionalFrost/yaxa"
 				target="_blank"
 				rel="noopener noreferrer"
 				class="hidden items-center gap-1.5 font-mono text-zinc-500 hover:text-zinc-900 sm:inline-flex dark:hover:text-white"

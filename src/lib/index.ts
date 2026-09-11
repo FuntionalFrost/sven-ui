@@ -1,4 +1,4 @@
-// Sven UI - Nuxt UI v4 Equivalent for SvelteKit 2.7+ & Svelte 5
+// Yaxa - Nuxt UI v4 Equivalent for SvelteKit 2.7+ & Svelte 5
 
 // Elements
 export { default as Button } from './components/elements/Button.svelte';
@@ -37,7 +37,7 @@ export { default as Footer } from './components/layout/Footer.svelte';
 export { default as Section } from './components/layout/Section.svelte';
 export { default as Card } from './components/layout/Card.svelte';
 export { default as Divider } from './components/layout/Divider.svelte';
-export { default as SvenApp } from './components/layout/SvenApp.svelte';
+export { default as YaxaApp } from './components/layout/YaxaApp.svelte';
 
 // Navigation & Command
 export { default as Tabs } from './components/navigation/Tabs.svelte';
@@ -97,8 +97,8 @@ export { default as OgImage } from './components/seo/OgImage.svelte';
 export { defineSiteConfig } from './site/config';
 export type { SiteConfig, NavItem, AuthorConfig } from './site/config';
 export { setSiteConfig, getSiteConfig } from './site/context';
-export { createSvenHook } from './site/hook';
-export type { SvenHookOptions } from './site/hook';
+export { createYaxaHook } from './site/hook';
+export type { YaxaHookOptions } from './site/hook';
 export { createRobotsHandler } from './site/robots';
 export type { RobotsOptions } from './site/robots';
 export { createSitemapHandler } from './site/sitemap';
@@ -116,8 +116,8 @@ export {
 export type { SchemaType, BreadcrumbItem, ArticleSchemaData } from './site/schema';
 export { definePageSeo } from './site/seo-helpers';
 export type { PageSeoConfig } from './site/seo-helpers';
-export { sven } from './vite/index';
-export type { SvenPluginOptions } from './vite/index';
+export { yaxa } from './vite/index';
+export type { YaxaPluginOptions } from './vite/index';
 
 // SaaS Suite: Components, Composables & Integrations
 export { default as AuthCard } from './components/saas/AuthCard.svelte';
@@ -139,10 +139,10 @@ export type {
 	PricingTier,
 	PricingFeature
 } from './server/db/index';
-export { createSvenAuth } from './server/auth/index';
-export type { SvenAuthConfig, SvenAuth } from './server/auth/index';
-export { createSvenAuthHook } from './server/auth/hook';
-export type { SvenAuthHookOptions } from './server/auth/hook';
+export { createYaxaAuth } from './server/auth/index';
+export type { YaxaAuthConfig, YaxaAuth } from './server/auth/index';
+export { createYaxaAuthHook } from './server/auth/hook';
+export type { YaxaAuthHookOptions } from './server/auth/hook';
 export {
 	getPolarClient,
 	createPolarCheckout,

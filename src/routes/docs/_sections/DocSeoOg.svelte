@@ -5,7 +5,7 @@
 	import OgImage from '$lib/components/seo/OgImage.svelte';
 	import Icon from '$lib/components/elements/Icon.svelte';
 
-	let ogTitle = $state('Building Faster with SvelteKit & Sven UI');
+	let ogTitle = $state('Building Faster with SvelteKit & Yaxa');
 	let ogDescription = $state(
 		'The complete Svelte 5 component suite with zero-config SVG OpenGraph generation.'
 	);
@@ -19,7 +19,7 @@
 	const codeUsage =
 		`<` +
 		`script lang="ts">
-  import { OgImage } from 'sven-ui';
+  import { OgImage } from 'yaxa';
 <` +
 		`/script>
 

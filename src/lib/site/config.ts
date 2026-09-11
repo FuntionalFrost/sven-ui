@@ -90,10 +90,10 @@ export function defineSiteConfig(config: SiteConfig): SiteConfig {
 }
 
 export const DEFAULT_SITE_CONFIG: SiteConfig = defineSiteConfig({
-	name: 'Sven UI',
-	title: 'Sven UI — Intuitive Svelte UI Library',
+	name: 'Yaxa',
+	title: 'Yaxa — Intuitive Svelte UI Library',
 	description: 'A comprehensive Svelte 5 UI component and SEO library with Tailwind CSS v4.',
-	url: 'https://sven-ui.vercel.app',
+	url: 'https://yaxa.vercel.app',
 	logo: '/favicon.svg',
 	theme: {
 		primaryColor: '#ff3e00',
@@ -101,7 +101,7 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = defineSiteConfig({
 		defaultMode: 'dark'
 	},
 	seo: {
-		titleTemplate: '%s · Sven UI',
+		titleTemplate: '%s · Yaxa',
 		defaultOgImage: '/api/og',
 		twitterCard: 'summary_large_image'
 	},

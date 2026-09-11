@@ -35,9 +35,9 @@ export function generateOgSvg(params: {
 
 	const safeTitle = escapeXml(params.title || 'Welcome');
 	const safeDesc = escapeXml(params.description || 'Fast, beautiful, accessible web applications.');
-	const safeSiteName = escapeXml(params.siteName || 'Sven UI');
+	const safeSiteName = escapeXml(params.siteName || 'Yaxa');
 	const safeBadge = params.badge ? escapeXml(params.badge) : null;
-	const safeUrl = escapeXml(params.url ? params.url.replace(/^https?:\/\//, '') : 'sven-ui.dev');
+	const safeUrl = escapeXml(params.url ? params.url.replace(/^https?:\/\//, '') : 'yaxa.dev');
 
 	return `<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -107,14 +107,14 @@ export function generateOgSvg(params: {
 
 export function createOgImageHandler(options?: OgImageOptions): RequestHandler {
 	return async ({ url }) => {
-		const title = url.searchParams.get('title') || options?.config?.title || 'Sven UI';
+		const title = url.searchParams.get('title') || options?.config?.title || 'Yaxa';
 		const description =
 			url.searchParams.get('description') ||
 			options?.config?.description ||
 			'Fast, beautiful, accessible UI components and SEO tools for SvelteKit.';
 		const badge = url.searchParams.get('badge') || undefined;
 		const theme = (url.searchParams.get('theme') as 'dark' | 'light') || 'dark';
-		const siteName = url.searchParams.get('site') || options?.config?.name || 'Sven UI';
+		const siteName = url.searchParams.get('site') || options?.config?.name || 'Yaxa';
 		const siteUrl = options?.config?.url || url.origin;
 
 		const svg = generateOgSvg({

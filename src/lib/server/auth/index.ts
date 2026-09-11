@@ -2,7 +2,7 @@ import { betterAuth, type BetterAuthOptions } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { schemaPg, schemaSqlite, getDb, type AnyDb } from '../db';
 
-export interface SvenAuthConfig {
+export interface YaxaAuthConfig {
 	db?: AnyDb;
 	driver?: 'neon' | 'turso' | 'sqlite';
 	secret?: string;
@@ -32,9 +32,9 @@ export interface SvenAuthConfig {
 }
 
 /**
- * Creates and initializes a Better-Auth instance pre-configured for Sven UI and Drizzle.
+ * Creates and initializes a Better-Auth instance pre-configured for Yaxa and Drizzle.
  */
-export function createSvenAuth(config: SvenAuthConfig = {}) {
+export function createYaxaAuth(config: YaxaAuthConfig = {}) {
 	const driver =
 		config.driver ||
 		(typeof process !== 'undefined'
@@ -48,7 +48,7 @@ export function createSvenAuth(config: SvenAuthConfig = {}) {
 		secret:
 			config.secret ||
 			(typeof process !== 'undefined' ? process.env.BETTER_AUTH_SECRET : undefined) ||
-			'sven-ui-default-super-secret-key-change-in-prod-123456789',
+			'yaxa-default-super-secret-key-change-in-prod-123456789',
 		baseURL:
 			config.baseURL ||
 			(typeof process !== 'undefined'
@@ -104,4 +104,4 @@ export function createSvenAuth(config: SvenAuthConfig = {}) {
 	return betterAuth(authOptions);
 }
 
-export type SvenAuth = ReturnType<typeof createSvenAuth>;
+export type YaxaAuth = ReturnType<typeof createYaxaAuth>;

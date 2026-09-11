@@ -39,7 +39,7 @@
 		propUser ||
 			auth.user || {
 				name: 'Solo Developer',
-				email: 'dev@sven-ui.dev',
+				email: 'dev@yaxa.dev',
 				image: null,
 				tier
 			}

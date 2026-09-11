@@ -7,12 +7,12 @@
 	let sampleName = $state('My SaaS App');
 	let sampleUrl = $state('https://mysaas.com');
 
-	let generatedConfig = $derived(`import { defineSiteConfig } from 'sven-ui';
+	let generatedConfig = $derived(`import { defineSiteConfig } from 'yaxa';
 
 export const siteConfig = defineSiteConfig({
   name: '${sampleName}',
   title: '${sampleName} — Modern Web App',
-  description: 'Built with Sven UI, SvelteKit, and Tailwind CSS v4.',
+  description: 'Built with Yaxa, SvelteKit, and Tailwind CSS v4.',
   url: '${sampleUrl}',
   theme: {
     primaryColor: '${ACCENT_PALETTES[theme.accent]?.color || '#ff3e00'}',
@@ -38,7 +38,7 @@ export const siteConfig = defineSiteConfig({
 	const contextSnippet =
 		`<` +
 		`script lang="ts">
-  import { getSiteConfig } from 'sven-ui';
+  import { getSiteConfig } from 'yaxa';
 
   // Reactively retrieve the current site configuration from context
   const site = getSiteConfig();
@@ -103,7 +103,7 @@ export const siteConfig = defineSiteConfig({
 		<p class="text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
 			When wrapped in <code
 				class="rounded bg-zinc-100 px-1 py-0.5 font-mono text-xs dark:bg-zinc-800"
-				>&lt;SvenApp /&gt;</code
+				>&lt;YaxaApp /&gt;</code
 			>, your configuration is provided to all descendant components via Svelte 5 context. You can
 			retrieve it anytime using
 			<code class="font-mono text-primary-600 dark:text-primary-400">getSiteConfig()</code>:

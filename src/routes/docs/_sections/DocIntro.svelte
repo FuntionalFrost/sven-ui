@@ -23,7 +23,7 @@
 </script>
 
 <DocHeader
-	title="Introduction to Sven UI"
+	title="Introduction to Yaxa"
 	description="The intuitive, production-grade UI component and automated SEO library for SvelteKit 2.7+ and Svelte 5 Runes. Bringing full Nuxt UI v4 & Nuxt SEO DX to the Svelte ecosystem."
 	badge="Svelte 5 Runes"
 	category="Getting Started"
@@ -112,11 +112,9 @@
 		</div>
 	</DocSandbox>
 
-	<!-- Nuxt UI vs Sven UI Feature Parity Table -->
+	<!-- Nuxt UI vs Yaxa Feature Parity Table -->
 	<div class="space-y-3">
-		<h3 class="text-lg font-bold text-zinc-900 dark:text-white">
-			Nuxt UI vs. Sven UI Parity Matrix
-		</h3>
+		<h3 class="text-lg font-bold text-zinc-900 dark:text-white">Nuxt UI vs. Yaxa Parity Matrix</h3>
 		<div class="overflow-x-auto rounded-xl border border-zinc-200 dark:border-zinc-800">
 			<table class="w-full text-left text-xs">
 				<thead
@@ -125,7 +123,7 @@
 					<tr>
 						<th class="px-4 py-2.5">Feature Domain</th>
 						<th class="px-4 py-2.5">Nuxt UI / Nuxt SEO</th>
-						<th class="px-4 py-2.5">Sven UI (SvelteKit)</th>
+						<th class="px-4 py-2.5">Yaxa (SvelteKit)</th>
 						<th class="px-4 py-2.5">Status</th>
 					</tr>
 				</thead>
@@ -160,7 +158,7 @@
 							>Robots & XML Sitemaps</td
 						>
 						<td class="px-4 py-2.5">`@nuxtjs/robots` & `@nuxtjs/sitemap`</td>
-						<td class="px-4 py-2.5 font-mono">createSvenHook(config)</td>
+						<td class="px-4 py-2.5 font-mono">createYaxaHook(config)</td>
 						<td class="px-4 py-2.5"><Badge color="primary" size="xs">1-Line Hook</Badge></td>
 					</tr>
 					<tr>

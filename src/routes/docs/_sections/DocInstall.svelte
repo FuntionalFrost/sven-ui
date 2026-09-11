@@ -14,28 +14,28 @@ export default defineConfig({
 	const layoutSnippet =
 		`<` +
 		`script lang="ts">
-  import 'sven-ui/sven.css';
-  import { SvenApp } from 'sven-ui';
+  import 'yaxa/yaxa.css';
+  import { YaxaApp } from 'yaxa';
   import { siteConfig } from '../site.config';
 
   let { children } = $props();
 <` +
 		`/script>
 
-<SvenApp config={siteConfig}>
+<YaxaApp config={siteConfig}>
   {@render children()}
-</SvenApp>`;
+</YaxaApp>`;
 
-	const hooksSnippet = `import { createSvenHook } from 'sven-ui/server';
+	const hooksSnippet = `import { createYaxaHook } from 'yaxa';
 import { siteConfig } from './site.config';
 
 // Automatically handles /robots.txt, /sitemap.xml, /site.webmanifest, and /api/og
-export const handle = createSvenHook(siteConfig);`;
+export const handle = createYaxaHook(siteConfig);`;
 </script>
 
 <DocHeader
 	title="Creating a Project & Installation"
-	description="Get up and running with Sven UI in your SvelteKit project in less than 2 minutes."
+	description="Get up and running with Yaxa in your SvelteKit project in less than 2 minutes."
 	badge="Quickstart"
 	category="Getting Started"
 />
@@ -68,11 +68,11 @@ export const handle = createSvenHook(siteConfig);`;
 				2
 			</span>
 			<h3 class="text-base font-bold text-zinc-900 dark:text-white">
-				Install Sven UI and Tailwind CSS v4
+				Install Yaxa and Tailwind CSS v4
 			</h3>
 		</div>
 		<DocCodeBlock
-			code="pnpm add sven-ui @tailwindcss/vite tailwindcss"
+			code="pnpm add yaxa @tailwindcss/vite tailwindcss"
 			filename="Terminal"
 			language="bash"
 		/>
@@ -106,13 +106,13 @@ export const handle = createSvenHook(siteConfig);`;
 				4
 			</span>
 			<h3 class="text-base font-bold text-zinc-900 dark:text-white">
-				Mount SvenApp in Root Layout
+				Mount YaxaApp in Root Layout
 			</h3>
 		</div>
 		<p class="text-xs text-zinc-600 dark:text-zinc-400">
 			Wrap your application in <code
 				class="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-xs dark:bg-zinc-800"
-				>&lt;SvenApp /&gt;</code
+				>&lt;YaxaApp /&gt;</code
 			>
 			in
 			<code class="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-xs dark:bg-zinc-800"

@@ -24,7 +24,7 @@ export const DOC_NAV_GROUPS: DocNavGroup[] = [
 				id: 'intro',
 				label: 'Introduction',
 				href: '/docs/intro',
-				title: 'Introduction to Sven UI',
+				title: 'Introduction to Yaxa',
 				description:
 					'The intuitive, production-grade UI component and automated SEO library for SvelteKit 2.7+ and Svelte 5 Runes. Full Nuxt UI & Nuxt SEO parity.',
 				category: 'Getting Started',
@@ -36,7 +36,7 @@ export const DOC_NAV_GROUPS: DocNavGroup[] = [
 				href: '/docs/install',
 				title: 'Creating a Project & Installation',
 				description:
-					'Fast 4-step setup guide for integrating Sven UI and Tailwind CSS v4 into your existing or new SvelteKit project.',
+					'Fast 4-step setup guide for integrating Yaxa and Tailwind CSS v4 into your existing or new SvelteKit project.',
 				category: 'Getting Started',
 				badge: 'Quickstart'
 			},

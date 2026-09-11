@@ -12,7 +12,7 @@ export const load: PageLoad = ({ params }) => {
 	return {
 		doc,
 		slug: params.slug,
-		title: `${doc.label} — Sven UI Documentation`,
+		title: `${doc.label} — Yaxa Documentation`,
 		description: doc.description
 	};
 };

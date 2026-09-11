@@ -12,7 +12,7 @@
 	import Slider from '$lib/components/forms/Slider.svelte';
 	import ColorPicker from '$lib/components/forms/ColorPicker.svelte';
 
-	let sampleEmail = $state('user@sven-ui.dev');
+	let sampleEmail = $state('user@yaxa.dev');
 	let sampleBio = $state('Building high-converting web apps with SvelteKit.');
 	let sampleRole = $state('developer');
 	let enableTelemetry = $state(true);

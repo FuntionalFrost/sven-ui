@@ -1,9 +1,9 @@
 import type { Handle } from '@sveltejs/kit';
 import { redirect } from '@sveltejs/kit';
-import type { SvenAuth } from './index';
+import type { YaxaAuth } from './index';
 
-export interface SvenAuthHookOptions {
-	auth: SvenAuth;
+export interface YaxaAuthHookOptions {
+	auth: YaxaAuth;
 	protectedPaths?: string[];
 	loginPath?: string;
 }
@@ -14,7 +14,7 @@ export interface SvenAuthHookOptions {
  * - Parses and caches session on event.locals
  * - Enforces path protection for dashboard/app routes
  */
-export function createSvenAuthHook(options: SvenAuthHookOptions): Handle {
+export function createYaxaAuthHook(options: YaxaAuthHookOptions): Handle {
 	const {
 		auth,
 		protectedPaths = ['/dashboard', '/app', '/settings'],

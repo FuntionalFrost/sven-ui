@@ -62,10 +62,10 @@
 
 	let activeDemoTab = $state('buttons');
 	let demoSwitchState = $state(true);
-	let demoInputValue = $state('user@sven-ui.dev');
+	let demoInputValue = $state('user@yaxa.dev');
 
 	let copiedInstall = $state(false);
-	const installCommand = 'pnpm add sven-ui @tailwindcss/vite tailwindcss';
+	const installCommand = 'pnpm add yaxa @tailwindcss/vite tailwindcss';
 
 	function copyInstall() {
 		if (typeof navigator !== 'undefined' && navigator.clipboard) {
@@ -80,7 +80,7 @@
 
 	function copyConfigSnippet() {
 		const snippet = `// src/site.config.ts
-import { defineSiteConfig } from 'sven-ui';
+import { defineSiteConfig } from 'yaxa';
 
 export const siteConfig = defineSiteConfig({
   theme: {
@@ -104,7 +104,7 @@ export const siteConfig = defineSiteConfig({
 </script>
 
 <svelte:head>
-	<title>Sven UI — The Intuitive Svelte 5 UI & SEO Library</title>
+	<title>Yaxa — The Intuitive Svelte 5 UI & SEO Library</title>
 	<meta
 		name="description"
 		content="A comprehensive Svelte 5 UI component library and automated Nuxt SEO parity suite with real-time Tailwind CSS v4 customization."
@@ -116,7 +116,7 @@ export const siteConfig = defineSiteConfig({
 	<!-- Subtle ambient glow matching dynamic primary color -->
 	<div
 		class="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[500px] w-[800px] -translate-x-1/2 rounded-full opacity-20 blur-3xl transition-all duration-700 dark:opacity-30"
-		style="background: radial-gradient(circle, var(--sven-primary-500, #ff3e00) 0%, transparent 70%);"
+		style="background: radial-gradient(circle, var(--yaxa-primary-500, #ff3e00) 0%, transparent 70%);"
 	></div>
 
 	<Container size="2xl" class="relative text-center">
@@ -170,7 +170,7 @@ export const siteConfig = defineSiteConfig({
 			</Button>
 
 			<Button
-				href="https://github.com/FuntionalFrost/sven-ui"
+				href="https://github.com/FuntionalFrost/yaxa"
 				size="lg"
 				variant="ghost"
 				color="neutral"
@@ -464,7 +464,7 @@ export const siteConfig = defineSiteConfig({
 					>
 						<div>// Active CSS Variables:</div>
 						<div class="text-primary-600 dark:text-primary-400">
-							--sven-primary: {ACCENT_PALETTES[theme.accent]?.color}
+							--yaxa-primary: {ACCENT_PALETTES[theme.accent]?.color}
 						</div>
 						<div>--radius: {RADIUS_PRESETS[theme.radius]?.value}</div>
 					</div>
@@ -482,7 +482,7 @@ export const siteConfig = defineSiteConfig({
 			<h2
 				class="text-3xl font-extrabold tracking-tight text-neutral-900 sm:text-4xl dark:text-white"
 			>
-				Why Sven UI for SvelteKit?
+				Why Yaxa for SvelteKit?
 			</h2>
 			<p class="mx-auto mt-2 max-w-xl text-sm text-neutral-600 dark:text-neutral-400">
 				Modern web development primitives built specifically for solo developers who value velocity
@@ -540,7 +540,7 @@ export const siteConfig = defineSiteConfig({
 					Automated Robots & Sitemaps
 				</h3>
 				<p class="text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">
-					Mount `createSvenHook(siteConfig)` in `src/hooks.server.ts` to get environment-aware
+					Mount `createYaxaHook(siteConfig)` in `src/hooks.server.ts` to get environment-aware
 					robots.txt, XML sitemaps with human-readable XSL dashboards, and webmanifests.
 				</p>
 			</div>
@@ -595,7 +595,7 @@ export const siteConfig = defineSiteConfig({
 				</h3>
 				<p class="text-xs leading-relaxed text-neutral-600 dark:text-neutral-400">
 					Never repeat metadata or styling across files. Configure `src/site.config.ts` once and let
-					Sven UI derive your header, footer, SEO tags, and endpoints automatically.
+					Yaxa derive your header, footer, SEO tags, and endpoints automatically.
 				</p>
 			</div>
 		</div>
@@ -613,7 +613,7 @@ export const siteConfig = defineSiteConfig({
 				<h2
 					class="text-2xl font-extrabold tracking-tight text-neutral-900 sm:text-3xl dark:text-white"
 				>
-					Explore Sven UI by Category
+					Explore Yaxa by Category
 				</h2>
 			</div>
 			<Button href="/docs/intro" color="primary" variant="outline" size="sm">
@@ -714,7 +714,7 @@ export const siteConfig = defineSiteConfig({
 
 			<Badge color="primary" variant="subtle" size="sm" class="mb-4">Production Ready</Badge>
 			<h2 class="mb-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-				Start Building Faster with Sven UI
+				Start Building Faster with Yaxa
 			</h2>
 			<p class="mx-auto mb-8 max-w-xl text-sm leading-relaxed text-neutral-300">
 				Supercharge your SvelteKit development with accessible Tailwind CSS components and automated
@@ -732,7 +732,7 @@ export const siteConfig = defineSiteConfig({
 					Read the Documentation ↗
 				</Button>
 				<Button
-					href="https://github.com/FuntionalFrost/sven-ui"
+					href="https://github.com/FuntionalFrost/yaxa"
 					target="_blank"
 					size="lg"
 					variant="outline"

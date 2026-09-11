@@ -7,15 +7,17 @@
 	import Favicons from '../seo/Favicons.svelte';
 	import Seo from '../seo/Seo.svelte';
 	import { setSiteConfig } from '$lib/site/context';
-	import '$lib/styles/sven.css';
+	import '$lib/styles/yaxa.css';
 
-	interface Props {
+	export interface YaxaAppProps {
 		config?: SiteConfig;
 		enableDefaultSeo?: boolean;
 		children?: Snippet;
 	}
 
-	let { config = DEFAULT_SITE_CONFIG, enableDefaultSeo = true, children }: Props = $props();
+	export type Props = YaxaAppProps;
+
+	let { config = DEFAULT_SITE_CONFIG, enableDefaultSeo = true, children }: YaxaAppProps = $props();
 
 	// Provide config to all descendant components via Svelte 5 context
 	setSiteConfig(() => config);

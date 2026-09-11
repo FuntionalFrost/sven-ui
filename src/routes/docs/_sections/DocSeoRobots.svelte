@@ -4,7 +4,7 @@
 	import Badge from '$lib/components/elements/Badge.svelte';
 
 	const hookSnippet = `// src/hooks.server.ts
-import { createSvenHook } from 'sven-ui/server';
+import { createYaxaHook } from 'yaxa';
 import { siteConfig } from './site.config';
 
 // 1-line handler automatically mounts:
@@ -13,7 +13,7 @@ import { siteConfig } from './site.config';
 // - /sitemap.xsl (styled visual dashboard)
 // - /site.webmanifest
 // - /api/og
-export const handle = createSvenHook(siteConfig);`;
+export const handle = createYaxaHook(siteConfig);`;
 
 	const customSitemapSnippet = `// src/site.config.ts
 export const siteConfig = defineSiteConfig({
@@ -47,8 +47,8 @@ export const siteConfig = defineSiteConfig({
 	<div class="space-y-3">
 		<h3 class="text-lg font-bold text-zinc-900 dark:text-white">1-Line Zero-Route Server Hook</h3>
 		<p class="text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
-			Instead of manually writing endpoint files for every SEO route, Sven UI exports <code
-				class="font-mono text-primary-600 dark:text-primary-400">createSvenHook()</code
+			Instead of manually writing endpoint files for every SEO route, Yaxa exports <code
+				class="font-mono text-primary-600 dark:text-primary-400">createYaxaHook()</code
 			> to intercept and generate them on the fly:
 		</p>
 		<DocCodeBlock code={hookSnippet} filename="src/hooks.server.ts" language="typescript" />

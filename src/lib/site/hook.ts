@@ -6,7 +6,7 @@ import { createSitemapXslHandler } from './sitemap-xsl';
 import { createManifestHandler } from './manifest';
 import { createOgImageHandler } from './og';
 
-export interface SvenHookOptions {
+export interface YaxaHookOptions {
 	config: SiteConfig;
 	robots?: RobotsOptions;
 	sitemap?: SitemapOptions;
@@ -17,8 +17,8 @@ export interface SvenHookOptions {
  * /robots.txt, /sitemap.xml, /sitemap.xsl, /site.webmanifest, and /api/og
  * directly from your site.config.ts with zero route files required!
  */
-export function createSvenHook(optionsOrConfig: SiteConfig | SvenHookOptions): Handle {
-	const options: SvenHookOptions =
+export function createYaxaHook(optionsOrConfig: SiteConfig | YaxaHookOptions): Handle {
+	const options: YaxaHookOptions =
 		'name' in optionsOrConfig ? { config: optionsOrConfig } : optionsOrConfig;
 	const { config } = options;
 

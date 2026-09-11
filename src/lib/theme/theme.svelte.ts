@@ -277,27 +277,27 @@ class ThemeStore {
 
 	constructor() {
 		if (browser) {
-			const storedMode = localStorage.getItem('sven-theme') as ThemeMode | null;
+			const storedMode = localStorage.getItem('yaxa-theme') as ThemeMode | null;
 			if (storedMode && ['light', 'dark', 'system'].includes(storedMode)) {
 				this.mode = storedMode;
 			}
-			const storedAccent = localStorage.getItem('sven-accent') as AccentName | null;
+			const storedAccent = localStorage.getItem('yaxa-accent') as AccentName | null;
 			if (storedAccent && storedAccent in ACCENT_PALETTES) {
 				this.accent = storedAccent;
 			}
-			const storedNeutral = localStorage.getItem('sven-neutral') as NeutralName | null;
+			const storedNeutral = localStorage.getItem('yaxa-neutral') as NeutralName | null;
 			if (storedNeutral && storedNeutral in NEUTRAL_PALETTES) {
 				this.neutral = storedNeutral;
 			}
-			const storedFont = localStorage.getItem('sven-font') as FontFamily | null;
+			const storedFont = localStorage.getItem('yaxa-font') as FontFamily | null;
 			if (storedFont && storedFont in FONT_PRESETS) {
 				this.fontFamily = storedFont;
 			}
-			const storedRadius = localStorage.getItem('sven-radius') as RadiusPreset | null;
+			const storedRadius = localStorage.getItem('yaxa-radius') as RadiusPreset | null;
 			if (storedRadius && storedRadius in RADIUS_PRESETS) {
 				this.radius = storedRadius;
 			}
-			const storedFontSize = localStorage.getItem('sven-size') as BaseFontSize | null;
+			const storedFontSize = localStorage.getItem('yaxa-size') as BaseFontSize | null;
 			if (storedFontSize && storedFontSize in FONT_SIZE_PRESETS) {
 				this.fontSize = storedFontSize;
 			}
@@ -316,7 +316,7 @@ class ThemeStore {
 	setMode(newMode: ThemeMode) {
 		this.mode = newMode;
 		if (browser) {
-			localStorage.setItem('sven-theme', newMode);
+			localStorage.setItem('yaxa-theme', newMode);
 			this.updateResolvedTheme();
 		}
 	}
@@ -332,7 +332,7 @@ class ThemeStore {
 	setAccent(newAccent: AccentName) {
 		this.accent = newAccent;
 		if (browser) {
-			localStorage.setItem('sven-accent', newAccent);
+			localStorage.setItem('yaxa-accent', newAccent);
 			this.applyAccent();
 		}
 	}
@@ -340,7 +340,7 @@ class ThemeStore {
 	setNeutral(newNeutral: NeutralName) {
 		this.neutral = newNeutral;
 		if (browser) {
-			localStorage.setItem('sven-neutral', newNeutral);
+			localStorage.setItem('yaxa-neutral', newNeutral);
 			this.applyNeutral();
 		}
 	}
@@ -348,7 +348,7 @@ class ThemeStore {
 	setFontFamily(newFont: FontFamily) {
 		this.fontFamily = newFont;
 		if (browser) {
-			localStorage.setItem('sven-font', newFont);
+			localStorage.setItem('yaxa-font', newFont);
 			this.applyFont();
 		}
 	}
@@ -356,7 +356,7 @@ class ThemeStore {
 	setRadius(newRadius: RadiusPreset) {
 		this.radius = newRadius;
 		if (browser) {
-			localStorage.setItem('sven-radius', newRadius);
+			localStorage.setItem('yaxa-radius', newRadius);
 			this.applyRadius();
 		}
 	}
@@ -364,7 +364,7 @@ class ThemeStore {
 	setFontSize(newSize: BaseFontSize) {
 		this.fontSize = newSize;
 		if (browser) {
-			localStorage.setItem('sven-size', newSize);
+			localStorage.setItem('yaxa-size', newSize);
 			this.applyFontSize();
 		}
 	}
@@ -415,9 +415,9 @@ class ThemeStore {
 
 		for (const [shade, hex] of Object.entries(palette.shades)) {
 			if (shade === 'ring') {
-				root.style.setProperty('--sven-ring', hex);
+				root.style.setProperty('--yaxa-ring', hex);
 			} else {
-				root.style.setProperty(`--sven-primary-${shade}`, hex);
+				root.style.setProperty(`--yaxa-primary-${shade}`, hex);
 				root.style.setProperty(`--color-primary-${shade}`, hex);
 			}
 		}
@@ -429,7 +429,7 @@ class ThemeStore {
 		const root = document.documentElement;
 
 		for (const [shade, hex] of Object.entries(palette.shades)) {
-			root.style.setProperty(`--sven-neutral-${shade}`, hex);
+			root.style.setProperty(`--yaxa-neutral-${shade}`, hex);
 			root.style.setProperty(`--color-neutral-${shade}`, hex);
 		}
 	}
@@ -444,7 +444,7 @@ class ThemeStore {
 	private applyRadius() {
 		if (!browser) return;
 		const rad = RADIUS_PRESETS[this.radius] || RADIUS_PRESETS.default;
-		document.documentElement.style.setProperty('--sven-radius', rad.value);
+		document.documentElement.style.setProperty('--yaxa-radius', rad.value);
 	}
 
 	private applyFontSize() {
@@ -462,7 +462,7 @@ export const theme = new ThemeStore();
 export const themeInitScript = `
 (function() {
   try {
-    var stored = localStorage.getItem('sven-theme');
+    var stored = localStorage.getItem('yaxa-theme');
     var isDark = stored === 'dark' || (!stored || stored === 'system') && window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (isDark) {
       document.documentElement.classList.add('dark');

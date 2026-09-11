@@ -1,6 +1,6 @@
 import type { Plugin } from 'vite';
 
-export interface SvenPluginOptions {
+export interface YaxaPluginOptions {
 	/**
 	 * Pre-bundle dependencies for fast hot module reloading.
 	 */
@@ -8,23 +8,23 @@ export interface SvenPluginOptions {
 }
 
 /**
- * Sven UI Vite Plugin for SvelteKit.
- * Configures optimal bundling and dependency optimization for Sven UI components.
+ * Yaxa Vite Plugin for SvelteKit.
+ * Configures optimal bundling and dependency optimization for Yaxa components.
  *
  * Usage in vite.config.ts:
  * ```ts
- * import { sven } from 'sven-ui/vite';
+ * import { yaxa } from 'yaxa/vite';
  * export default defineConfig({
- *   plugins: [tailwindcss(), sveltekit(), sven()]
+ *   plugins: [tailwindcss(), sveltekit(), yaxa()]
  * });
  * ```
  */
-export function sven(options: SvenPluginOptions = {}): Plugin[] {
+export function yaxa(options: YaxaPluginOptions = {}): Plugin[] {
 	const { optimizeDeps = true } = options;
 
 	return [
 		{
-			name: 'vite-plugin-sven-ui',
+			name: 'vite-plugin-yaxa',
 			config() {
 				if (!optimizeDeps) return {};
 				return {

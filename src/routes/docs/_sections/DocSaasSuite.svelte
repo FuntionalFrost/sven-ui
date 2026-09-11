@@ -29,22 +29,22 @@ DATABASE_URL="postgresql://user:password@ep-cool-db.us-east-2.aws.neon.tech/neon
 
 	const hookCodeSnippet = `// src/hooks.server.ts
 import { sequence } from '@sveltejs/kit/hooks';
-import { createSvenHook, createSvenAuth, createSvenAuthHook } from 'sven-ui';
+import { createYaxaHook, createYaxaAuth, createYaxaAuthHook } from 'yaxa';
 import { siteConfig } from './site.config';
 
-const svenHook = createSvenHook(siteConfig);
-const auth = createSvenAuth();
-const authHook = createSvenAuthHook({
+const yaxaHook = createYaxaHook(siteConfig);
+const auth = createYaxaAuth();
+const authHook = createYaxaAuthHook({
   auth,
   protectedPaths: ['/dashboard', '/settings', '/billing'],
   loginPath: '/login'
 });
 
-export const handle = sequence(svenHook, authHook);
+export const handle = sequence(yaxaHook, authHook);
 `;
 
 	const webhookCodeSnippet = `// src/routes/api/webhooks/polar/+server.ts
-import { createPolarWebhookHandler } from 'sven-ui';
+import { createPolarWebhookHandler } from 'yaxa';
 
 export const POST = createPolarWebhookHandler({
   onSubscriptionCreated: async (event) => {
@@ -110,8 +110,8 @@ export const POST = createPolarWebhookHandler({
 				<div class="flex justify-center p-8">
 					<UserMenu
 						user={{
-							name: 'Sven Creator',
-							email: 'founder@sven-ui.dev',
+							name: 'Yaxa Creator',
+							email: 'founder@yaxa.dev',
 							image: null,
 							role: 'Owner'
 						}}
@@ -150,7 +150,7 @@ export const POST = createPolarWebhookHandler({
 		<p class="text-sm text-zinc-600 dark:text-zinc-400">
 			Attach Better-Auth session validation and protected dashboard route guards with <code
 				class="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-xs dark:bg-zinc-800"
-				>createSvenAuthHook</code
+				>createYaxaAuthHook</code
 			>:
 		</p>
 		<pre

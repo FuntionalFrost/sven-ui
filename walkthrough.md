@@ -1,6 +1,6 @@
-# Sven UI — Nuxt UI & Solo SaaS Parity for SvelteKit 2.7+ & Svelte 5
+# Yaxa — Nuxt UI & Solo SaaS Parity for SvelteKit 2.7+ & Svelte 5
 
-**Sven UI** delivers the full developer experience, component toolkit, and full-stack SaaS engine of **Nuxt UI v4 / Nuxt UI Pro** and the **Nuxt SEO ecosystem** to **SvelteKit 2.7+** and **Svelte 5**, with authentic Svelte flame branding (`#ff3e00` / `#121212`).
+**Yaxa** delivers the full developer experience, component toolkit, and full-stack SaaS engine of **Nuxt UI v4 / Nuxt UI Pro** and the **Nuxt SEO ecosystem** to **SvelteKit 2.7+** and **Svelte 5**, with authentic Svelte flame branding (`#ff3e00` / `#121212`).
 
 ---
 
@@ -8,24 +8,24 @@
 
 1. **`definePageSeo()` Type-Safe SvelteKit `load()` Helper**:
    - Return `{ seo: definePageSeo({ title, description, badge }) }` directly from `+page.ts` / `+page.server.ts`.
-   - `<SvenApp>` automatically extracts and binds all meta tags, OpenGraph cards, Twitter cards, and Schema.org JSON-LD data.
+   - `<YaxaApp>` automatically extracts and binds all meta tags, OpenGraph cards, Twitter cards, and Schema.org JSON-LD data.
 
-2. **1-Line Server Hooks (`createSvenHook` & `createSvenAuthHook`)**:
+2. **1-Line Server Hooks (`createYaxaHook` & `createYaxaAuthHook`)**:
    - Manage all 5 SEO endpoints (`/robots.txt`, `/sitemap.xml`, `/sitemap.xsl`, `/site.webmanifest`, `/api/og`) with **1 line** in `src/hooks.server.ts`:
      ```ts
      import { sequence } from '@sveltejs/kit/hooks';
-     import { createSvenHook, createSvenAuth, createSvenAuthHook } from 'sven-ui';
+     import { createYaxaHook, createYaxaAuth, createYaxaAuthHook } from 'yaxa';
      import { siteConfig } from './site.config';
 
-     const svenHook = createSvenHook(siteConfig);
-     const auth = createSvenAuth();
-     const authHook = createSvenAuthHook({
+     const yaxaHook = createYaxaHook(siteConfig);
+     const auth = createYaxaAuth();
+     const authHook = createYaxaAuthHook({
      	auth,
      	protectedPaths: ['/dashboard', '/settings', '/billing'],
      	loginPath: '/login'
      });
 
-     export const handle = sequence(svenHook, authHook);
+     export const handle = sequence(yaxaHook, authHook);
      ```
 
 3. **Multi-Dialect Database Factory (`getDb`)**:
@@ -45,7 +45,7 @@
 - **SaaS Suite**: `<AuthCard>`, `<UserMenu>`, `<PricingCard>`, `<PricingTable>`, `<SubscriptionCard>`, `useAuth()`.
 - **Elements**: `Button`, `ButtonGroup`, `Badge`, `Avatar`, `AvatarGroup`, `DataTable`, `Chip`, `Meter`, `Kbd`, `Icon`, `Spinner`, `Progress`, `Skeleton`, `Link`, `Logo`.
 - **Forms**: `Form`, `FormField`, `Input`, `Textarea`, `Checkbox`, `Switch`, `Select`, `RadioGroup`, `Slider`, `ColorPicker`.
-- **Layout**: `Container`, `Header`, `Footer`, `Section`, `Card`, `Divider`, `SvenApp`.
+- **Layout**: `Container`, `Header`, `Footer`, `Section`, `Card`, `Divider`, `YaxaApp`.
 - **Navigation & Overlays**: `Tabs`, `Breadcrumb`, `Pagination`, `CommandPalette` (`⌘K`), `DropdownMenu`, `ContextMenu`, `Modal`, `Slideover`, `Popover`, `Tooltip`, `Alert`, `Accordion`.
 - **Composables**: `useAuth`, `useClipboard`, `useShortcuts`, `useColorMode`, `useToast`, `useMediaQuery`, `useDebounce`.
 
@@ -53,8 +53,9 @@
 
 ## 🚀 Live Demo & Documentation
 
-- **SaaS Showcase**: Explore the interactive SaaS flow at [`/saas`](file:///c:/Users/cvgov/Documents/Projects/Web/Deployed%20Sites/SvelteKit/sven-ui/src/routes/saas/+page.svelte).
-- **SaaS Docs**: Full implementation guide at [`/docs/saas-suite`](file:///c:/Users/cvgov/Documents/Projects/Web/Deployed%20Sites/SvelteKit/sven-ui/src/routes/docs/_sections/DocSaasSuite.svelte).
+- **Live Documentation**: [https://yaxa.vercel.app](https://yaxa.vercel.app)
+- **SaaS Showcase**: Explore the interactive SaaS flow at [`/saas`](src/routes/saas/+page.svelte) or on [yaxa.vercel.app/saas](https://yaxa.vercel.app/saas).
+- **SaaS Docs**: Full implementation guide in [`src/routes/docs/_sections/DocSaasSuite.svelte`](src/routes/docs/_sections/DocSaasSuite.svelte) or on [yaxa.vercel.app/docs/saas-suite](https://yaxa.vercel.app/docs/saas-suite).
 
 ---
 

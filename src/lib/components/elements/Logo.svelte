@@ -6,7 +6,7 @@
 		class?: string;
 	}
 
-	let { size = 'md', showText = false, text = 'Sven UI', class: className = '' }: Props = $props();
+	let { size = 'md', showText = false, text = 'Yaxa', class: className = '' }: Props = $props();
 
 	let sizeClasses = $derived.by(() => {
 		if (typeof size === 'number') {

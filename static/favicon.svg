@@ -1,18 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
   <defs>
-    <linearGradient id="sven-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="yaxa-grad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#ff3e00" />
       <stop offset="100%" stop-color="#ea580c" />
     </linearGradient>
   </defs>
   <style>
-    .bg { fill: url(#sven-grad); }
+    .bg { fill: url(#yaxa-grad); }
     .mark { fill: #ffffff; }
     @media (prefers-color-scheme: light) {
-      .bg { fill: url(#sven-grad); }
+      .bg { fill: url(#yaxa-grad); }
     }
     @media (prefers-color-scheme: dark) {
-      .bg { fill: url(#sven-grad); }
+      .bg { fill: url(#yaxa-grad); }
       .mark { filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.4)); }
     }
   </style>

@@ -1,17 +1,17 @@
 import { defineSiteConfig } from '$lib/site/config';
 
 export const siteConfig = defineSiteConfig({
-	name: 'Sven UI',
-	title: 'Sven UI — The Intuitive Svelte UI Library',
+	name: 'Yaxa',
+	title: 'Yaxa — The Intuitive Svelte UI Library',
 	description:
 		'A comprehensive Svelte 5 UI component library (SvelteKit optional) with 25+ accessible, Tailwind CSS components for building modern web applications.',
-	url: 'https://sven-ui.vercel.app',
+	url: 'https://yaxa.vercel.app',
 	version: 'v1',
 	logo: '/favicon.svg',
 	author: {
-		name: 'Sven UI Team',
-		twitter: '@sven_ui',
-		github: 'https://github.com/FuntionalFrost/sven-ui'
+		name: 'Yaxa Team',
+		twitter: '@yaxa_ui',
+		github: 'https://github.com/FuntionalFrost/yaxa'
 	},
 	theme: {
 		primaryColor: '#ff3e00',
@@ -19,7 +19,7 @@ export const siteConfig = defineSiteConfig({
 		defaultMode: 'dark'
 	},
 	seo: {
-		titleTemplate: '%s · Sven UI',
+		titleTemplate: '%s · Yaxa',
 		defaultOgImage: '/api/og',
 		twitterCard: 'summary_large_image',
 		keywords: [
@@ -48,10 +48,10 @@ export const siteConfig = defineSiteConfig({
 		{ label: 'Docs', href: '/docs/intro' },
 		{ label: 'Components', href: '/docs/comp-buttons' },
 		{ label: 'SEO Suite', href: '/docs/seo-og' },
-		{ label: 'Releases', href: 'https://github.com/FuntionalFrost/sven-ui/releases' }
+		{ label: 'Releases', href: 'https://github.com/FuntionalFrost/yaxa/releases' }
 	],
 	socials: {
-		github: 'https://github.com/FuntionalFrost/sven-ui',
-		twitter: 'https://twitter.com/sven_ui'
+		github: 'https://github.com/FuntionalFrost/yaxa',
+		twitter: 'https://twitter.com/yaxa_ui'
 	}
 });

@@ -38,8 +38,8 @@ export function getDb(config?: DbConfig): AnyDb {
 	const url =
 		config?.url ||
 		(typeof process !== 'undefined'
-			? process.env.DATABASE_URL || 'postgres://localhost:5432/sven_saas'
-			: 'postgres://localhost:5432/sven_saas');
+			? process.env.DATABASE_URL || 'postgres://localhost:5432/yaxa_saas'
+			: 'postgres://localhost:5432/yaxa_saas');
 
 	const authToken =
 		config?.authToken ||

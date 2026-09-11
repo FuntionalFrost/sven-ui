@@ -1,15 +1,15 @@
 {
-	"name": "sven-ui",
+	"name": "yaxa",
 	"version": "1.0.0",
 	"description": "The Intuitive Svelte UI Library — Nuxt UI v4 equivalent for SvelteKit 2.7+ & Svelte 5 with automated SEO, dynamic OpenGraph cards, sitemaps, robots.txt, and Tailwind CSS v4.",
 	"license": "MIT",
-	"homepage": "https://sven-ui.vercel.app",
+	"homepage": "https://yaxa.vercel.app",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/FuntionalFrost/sven-ui.git"
+		"url": "https://github.com/FuntionalFrost/yaxa.git"
 	},
 	"bugs": {
-		"url": "https://github.com/FuntionalFrost/sven-ui/issues"
+		"url": "https://github.com/FuntionalFrost/yaxa/issues"
 	},
 	"packageManager": "pnpm@11.24.0",
 	"engines": {
@@ -46,7 +46,7 @@
 			"types": "./dist/vite/index.d.ts",
 			"default": "./dist/vite/index.js"
 		},
-		"./sven.css": "./dist/styles/sven.css"
+		"./yaxa.css": "./dist/styles/yaxa.css"
 	},
 	"scripts": {
 		"dev": "vite dev",

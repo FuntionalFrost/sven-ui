@@ -37,7 +37,7 @@
 		</div>
 		{#if source}
 			<Link
-				href="https://github.com/FuntionalFrost/sven-ui/blob/main/{source}"
+				href="https://github.com/FuntionalFrost/yaxa/blob/main/{source}"
 				external
 				class="inline-flex items-center gap-1.5 font-mono text-xs text-zinc-500 hover:text-primary-600 dark:text-zinc-400 dark:hover:text-primary-400"
 			>

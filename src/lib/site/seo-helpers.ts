@@ -20,7 +20,7 @@ export interface PageSeoConfig {
 
 /**
  * Type-safe helper for SvelteKit load() functions to define page-level SEO.
- * When returned inside { seo: definePageSeo(...) }, SvenApp automatically
+ * When returned inside { seo: definePageSeo(...) }, YaxaApp automatically
  * extracts and binds all meta tags, OpenGraph cards, Twitter cards, and Schema.org data.
  *
  * Example:
