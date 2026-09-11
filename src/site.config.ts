@@ -5,7 +5,7 @@ export const siteConfig = defineSiteConfig({
 	title: 'Sven UI — The Intuitive Svelte UI Library',
 	description:
 		'A comprehensive Svelte 5 UI component library (SvelteKit optional) with 25+ accessible, Tailwind CSS components for building modern web applications.',
-	url: 'https://sven-ui.dev',
+	url: 'https://sven-ui.vercel.app',
 	version: 'v1',
 	logo: '/favicon.svg',
 	author: {

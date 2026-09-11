@@ -93,7 +93,7 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = defineSiteConfig({
 	name: 'Sven UI',
 	title: 'Sven UI — Intuitive Svelte UI Library',
 	description: 'A comprehensive Svelte 5 UI component and SEO library with Tailwind CSS v4.',
-	url: 'https://sven-ui.dev',
+	url: 'https://sven-ui.vercel.app',
 	logo: '/favicon.svg',
 	theme: {
 		primaryColor: '#ff3e00',

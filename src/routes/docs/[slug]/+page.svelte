@@ -8,6 +8,7 @@
 	import DocButtons from '../_sections/DocButtons.svelte';
 	import DocForms from '../_sections/DocForms.svelte';
 	import DocOverlays from '../_sections/DocOverlays.svelte';
+	import DocSaasSuite from '../_sections/DocSaasSuite.svelte';
 	import Seo from '$lib/components/seo/Seo.svelte';
 
 	let { data }: PageProps = $props();
@@ -20,7 +21,8 @@
 		'seo-robots': DocSeoRobots,
 		'comp-buttons': DocButtons,
 		'comp-forms': DocForms,
-		'comp-overlays': DocOverlays
+		'comp-overlays': DocOverlays,
+		'saas-suite': DocSaasSuite
 	};
 
 	let ActiveSectionComponent = $derived(SECTION_MAP[data.slug] ?? DocIntro);

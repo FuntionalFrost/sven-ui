@@ -79,6 +79,22 @@ export const DOC_NAV_GROUPS: DocNavGroup[] = [
 		]
 	},
 	{
+		category: 'saas',
+		title: 'Solo SaaS Suite',
+		items: [
+			{
+				id: 'saas-suite',
+				label: 'SaaS Toolkit & DB',
+				href: '/docs/saas-suite',
+				title: 'Full-Stack Solo SaaS Toolkit',
+				description:
+					'Batteries-included Auth (Better-Auth), Database ORM (Drizzle with Neon & Turso), Billing (Polar.sh), Resend email, and drop-in Svelte 5 components.',
+				category: 'Solo SaaS Suite',
+				badge: 'Full-Stack'
+			}
+		]
+	},
+	{
 		category: 'components',
 		title: 'Components',
 		items: [

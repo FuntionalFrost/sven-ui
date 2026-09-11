@@ -119,6 +119,45 @@ export type { PageSeoConfig } from './site/seo-helpers';
 export { sven } from './vite/index';
 export type { SvenPluginOptions } from './vite/index';
 
+// SaaS Suite: Components, Composables & Integrations
+export { default as AuthCard } from './components/saas/AuthCard.svelte';
+export { default as UserMenu } from './components/saas/UserMenu.svelte';
+export { default as PricingCard } from './components/saas/PricingCard.svelte';
+export { default as PricingTable } from './components/saas/PricingTable.svelte';
+export { default as SubscriptionCard } from './components/saas/SubscriptionCard.svelte';
+export { useAuth } from './composables/useAuth.svelte';
+export type { UseAuthOptions, SocialProvider } from './composables/useAuth.svelte';
+
+// SaaS Server & DB Modules
+export { getDb, schemaPg, schemaSqlite } from './server/db/index';
+export type {
+	DbConfig,
+	DbDriver,
+	SaasUser,
+	SaasSubscription,
+	SubscriptionStatus,
+	PricingTier,
+	PricingFeature
+} from './server/db/index';
+export { createSvenAuth } from './server/auth/index';
+export type { SvenAuthConfig, SvenAuth } from './server/auth/index';
+export { createSvenAuthHook } from './server/auth/hook';
+export type { SvenAuthHookOptions } from './server/auth/hook';
+export {
+	getPolarClient,
+	createPolarCheckout,
+	createPolarCustomerPortalSession
+} from './server/polar/index';
+export type { PolarConfig, CreateCheckoutOptions } from './server/polar/index';
+export { createPolarWebhookHandler } from './server/polar/webhook';
+export type { PolarWebhookOptions } from './server/polar/webhook';
+export { getResendClient, sendMagicLinkEmail, sendWelcomeEmail } from './server/email/index';
+export type {
+	ResendEmailConfig,
+	SendMagicLinkOptions,
+	SendWelcomeEmailOptions
+} from './server/email/index';
+
 // Utilities
 export { cn, tv } from './utils/cn';
 export type { VariantProps } from './utils/cn';

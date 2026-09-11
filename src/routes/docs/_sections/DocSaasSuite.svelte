@@ -1,0 +1,176 @@
+<script lang="ts">
+	import Badge from '$lib/components/elements/Badge.svelte';
+	import Card from '$lib/components/layout/Card.svelte';
+	import Tabs from '$lib/components/navigation/Tabs.svelte';
+	import AuthCard from '$lib/components/saas/AuthCard.svelte';
+	import UserMenu from '$lib/components/saas/UserMenu.svelte';
+	import PricingTable from '$lib/components/saas/PricingTable.svelte';
+	import SubscriptionCard from '$lib/components/saas/SubscriptionCard.svelte';
+
+	let activeDemo = $state('auth');
+
+	const demoTabs = [
+		{ value: 'auth', label: 'Auth Card' },
+		{ value: 'pricing', label: 'Pricing Table' },
+		{ value: 'subscription', label: 'Subscription Widget' },
+		{ value: 'user-menu', label: 'User Menu' }
+	];
+
+	const envCodeSnippet = `# .env
+# For Neon PostgreSQL:
+DATABASE_DRIVER="neon"
+DATABASE_URL="postgresql://user:password@ep-cool-db.us-east-2.aws.neon.tech/neondb?sslmode=require"
+
+# OR For Turso SQLite:
+# DATABASE_DRIVER="turso"
+# DATABASE_URL="libsql://your-db-org.turso.io"
+# DATABASE_AUTH_TOKEN="your-turso-token"
+`;
+
+	const hookCodeSnippet = `// src/hooks.server.ts
+import { sequence } from '@sveltejs/kit/hooks';
+import { createSvenHook, createSvenAuth, createSvenAuthHook } from 'sven-ui';
+import { siteConfig } from './site.config';
+
+const svenHook = createSvenHook(siteConfig);
+const auth = createSvenAuth();
+const authHook = createSvenAuthHook({
+  auth,
+  protectedPaths: ['/dashboard', '/settings', '/billing'],
+  loginPath: '/login'
+});
+
+export const handle = sequence(svenHook, authHook);
+`;
+
+	const webhookCodeSnippet = `// src/routes/api/webhooks/polar/+server.ts
+import { createPolarWebhookHandler } from 'sven-ui';
+
+export const POST = createPolarWebhookHandler({
+  onSubscriptionCreated: async (event) => {
+    console.log('New paid subscription created!', event.data.id);
+  }
+});
+`;
+</script>
+
+<div class="space-y-12">
+	<!-- Header -->
+	<div class="space-y-4">
+		<div class="flex items-center gap-2">
+			<Badge color="primary" variant="subtle" size="sm">Solo SaaS Suite</Badge>
+			<Badge color="neutral" variant="outline" size="sm">Batteries-Included</Badge>
+		</div>
+		<h1 class="text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-50">
+			Full-Stack Solo SaaS Toolkit
+		</h1>
+		<p class="text-base text-zinc-600 sm:text-lg dark:text-zinc-400">
+			Everything a solo developer needs to ship a paid SaaS in record time: <strong
+				>Better-Auth</strong
+			>
+			authentication, switchable <strong>Drizzle ORM</strong> (Neon PostgreSQL or Turso LibSQL),
+			<strong>Polar.sh</strong>
+			payments & subscriptions, <strong>Resend</strong> transactional emails, and drop-in Svelte 5 runes
+			components.
+		</p>
+	</div>
+
+	<!-- Interactive SaaS Live Preview -->
+	<Card class="space-y-6 border-zinc-200 p-6 shadow-md sm:p-8 dark:border-zinc-800">
+		<div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+			<div>
+				<h3 class="text-lg font-bold text-zinc-900 dark:text-zinc-100">
+					Live Component Playground
+				</h3>
+				<p class="text-xs text-zinc-500 dark:text-zinc-400">
+					Interact with real Svelte 5 SaaS components rendered below.
+				</p>
+			</div>
+			<div class="w-full sm:w-auto">
+				<Tabs items={demoTabs} bind:value={activeDemo} />
+			</div>
+		</div>
+
+		<div
+			class="flex min-h-[420px] items-center justify-center rounded-xl border border-dashed border-zinc-200 bg-zinc-50/50 p-6 dark:border-zinc-800 dark:bg-zinc-950/40"
+		>
+			{#if activeDemo === 'auth'}
+				<div class="w-full max-w-md">
+					<AuthCard showSocial={true} showMagicLinkToggle={true} />
+				</div>
+			{:else if activeDemo === 'pricing'}
+				<div class="w-full">
+					<PricingTable />
+				</div>
+			{:else if activeDemo === 'subscription'}
+				<div class="w-full max-w-2xl">
+					<SubscriptionCard tierName="Pro Solo Plan" amount={29} status="active" interval="month" />
+				</div>
+			{:else if activeDemo === 'user-menu'}
+				<div class="flex justify-center p-8">
+					<UserMenu
+						user={{
+							name: 'Sven Creator',
+							email: 'founder@sven-ui.dev',
+							image: null,
+							role: 'Owner'
+						}}
+						tier="PRO"
+					/>
+				</div>
+			{/if}
+		</div>
+	</Card>
+
+	<!-- Architecture Breakdown -->
+	<div class="space-y-6">
+		<h2 class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+			1. Database Configuration (Neon vs. Turso)
+		</h2>
+		<p class="text-sm text-zinc-600 dark:text-zinc-400">
+			Choose between serverless PostgreSQL (Neon) or edge LibSQL/SQLite (Turso) by setting <code
+				class="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-xs dark:bg-zinc-800"
+				>DATABASE_DRIVER</code
+			>
+			in your
+			<code class="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-xs dark:bg-zinc-800">.env</code
+			>:
+		</p>
+		<pre
+			class="overflow-x-auto rounded-xl border border-zinc-200 bg-zinc-900 p-4 font-mono text-xs text-zinc-100 dark:border-zinc-800"><code
+				>{envCodeSnippet}</code
+			></pre>
+	</div>
+
+	<!-- Better-Auth Setup -->
+	<div class="space-y-6">
+		<h2 class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+			2. Authentication in 1 Hook (`src/hooks.server.ts`)
+		</h2>
+		<p class="text-sm text-zinc-600 dark:text-zinc-400">
+			Attach Better-Auth session validation and protected dashboard route guards with <code
+				class="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-xs dark:bg-zinc-800"
+				>createSvenAuthHook</code
+			>:
+		</p>
+		<pre
+			class="overflow-x-auto rounded-xl border border-zinc-200 bg-zinc-900 p-4 font-mono text-xs text-zinc-100 dark:border-zinc-800"><code
+				>{hookCodeSnippet}</code
+			></pre>
+	</div>
+
+	<!-- Polar.sh Payments -->
+	<div class="space-y-6">
+		<h2 class="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+			3. Polar.sh Payments & Webhooks
+		</h2>
+		<p class="text-sm text-zinc-600 dark:text-zinc-400">
+			Create instant checkout endpoints and handle webhooks with automatic Drizzle database
+			synchronization:
+		</p>
+		<pre
+			class="overflow-x-auto rounded-xl border border-zinc-200 bg-zinc-900 p-4 font-mono text-xs text-zinc-100 dark:border-zinc-800"><code
+				>{webhookCodeSnippet}</code
+			></pre>
+	</div>
+</div>

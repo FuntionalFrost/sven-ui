@@ -2,8 +2,8 @@
 
 # Sven UI
 
-**The Intuitive Svelte UI Library**  
-_Nuxt UI v4 Equivalent for SvelteKit 2.7+ & Svelte 5 with Built-in SEO Parity._
+**The Intuitive Svelte UI & Solo SaaS Library**  
+_Nuxt UI v4 & Nuxt UI Pro Equivalent for SvelteKit 2.7+ & Svelte 5 with Built-in SEO & SaaS Parity._
 
 [![Svelte 5](https://img.shields.io/badge/Svelte-5.0+-FF3E00?style=flat&logo=svelte&logoColor=white)](https://svelte.dev)
 [![SvelteKit](https://img.shields.io/badge/SvelteKit-2.7+-FF3E00?style=flat&logo=svelte&logoColor=white)](https://kit.svelte.dev)
@@ -19,14 +19,15 @@ _Nuxt UI v4 Equivalent for SvelteKit 2.7+ & Svelte 5 with Built-in SEO Parity._
 
 ## 🌟 Overview
 
-**Sven UI** brings the full developer experience, visual elegance, and full-stack toolkit of **Nuxt UI** and the **Nuxt SEO ecosystem** to **SvelteKit 2.7+** and **Svelte 5**.
+**Sven UI** brings the full developer experience, visual elegance, and full-stack toolkit of **Nuxt UI** and the **Nuxt SEO + SaaS ecosystem** to **SvelteKit 2.7+** and **Svelte 5**.
 
 - 🎨 **Tailwind CSS v4 Native Tokens**: Styled with `@theme` variables; customize any color or token directly.
 - ⚡ **Pure Svelte 5 Runes**: Built using `$state`, `$derived`, `$props`, and `$bindable` — zero Virtual DOM overhead.
 - ♿ **Accessible by Default**: Headless primitives powered by **Bits UI**.
 - 🚀 **100% DRY SEO Parity**: Automate dynamic Open Graph cards (`/api/og`), environment-aware `robots.txt`, XML sitemaps with human-readable `sitemap.xsl` stylesheets, PWA manifests, and Schema.org JSON-LD from a single `src/site.config.ts`.
-- 🧩 **30+ Production Components**: Full suite of layout, element, form, and overlay components.
-- 🛠️ **Composable Runes**: `useShortcuts`, `useClipboard`, `useColorMode`, `useToast`, `useMediaQuery`, `useDebounce`.
+- 🔐 **Batteries-Included SaaS Suite**: Pre-integrated **Better-Auth**, multi-dialect **Drizzle ORM** (Neon PostgreSQL & Turso LibSQL/SQLite), **Polar.sh** payments & webhook sync, and **Resend** transactional emails.
+- 🧩 **35+ Production Components**: Elements, forms, layout, overlays, and drop-in SaaS widgets (`<AuthCard>`, `<UserMenu>`, `<PricingTable>`, `<SubscriptionCard>`).
+- 🛠️ **Composable Runes**: `useAuth`, `useShortcuts`, `useClipboard`, `useColorMode`, `useToast`, `useMediaQuery`, `useDebounce`.
 
 ---
 
@@ -35,9 +36,9 @@ _Nuxt UI v4 Equivalent for SvelteKit 2.7+ & Svelte 5 with Built-in SEO Parity._
 ### 1. Install Sven UI
 
 ```bash
-pnpm add sven-ui bits-ui tailwind-variants svelte-sonner
+pnpm add sven-ui bits-ui tailwind-variants svelte-sonner better-auth drizzle-orm @polar-sh/sdk resend
 # or
-npm install sven-ui bits-ui tailwind-variants svelte-sonner
+npm install sven-ui bits-ui tailwind-variants svelte-sonner better-auth drizzle-orm @polar-sh/sdk resend
 ```
 
 ### 2. Define Your Site Configuration
@@ -49,8 +50,8 @@ Create `src/site.config.ts` — your single source of truth for branding, metada
 import { defineSiteConfig } from 'sven-ui';
 
 export const siteConfig = defineSiteConfig({
-	name: 'My Indie App',
-	title: 'My Indie App — Build Fast with SvelteKit',
+	name: 'My Indie SaaS',
+	title: 'My Indie SaaS — Build Fast with SvelteKit',
 	description: 'Fast, beautiful, accessible web applications.',
 	url: 'https://my-app.com',
 	theme: {
@@ -82,33 +83,38 @@ export const siteConfig = defineSiteConfig({
 
 ---
 
-## 🛡️ 1-Line Server SEO Automation
+## 🛡️ 1-Line Server SEO & Auth Automation
 
-Handle **all 5 SEO endpoints** (`/robots.txt`, `/sitemap.xml`, `/sitemap.xsl`, `/site.webmanifest`, `/api/og`) automatically with a **single line** in `src/hooks.server.ts`:
+Handle **all 5 SEO endpoints** and **Better-Auth session parsing** in `src/hooks.server.ts`:
 
 ```ts
 // src/hooks.server.ts
-import { createSvenHook } from 'sven-ui';
+import { sequence } from '@sveltejs/kit/hooks';
+import { createSvenHook, createSvenAuth, createSvenAuthHook } from 'sven-ui';
 import { siteConfig } from './site.config';
 
-export const handle = createSvenHook(siteConfig);
+const svenHook = createSvenHook(siteConfig);
+const auth = createSvenAuth();
+const authHook = createSvenAuthHook({
+	auth,
+	protectedPaths: ['/dashboard', '/settings', '/billing'],
+	loginPath: '/login'
+});
+
+export const handle = sequence(svenHook, authHook);
 ```
 
-### Automatic Page SEO via SvelteKit `load()`
+---
+
+## 💳 Polar.sh Payments & Webhook Synchronization
+
+Create a webhook endpoint in `src/routes/api/webhooks/polar/+server.ts`:
 
 ```ts
-// src/routes/blog/[slug]/+page.ts
-import { definePageSeo } from 'sven-ui';
+// src/routes/api/webhooks/polar/+server.ts
+import { createPolarWebhookHandler } from 'sven-ui';
 
-export const load = async ({ params }) => {
-	return {
-		seo: definePageSeo({
-			title: 'How to Build Fast Indie SaaS',
-			description: 'Step-by-step guide with SvelteKit 2.7 & Sven UI',
-			badge: 'Tutorial'
-		})
-	};
-};
+export const POST = createPolarWebhookHandler();
 ```
 
 ---
@@ -117,11 +123,12 @@ export const load = async ({ params }) => {
 
 | Category           | Components                                                                                                                                                   |
 | :----------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **SaaS Suite**     | `AuthCard`, `UserMenu`, `PricingCard`, `PricingTable`, `SubscriptionCard`, `useAuth`                                                                         |
 | **Elements**       | `Button`, `ButtonGroup`, `Badge`, `Avatar`, `AvatarGroup`, `DataTable`, `Chip`, `Meter`, `Kbd`, `Icon`, `Spinner`, `Progress`, `Skeleton`, `Link`, `Logo`    |
 | **Forms**          | `Form`, `FormField`, `Input`, `Textarea`, `Checkbox`, `Switch`, `Select`, `RadioGroup`, `Slider`, `ColorPicker`                                              |
 | **Layout**         | `Container`, `Header`, `Footer`, `Section`, `Card`, `Divider`, `SvenApp`                                                                                     |
 | **Overlays & Nav** | `Tabs`, `Breadcrumb`, `Pagination`, `CommandPalette` (`⌘K`), `DropdownMenu`, `ContextMenu`, `Modal`, `Slideover`, `Popover`, `Tooltip`, `Alert`, `Accordion` |
-| **Composables**    | `useClipboard`, `useShortcuts`, `useColorMode`, `useToast`, `useMediaQuery`, `useDebounce`                                                                   |
+| **Composables**    | `useAuth`, `useClipboard`, `useShortcuts`, `useColorMode`, `useToast`, `useMediaQuery`, `useDebounce`                                                        |
 
 ---
 

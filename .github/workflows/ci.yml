@@ -15,18 +15,26 @@ permissions:
 
 jobs:
   build-and-check:
+    name: Lint, Typecheck & Build
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Setup pnpm and Node.js
-        uses: pnpm/setup@v2
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
         with:
-          runtime: node@24
-          cache: true
-          require-lockfile: true
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Lint and format check
         run: pnpm lint
@@ -34,5 +42,12 @@ jobs:
       - name: Run svelte-check
         run: pnpm check
 
-      - name: Build production bundle
+      - name: Package library (svelte-package)
+        run: pnpm package
+
+      - name: Build SvelteKit site & SSR bundle
         run: pnpm build
+        env:
+          PUBLIC_APP_URL: https://sven-ui.vercel.app
+          BETTER_AUTH_SECRET: ci-dummy-secret-key-123456789-production
+          BETTER_AUTH_URL: https://sven-ui.vercel.app
