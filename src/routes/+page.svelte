@@ -65,7 +65,7 @@
 	let demoInputValue = $state('user@yaxa.dev');
 
 	let copiedInstall = $state(false);
-	const installCommand = 'pnpm add yaxa @tailwindcss/vite tailwindcss';
+	const installCommand = 'pnpm add yaxa-svelte @tailwindcss/vite tailwindcss';
 
 	function copyInstall() {
 		if (typeof navigator !== 'undefined' && navigator.clipboard) {
@@ -80,7 +80,7 @@
 
 	function copyConfigSnippet() {
 		const snippet = `// src/site.config.ts
-import { defineSiteConfig } from 'yaxa';
+import { defineSiteConfig } from 'yaxa-svelte';
 
 export const siteConfig = defineSiteConfig({
   theme: {

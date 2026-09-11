@@ -14,8 +14,8 @@ export default defineConfig({
 	const layoutSnippet =
 		`<` +
 		`script lang="ts">
-  import 'yaxa/yaxa.css';
-  import { YaxaApp } from 'yaxa';
+  import 'yaxa-svelte/yaxa.css';
+  import { YaxaApp } from 'yaxa-svelte';
   import { siteConfig } from '../site.config';
 
   let { children } = $props();
@@ -26,7 +26,7 @@ export default defineConfig({
   {@render children()}
 </YaxaApp>`;
 
-	const hooksSnippet = `import { createYaxaHook } from 'yaxa';
+	const hooksSnippet = `import { createYaxaHook } from 'yaxa-svelte';
 import { siteConfig } from './site.config';
 
 // Automatically handles /robots.txt, /sitemap.xml, /site.webmanifest, and /api/og
@@ -72,7 +72,7 @@ export const handle = createYaxaHook(siteConfig);`;
 			</h3>
 		</div>
 		<DocCodeBlock
-			code="pnpm add yaxa @tailwindcss/vite tailwindcss"
+			code="pnpm add yaxa-svelte @tailwindcss/vite tailwindcss"
 			filename="Terminal"
 			language="bash"
 		/>

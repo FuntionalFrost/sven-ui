@@ -19,7 +19,7 @@
 	const codeUsage =
 		`<` +
 		`script lang="ts">
-  import { OgImage } from 'yaxa';
+  import { OgImage } from 'yaxa-svelte';
 <` +
 		`/script>
 

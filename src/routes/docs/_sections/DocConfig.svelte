@@ -7,7 +7,7 @@
 	let sampleName = $state('My SaaS App');
 	let sampleUrl = $state('https://mysaas.com');
 
-	let generatedConfig = $derived(`import { defineSiteConfig } from 'yaxa';
+	let generatedConfig = $derived(`import { defineSiteConfig } from 'yaxa-svelte';
 
 export const siteConfig = defineSiteConfig({
   name: '${sampleName}',
@@ -38,7 +38,7 @@ export const siteConfig = defineSiteConfig({
 	const contextSnippet =
 		`<` +
 		`script lang="ts">
-  import { getSiteConfig } from 'yaxa';
+  import { getSiteConfig } from 'yaxa-svelte';
 
   // Reactively retrieve the current site configuration from context
   const site = getSiteConfig();

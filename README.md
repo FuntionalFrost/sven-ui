@@ -36,9 +36,9 @@ _Nuxt UI v4 & Nuxt UI Pro Equivalent for SvelteKit 2.7+ & Svelte 5 with Built-in
 ### 1. Install Yaxa
 
 ```bash
-pnpm add yaxa bits-ui tailwind-variants svelte-sonner better-auth drizzle-orm @polar-sh/sdk resend
+pnpm add yaxa-svelte bits-ui tailwind-variants svelte-sonner better-auth drizzle-orm @polar-sh/sdk resend
 # or
-npm install yaxa bits-ui tailwind-variants svelte-sonner better-auth drizzle-orm @polar-sh/sdk resend
+npm install yaxa-svelte bits-ui tailwind-variants svelte-sonner better-auth drizzle-orm @polar-sh/sdk resend
 ```
 
 ### 2. Define Your Site Configuration
@@ -47,7 +47,7 @@ Create `src/site.config.ts` — your single source of truth for branding, metada
 
 ```ts
 // src/site.config.ts
-import { defineSiteConfig } from 'yaxa';
+import { defineSiteConfig } from 'yaxa-svelte';
 
 export const siteConfig = defineSiteConfig({
 	name: 'My Indie SaaS',
@@ -70,7 +70,7 @@ export const siteConfig = defineSiteConfig({
 ```svelte
 <!-- src/routes/+layout.svelte -->
 <script lang="ts">
-	import { YaxaApp } from 'yaxa';
+	import { YaxaApp } from 'yaxa-svelte';
 	import { siteConfig } from '../site.config';
 
 	let { children } = $props();
@@ -90,7 +90,7 @@ Handle **all 5 SEO endpoints** and **Better-Auth session parsing** in `src/hooks
 ```ts
 // src/hooks.server.ts
 import { sequence } from '@sveltejs/kit/hooks';
-import { createYaxaHook, createYaxaAuth, createYaxaAuthHook } from 'yaxa';
+import { createYaxaHook, createYaxaAuth, createYaxaAuthHook } from 'yaxa-svelte';
 import { siteConfig } from './site.config';
 
 const yaxaHook = createYaxaHook(siteConfig);
@@ -112,7 +112,7 @@ Create a webhook endpoint in `src/routes/api/webhooks/polar/+server.ts`:
 
 ```ts
 // src/routes/api/webhooks/polar/+server.ts
-import { createPolarWebhookHandler } from 'yaxa';
+import { createPolarWebhookHandler } from 'yaxa-svelte';
 
 export const POST = createPolarWebhookHandler();
 ```
@@ -137,7 +137,7 @@ export const POST = createPolarWebhookHandler();
 Yaxa includes first-class support for instant dynamic CSS accent and neutral variables via `theme`:
 
 ```ts
-import { theme } from 'yaxa';
+import { theme } from 'yaxa-svelte';
 
 // Change theme accent dynamically at runtime:
 theme.setAccent('svelte'); // Svelte Flame (#ff3e00)

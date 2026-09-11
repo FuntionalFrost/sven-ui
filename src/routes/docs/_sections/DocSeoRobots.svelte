@@ -4,7 +4,7 @@
 	import Badge from '$lib/components/elements/Badge.svelte';
 
 	const hookSnippet = `// src/hooks.server.ts
-import { createYaxaHook } from 'yaxa';
+import { createYaxaHook } from 'yaxa-svelte';
 import { siteConfig } from './site.config';
 
 // 1-line handler automatically mounts:
