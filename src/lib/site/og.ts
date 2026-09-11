@@ -70,11 +70,14 @@ export function generateOgSvg(params: {
 
   <!-- Top Bar: Logo & Badge -->
   <g transform="translate(120, 130)">
-    <!-- Yaxa Svelte-Style Interlocking X Icon -->
-    <rect width="40" height="40" rx="10" fill="url(#brandGrad)"/>
-    <g transform="scale(0.4)" stroke="#ffffff" stroke-width="14" stroke-linecap="round">
-      <path d="M26 26 L74 74"/>
-      <path d="M74 26 L58 42 M42 58 L26 74"/>
+    <!-- Yaxa Svelte-Style Dual-Tone X Ribbon Icon -->
+    <g transform="translate(0, -2) scale(0.44)">
+      <!-- Outer Flame Track -->
+      <path d="M24 24 L76 76" stroke="url(#brandGrad)" stroke-width="22" stroke-linecap="round"/>
+      <path d="M76 24 L56 44 M44 56 L24 76" stroke="url(#brandGrad)" stroke-width="22" stroke-linecap="round"/>
+      <!-- Inner White Core Track -->
+      <path d="M24 24 L76 76" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+      <path d="M76 24 L58 42 M42 58 L24 76" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
     </g>
     
     <!-- Site Name -->

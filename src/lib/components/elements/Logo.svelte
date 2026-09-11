@@ -11,47 +11,64 @@
 	let sizeClasses = $derived.by(() => {
 		if (typeof size === 'number') {
 			return {
-				box: `w-[${size}px] h-[${size}px]`,
-				svg: `w-[${Math.round(size * 0.6)}px] h-[${Math.round(size * 0.6)}px]`,
+				svg: `w-[${size}px] h-[${size}px]`,
 				text: 'text-base font-bold'
 			};
 		}
 		switch (size) {
 			case 'xs':
-				return { box: 'h-6 w-6 rounded-md', svg: 'h-3.5 w-3.5', text: 'text-xs font-bold' };
+				return { svg: 'h-5 w-5', text: 'text-xs font-bold' };
 			case 'sm':
-				return { box: 'h-7 w-7 rounded-lg', svg: 'h-4 w-4', text: 'text-sm font-bold' };
+				return { svg: 'h-6 w-6', text: 'text-sm font-bold' };
 			case 'lg':
-				return { box: 'h-10 w-10 rounded-xl', svg: 'h-6 w-6', text: 'text-xl font-extrabold' };
+				return { svg: 'h-9 w-9', text: 'text-xl font-extrabold' };
 			case 'xl':
-				return { box: 'h-12 w-12 rounded-2xl', svg: 'h-7 w-7', text: 'text-2xl font-extrabold' };
+				return { svg: 'h-11 w-11', text: 'text-2xl font-extrabold' };
 			case 'md':
 			default:
-				return { box: 'h-8 w-8 rounded-lg', svg: 'h-4.5 w-4.5', text: 'text-base font-bold' };
+				return { svg: 'h-7 w-7', text: 'text-base font-bold' };
 		}
 	});
 </script>
 
 <div class="inline-flex items-center gap-2.5 {className}">
-	<div
-		class="flex shrink-0 items-center justify-center bg-gradient-to-tr from-[#ff3e00] to-[#ea580c] text-white shadow-xs shadow-[#ff3e00]/25 transition-transform hover:scale-105 {sizeClasses.box}"
+	<svg
+		class="shrink-0 transition-transform hover:scale-105 {sizeClasses.svg}"
+		viewBox="0 0 100 100"
+		fill="none"
+		xmlns="http://www.w3.org/2000/svg"
+		aria-hidden="true"
 	>
-		<svg
-			class={sizeClasses.svg}
-			viewBox="0 0 100 100"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-			aria-hidden="true"
-		>
-			<path d="M26 26 L74 74" stroke="currentColor" stroke-width="14" stroke-linecap="round" />
-			<path
-				d="M74 26 L58 42 M42 58 L26 74"
-				stroke="currentColor"
-				stroke-width="14"
-				stroke-linecap="round"
-			/>
-		</svg>
-	</div>
+		<defs>
+			<linearGradient id="yaxa-flame-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+				<stop offset="0%" stop-color="#ff3e00" />
+				<stop offset="100%" stop-color="#ea580c" />
+			</linearGradient>
+		</defs>
+
+		<!-- 1. Outer Flame Layer (Thick Orange Contour Ribbon) -->
+		<path
+			d="M24 24 L76 76"
+			stroke="url(#yaxa-flame-grad)"
+			stroke-width="22"
+			stroke-linecap="round"
+		/>
+		<path
+			d="M76 24 L56 44 M44 56 L24 76"
+			stroke="url(#yaxa-flame-grad)"
+			stroke-width="22"
+			stroke-linecap="round"
+		/>
+
+		<!-- 2. Inner Core Layer (White Stadium Ribbon - Svelte Style) -->
+		<path d="M24 24 L76 76" stroke="#ffffff" stroke-width="8" stroke-linecap="round" />
+		<path
+			d="M76 24 L58 42 M42 58 L24 76"
+			stroke="#ffffff"
+			stroke-width="8"
+			stroke-linecap="round"
+		/>
+	</svg>
 	{#if showText}
 		<span class="tracking-tight text-neutral-900 dark:text-white {sizeClasses.text}">
 			{text}
