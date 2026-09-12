@@ -1,6 +1,7 @@
 <script module lang="ts">
 	import { tv, type VariantProps } from '$lib/utils/cn';
 	import type { Snippet } from 'svelte';
+	import type { IconSource } from './Icon.svelte';
 
 	export const badgeVariants = tv({
 		base: 'inline-flex items-center font-medium select-none transition-colors duration-150',
@@ -150,7 +151,7 @@
 
 	export type BadgeProps = VariantProps<typeof badgeVariants> & {
 		dot?: boolean;
-		icon?: string;
+		icon?: IconSource;
 		class?: string;
 		children?: Snippet;
 	};

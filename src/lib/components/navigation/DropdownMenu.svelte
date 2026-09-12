@@ -1,8 +1,10 @@
 <script module lang="ts">
+	import type { IconSource } from '../elements/Icon.svelte';
+
 	export interface MenuItem {
 		id: string;
 		label: string;
-		icon?: string;
+		icon?: IconSource;
 		shortcut?: string;
 		disabled?: boolean;
 		separator?: boolean;

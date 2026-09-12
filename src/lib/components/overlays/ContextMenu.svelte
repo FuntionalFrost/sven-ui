@@ -1,13 +1,13 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import { ContextMenu } from 'bits-ui';
-	import Icon from '../elements/Icon.svelte';
+	import Icon, { type IconSource } from '../elements/Icon.svelte';
 	import Kbd from '../elements/Kbd.svelte';
 
 	export interface ContextMenuItem {
 		id: string;
 		label: string;
-		icon?: string;
+		icon?: IconSource;
 		shortcut?: string;
 		disabled?: boolean;
 		destructive?: boolean;

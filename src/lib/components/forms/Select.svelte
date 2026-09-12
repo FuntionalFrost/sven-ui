@@ -1,10 +1,11 @@
 <script module lang="ts">
 	import { tv, type VariantProps } from '$lib/utils/cn';
+	import type { IconSource } from '../elements/Icon.svelte';
 
 	export interface SelectOption {
 		value: string;
 		label: string;
-		icon?: string;
+		icon?: IconSource;
 		disabled?: boolean;
 	}
 
@@ -33,7 +34,7 @@
 		value?: string;
 		options?: SelectOption[];
 		placeholder?: string;
-		icon?: string;
+		icon?: IconSource;
 		disabled?: boolean;
 		name?: string;
 		class?: string;

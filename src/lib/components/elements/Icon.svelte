@@ -1,14 +1,28 @@
-<script lang="ts">
-	import type { Snippet } from 'svelte';
+<script module lang="ts">
+	import type { Component, Snippet } from 'svelte';
 
-	interface Props {
-		name?: string;
+	export type IconSource =
+		string | Component<{ class?: string; size?: string | number; [key: string]: any }>;
+
+	export interface IconProps {
+		name?: IconSource;
+		icon?: IconSource;
 		size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | number;
 		class?: string;
 		children?: Snippet;
+		[key: string]: unknown;
 	}
+</script>
 
-	let { name, size = 'md', class: className = '', children }: Props = $props();
+<script lang="ts">
+	let {
+		name,
+		icon,
+		size = 'md',
+		class: className = '',
+		children,
+		...restProps
+	}: IconProps = $props();
 
 	let sizeClass = $derived.by(() => {
 		if (typeof size === 'number') return `w-[${size}px] h-[${size}px]`;
@@ -25,6 +39,18 @@
 			default:
 				return 'w-5 h-5';
 		}
+	});
+
+	let IconComponent = $derived.by(() => {
+		if (icon && typeof icon !== 'string') return icon;
+		if (name && typeof name !== 'string') return name;
+		return null;
+	});
+
+	let stringIconName = $derived.by(() => {
+		if (typeof icon === 'string') return icon;
+		if (typeof name === 'string') return name;
+		return null;
 	});
 
 	// Common built-in SVGs for immediate zero-config use
@@ -66,14 +92,21 @@
 	<span class="inline-flex shrink-0 items-center justify-center {sizeClass} {className}">
 		{@render children()}
 	</span>
-{:else if name && builtInIcons[name]}
+{:else if IconComponent}
+	{@const RenderIcon = IconComponent}
+	<RenderIcon
+		class="inline-flex shrink-0 items-center justify-center {sizeClass} {className}"
+		{...restProps}
+	/>
+{:else if stringIconName && builtInIcons[stringIconName]}
 	<svg
 		class="inline-flex shrink-0 items-center justify-center {sizeClass} {className}"
 		viewBox="0 0 24 24"
 		fill="none"
 		aria-hidden="true"
+		{...restProps}
 	>
-		{@html builtInIcons[name]}
+		{@html builtInIcons[stringIconName]}
 	</svg>
 {:else}
 	<svg
@@ -81,6 +114,7 @@
 		viewBox="0 0 24 24"
 		fill="none"
 		aria-hidden="true"
+		{...restProps}
 	>
 		<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4" />
 	</svg>

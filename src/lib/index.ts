@@ -2,12 +2,15 @@
 
 // Elements
 export { default as Button } from './components/elements/Button.svelte';
+export type { ButtonProps } from './components/elements/Button.svelte';
 export { default as ButtonGroup } from './components/elements/ButtonGroup.svelte';
 export { default as Badge } from './components/elements/Badge.svelte';
+export type { BadgeProps } from './components/elements/Badge.svelte';
 export { default as Avatar } from './components/elements/Avatar.svelte';
 export { default as AvatarGroup } from './components/elements/AvatarGroup.svelte';
 export { default as Kbd } from './components/elements/Kbd.svelte';
 export { default as Icon } from './components/elements/Icon.svelte';
+export type { IconProps, IconSource } from './components/elements/Icon.svelte';
 export { default as Spinner } from './components/elements/Spinner.svelte';
 export { default as Progress } from './components/elements/Progress.svelte';
 export { default as Skeleton } from './components/elements/Skeleton.svelte';
@@ -22,10 +25,12 @@ export { default as Meter } from './components/elements/Meter.svelte';
 export { default as Form } from './components/forms/Form.svelte';
 export { default as FormField } from './components/forms/FormField.svelte';
 export { default as Input } from './components/forms/Input.svelte';
+export type { InputProps } from './components/forms/Input.svelte';
 export { default as Textarea } from './components/forms/Textarea.svelte';
 export { default as Checkbox } from './components/forms/Checkbox.svelte';
 export { default as Switch } from './components/forms/Switch.svelte';
 export { default as Select } from './components/forms/Select.svelte';
+export type { SelectProps, SelectOption } from './components/forms/Select.svelte';
 export { default as RadioGroup } from './components/forms/RadioGroup.svelte';
 export { default as Slider } from './components/forms/Slider.svelte';
 export { default as ColorPicker } from './components/forms/ColorPicker.svelte';
@@ -37,22 +42,31 @@ export { default as Footer } from './components/layout/Footer.svelte';
 export { default as Section } from './components/layout/Section.svelte';
 export { default as Card } from './components/layout/Card.svelte';
 export { default as Divider } from './components/layout/Divider.svelte';
+export type { DividerProps } from './components/layout/Divider.svelte';
 export { default as YaxaApp } from './components/layout/YaxaApp.svelte';
 
 // Navigation & Command
 export { default as Tabs } from './components/navigation/Tabs.svelte';
+export type { TabItem } from './components/navigation/Tabs.svelte';
 export { default as Breadcrumb } from './components/navigation/Breadcrumb.svelte';
+export type { BreadcrumbItem as NavBreadcrumbItem } from './components/navigation/Breadcrumb.svelte';
 export { default as Pagination } from './components/navigation/Pagination.svelte';
+export type { PaginationProps } from './components/navigation/Pagination.svelte';
 export { default as CommandPalette } from './components/navigation/CommandPalette.svelte';
+export type { CommandItem } from './components/navigation/CommandPalette.svelte';
 export { default as DropdownMenu } from './components/navigation/DropdownMenu.svelte';
+export type { MenuItem } from './components/navigation/DropdownMenu.svelte';
 
 // Overlays & Feedback
 export { default as Modal } from './components/overlays/Modal.svelte';
+export type { ModalProps } from './components/overlays/Modal.svelte';
 export { default as Slideover } from './components/overlays/Slideover.svelte';
 export { default as Popover } from './components/overlays/Popover.svelte';
 export { default as Tooltip } from './components/overlays/Tooltip.svelte';
 export { default as Alert } from './components/overlays/Alert.svelte';
+export type { AlertProps } from './components/overlays/Alert.svelte';
 export { default as Accordion } from './components/overlays/Accordion.svelte';
+export type { AccordionProps, AccordionItem } from './components/overlays/Accordion.svelte';
 export { default as ContextMenu } from './components/overlays/ContextMenu.svelte';
 export type { ContextMenuItem } from './components/overlays/ContextMenu.svelte';
 

@@ -1,6 +1,7 @@
 <script module lang="ts">
 	import { tv, type VariantProps } from '$lib/utils/cn';
 	import type { Snippet } from 'svelte';
+	import type { IconSource } from '../elements/Icon.svelte';
 
 	export const alertVariants = tv({
 		base: 'relative w-full rounded-xl border p-4 transition-all duration-150',
@@ -23,7 +24,7 @@
 	export type AlertProps = VariantProps<typeof alertVariants> & {
 		title?: string;
 		description?: string;
-		icon?: string;
+		icon?: IconSource;
 		closable?: boolean;
 		onclose?: () => void;
 		actions?: Snippet;

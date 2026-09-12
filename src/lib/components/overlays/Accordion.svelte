@@ -1,10 +1,18 @@
 <script module lang="ts">
+	import type { IconSource } from '../elements/Icon.svelte';
+
 	export interface AccordionItem {
 		value: string;
 		title: string;
 		content?: string;
-		icon?: string;
+		icon?: IconSource;
 		disabled?: boolean;
+	}
+
+	export interface AccordionProps {
+		items: AccordionItem[];
+		type?: 'single' | 'multiple';
+		class?: string;
 	}
 </script>
 
@@ -12,13 +20,7 @@
 	import { Accordion } from 'bits-ui';
 	import Icon from '../elements/Icon.svelte';
 
-	interface Props {
-		items: AccordionItem[];
-		type?: 'single' | 'multiple';
-		class?: string;
-	}
-
-	let { items, type = 'single', class: className = '' }: Props = $props();
+	let { items, type = 'single', class: className = '' }: AccordionProps = $props();
 </script>
 
 <Accordion.Root

@@ -2,6 +2,7 @@
 	import { tv, type VariantProps } from '$lib/utils/cn';
 	import type { Snippet } from 'svelte';
 	import type { HTMLButtonAttributes, HTMLAnchorAttributes } from 'svelte/elements';
+	import type { IconSource } from './Icon.svelte';
 
 	export const buttonVariants = tv({
 		base: 'inline-flex items-center justify-center font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 select-none active:scale-[0.98]',
@@ -195,8 +196,8 @@
 		href?: string;
 		loading?: boolean;
 		disabled?: boolean;
-		icon?: string;
-		trailingIcon?: string;
+		icon?: IconSource;
+		trailingIcon?: IconSource;
 		type?: 'button' | 'submit' | 'reset';
 		class?: string;
 		leading?: Snippet;

@@ -1,14 +1,18 @@
-<script lang="ts">
+<script module lang="ts">
 	import type { Snippet } from 'svelte';
-	import Icon from '../elements/Icon.svelte';
+	import type { IconSource } from '../elements/Icon.svelte';
 
-	interface Props {
+	export interface DividerProps {
 		label?: string;
-		icon?: string;
+		icon?: IconSource;
 		orientation?: 'horizontal' | 'vertical';
 		class?: string;
 		children?: Snippet;
 	}
+</script>
+
+<script lang="ts">
+	import Icon from '../elements/Icon.svelte';
 
 	let {
 		label,
@@ -16,7 +20,7 @@
 		orientation = 'horizontal',
 		class: className = '',
 		children
-	}: Props = $props();
+	}: DividerProps = $props();
 </script>
 
 {#if orientation === 'vertical'}

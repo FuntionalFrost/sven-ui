@@ -1,8 +1,10 @@
 <script module lang="ts">
+	import type { IconSource } from '../elements/Icon.svelte';
+
 	export interface TabItem {
 		value: string;
 		label: string;
-		icon?: string;
+		icon?: IconSource;
 		disabled?: boolean;
 		badge?: string;
 	}

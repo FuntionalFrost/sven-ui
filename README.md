@@ -35,14 +35,14 @@ _Nuxt UI v4 & Nuxt UI Pro Equivalent for SvelteKit 2.7+ & Svelte 5 with Built-in
 
 ### 1. Install Dependencies
 
-Install `yaxa-svelte` along with Tailwind CSS v4 and icon tooling:
+Install `yaxa-svelte` along with Tailwind CSS v4 and `@lucide/svelte`:
 
 ```bash
-# Core package
-pnpm add yaxa-svelte
+# Core package & icons
+pnpm add yaxa-svelte @lucide/svelte
 
-# Tailwind CSS v4 & Icon tooling (Dev Dependencies)
-pnpm add -D tailwindcss @tailwindcss/vite @tailwindcss/typography unplugin-icons @iconify/json
+# Tailwind CSS v4 (Dev Dependencies)
+pnpm add -D tailwindcss @tailwindcss/vite @tailwindcss/typography
 ```
 
 _(Optional full-stack SaaS features: `pnpm add better-auth drizzle-orm @polar-sh/sdk resend`)_
@@ -51,17 +51,16 @@ _(Optional full-stack SaaS features: `pnpm add better-auth drizzle-orm @polar-sh
 
 ### 2. Configure `vite.config.ts`
 
-Add Tailwind CSS and Unplugin Icons to your Vite plugins:
+Add Tailwind CSS to your Vite plugins:
 
 ```ts
 // vite.config.ts
 import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
-import Icons from 'unplugin-icons/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-	plugins: [tailwindcss(), Icons({ compiler: 'svelte', autoInstall: false }), sveltekit()]
+	plugins: [tailwindcss(), sveltekit()]
 });
 ```
 

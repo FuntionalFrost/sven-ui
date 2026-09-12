@@ -2,6 +2,7 @@
 	import { tv, type VariantProps } from '$lib/utils/cn';
 	import type { Snippet } from 'svelte';
 	import type { HTMLInputAttributes } from 'svelte/elements';
+	import type { IconSource } from '../elements/Icon.svelte';
 
 	export const inputVariants = tv({
 		base: 'w-full rounded-lg border bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:ring-2 transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-neutral-50 dark:disabled:bg-neutral-950',
@@ -30,8 +31,8 @@
 	export type InputProps = Omit<HTMLInputAttributes, 'size'> &
 		VariantProps<typeof inputVariants> & {
 			value?: string | number;
-			icon?: string;
-			trailingIcon?: string;
+			icon?: IconSource;
+			trailingIcon?: IconSource;
 			loading?: boolean;
 			clearable?: boolean;
 			prefix?: string;

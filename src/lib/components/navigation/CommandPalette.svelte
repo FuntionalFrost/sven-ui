@@ -1,9 +1,11 @@
 <script module lang="ts">
+	import type { IconSource } from '../elements/Icon.svelte';
+
 	export interface CommandItem {
 		id: string;
 		label: string;
 		description?: string;
-		icon?: string;
+		icon?: IconSource;
 		group?: string;
 		shortcut?: string;
 		onSelect?: () => void;

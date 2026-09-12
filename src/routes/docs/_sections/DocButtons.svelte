@@ -9,6 +9,7 @@
 	import Spinner from '$lib/components/elements/Spinner.svelte';
 	import Skeleton from '$lib/components/elements/Skeleton.svelte';
 	import Icon from '$lib/components/elements/Icon.svelte';
+	import { ArrowRight, ChevronLeft, ChevronRight, Sparkles, Send } from '@lucide/svelte';
 
 	let loading = $state(false);
 
@@ -74,16 +75,18 @@
 	</DocSandbox>
 
 	<!-- ButtonGroup & Icons Sandbox -->
-	<DocSandbox title="ButtonGroup & Icons">
+	<DocSandbox title="ButtonGroup & @lucide/svelte Icons">
 		<div class="flex flex-col items-center gap-4">
+			<div class="flex flex-wrap items-center justify-center gap-3">
+				<Button color="primary" icon={Sparkles}>Generate</Button>
+				<Button variant="outline" trailingIcon={ArrowRight}>Get Started</Button>
+				<Button variant="soft" color="success" icon={Send}>Send Message</Button>
+			</div>
+
 			<ButtonGroup>
-				<Button variant="outline">
-					<Icon name="chevron-left" class="mr-1 h-4 w-4" /> Prev
-				</Button>
+				<Button variant="outline" icon={ChevronLeft}>Prev</Button>
 				<Button variant="outline">Today</Button>
-				<Button variant="outline">
-					Next <Icon name="chevron-right" class="ml-1 h-4 w-4" />
-				</Button>
+				<Button variant="outline" trailingIcon={ChevronRight}>Next</Button>
 			</ButtonGroup>
 		</div>
 	</DocSandbox>

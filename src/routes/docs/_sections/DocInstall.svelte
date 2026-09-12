@@ -5,13 +5,11 @@
 
 	const viteSnippet = `import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
-import Icons from 'unplugin-icons/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [
     tailwindcss(),
-    Icons({ compiler: 'svelte', autoInstall: false }),
     sveltekit()
   ]
 });`;
@@ -87,15 +85,15 @@ export const handle = createYaxaHook(siteConfig);`;
 				2
 			</span>
 			<h3 class="text-base font-bold text-zinc-900 dark:text-white">
-				Install Yaxa and Dev Dependencies
+				Install Yaxa and Dependencies
 			</h3>
 		</div>
 		<p class="text-xs text-zinc-600 dark:text-zinc-400">
-			Install the core package and the required Tailwind CSS v4 and icon tooling:
+			Install the core package, Tailwind CSS v4, and the modern <code>@lucide/svelte</code> icon library:
 		</p>
 		<DocCodeBlock
-			code="pnpm add yaxa-svelte
-pnpm add -D tailwindcss @tailwindcss/vite @tailwindcss/typography unplugin-icons @iconify/json"
+			code="pnpm add yaxa-svelte @lucide/svelte
+pnpm add -D tailwindcss @tailwindcss/vite @tailwindcss/typography"
 			filename="Terminal"
 			language="bash"
 		/>
@@ -112,7 +110,7 @@ pnpm add -D tailwindcss @tailwindcss/vite @tailwindcss/typography unplugin-icons
 			<h3 class="text-base font-bold text-zinc-900 dark:text-white">Configure Vite Plugins</h3>
 		</div>
 		<p class="text-xs text-zinc-600 dark:text-zinc-400">
-			Add Tailwind CSS and Unplugin Icons in your <code
+			Add Tailwind CSS in your <code
 				class="rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-xs dark:bg-zinc-800"
 				>vite.config.ts</code
 			>:

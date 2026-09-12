@@ -1,22 +1,30 @@
-<script lang="ts">
-	import Button from '../elements/Button.svelte';
-	import Icon from '../elements/Icon.svelte';
+<script module lang="ts">
+	import type { IconSource } from '../elements/Icon.svelte';
 
-	interface Props {
+	export interface PaginationProps {
 		page?: number;
 		total: number;
 		pageSize?: number;
 		siblingCount?: number;
+		prevIcon?: IconSource;
+		nextIcon?: IconSource;
 		class?: string;
 	}
+</script>
+
+<script lang="ts">
+	import Button from '../elements/Button.svelte';
+	import Icon from '../elements/Icon.svelte';
 
 	let {
 		page = $bindable(1),
 		total,
 		pageSize = 10,
 		siblingCount = 1,
+		prevIcon = 'chevron-left',
+		nextIcon = 'chevron-right',
 		class: className = ''
-	}: Props = $props();
+	}: PaginationProps = $props();
 
 	let totalPages = $derived(Math.max(1, Math.ceil(total / pageSize)));
 
@@ -69,7 +77,7 @@
 		onclick={() => (page = Math.max(1, page - 1))}
 		aria-label="Previous page"
 	>
-		<Icon name="chevron-left" size="xs" />
+		<Icon name={prevIcon} size="xs" />
 	</Button>
 
 	<!-- Page Numbers -->
@@ -101,6 +109,6 @@
 		onclick={() => (page = Math.min(totalPages, page + 1))}
 		aria-label="Next page"
 	>
-		<Icon name="chevron-right" size="xs" />
+		<Icon name={nextIcon} size="xs" />
 	</Button>
 </nav>

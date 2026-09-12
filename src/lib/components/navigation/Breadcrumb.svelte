@@ -1,8 +1,10 @@
 <script module lang="ts">
+	import type { IconSource } from '../elements/Icon.svelte';
+
 	export interface BreadcrumbItem {
 		label: string;
 		href?: string;
-		icon?: string;
+		icon?: IconSource;
 	}
 </script>
 
@@ -11,7 +13,7 @@
 
 	interface Props {
 		items: BreadcrumbItem[];
-		separator?: string;
+		separator?: IconSource;
 		class?: string;
 	}
 
